@@ -22,7 +22,7 @@ spec:
         env: dev
       annotations:
         # Update this SHA to trigger rolling deployment via ArgoCD
-        image-version: "main-d359c56"
+        image-version: "main-ea941c1"
     spec:
       imagePullSecrets:
       - name: ghcr-secret
