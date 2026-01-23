@@ -65,18 +65,53 @@ if [ ! -f "/pb_data/data.db" ]; then
             SUCCESS=true
             
             while [ -f "/tmp/batch${BATCH_NUM}.json" ]; do
-                HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
-                    -H "Authorization: $TOKEN" \
-                    -H "Content-Type: application/json" \
-                    -d @/tmp/batch${BATCH_NUM}.json)
-                
-                if [ "$HTTP_CODE" = "204" ]; then
+                # For batch 3+, try importing collections one at a time to allow ID resolution
+                if [ $BATCH_NUM -ge 3 ]; then
+                    echo "📦 Importing batch $BATCH_NUM collections individually..."
+                    python3 -c "
+import json
+with open('/tmp/batch${BATCH_NUM}.json', 'r') as f:
+    data = json.load(f)
+for coll in data['collections']:
+    output = {'collections': [coll], 'deleteMissing': False}
+    filename = f'/tmp/batch${BATCH_NUM}_{coll[\"name\"]}.json'
+    with open(filename, 'w') as f:
+        json.dump(output, f)
+    print(filename)
+"
+                    # Import each collection separately
+                    for coll_file in /tmp/batch${BATCH_NUM}_*.json; do
+                        COLL_NAME=$(basename "$coll_file" .json | sed "s/batch${BATCH_NUM}_//")
+                        HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
+                            -H "Authorization: $TOKEN" \
+                            -H "Content-Type: application/json" \
+                            -d @$coll_file)
+                        
+                        if [ "$HTTP_CODE" = "204" ]; then
+                            echo "  ✅ $COLL_NAME imported"
+                        else
+                            echo "  ⚠️  $COLL_NAME import failed (HTTP $HTTP_CODE)"
+                            cat /tmp/import_response.json
+                            SUCCESS=false
+                            break 2
+                        fi
+                    done
                     echo "✅ Batch $BATCH_NUM imported successfully"
                 else
-                    echo "⚠️  Batch $BATCH_NUM import failed (HTTP $HTTP_CODE)"
-                    cat /tmp/import_response.json
-                    SUCCESS=false
-                    break
+                    # Import batch as a whole
+                    HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
+                        -H "Authorization: $TOKEN" \
+                        -H "Content-Type: application/json" \
+                        -d @/tmp/batch${BATCH_NUM}.json)
+                    
+                    if [ "$HTTP_CODE" = "204" ]; then
+                        echo "✅ Batch $BATCH_NUM imported successfully"
+                    else
+                        echo "⚠️  Batch $BATCH_NUM import failed (HTTP $HTTP_CODE)"
+                        cat /tmp/import_response.json
+                        SUCCESS=false
+                        break
+                    fi
                 fi
                 
                 BATCH_NUM=$((BATCH_NUM + 1))
