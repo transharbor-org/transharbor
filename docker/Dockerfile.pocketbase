@@ -9,18 +9,29 @@ RUN wget https://github.com/pocketbase/pocketbase/releases/download/v${POCKETBAS
     && strip pocketbase \
     && chmod +x pocketbase
 
-# Runtime stage - distroless
-FROM gcr.io/distroless/static-debian12:nonroot
+# Runtime stage - needs shell for init script
+FROM alpine:3.18
 
 WORKDIR /app
+
+# Install curl for health checks
+RUN apk add --no-cache curl
 
 # Copy PocketBase binary from builder
 COPY --from=builder /pocketbase /app/pocketbase
 
-# Create data directory with correct permissions
-USER nonroot:nonroot
+# Copy schema and init script
+COPY pocketbase/pb_schema.json /app/pb_schema.json
+COPY pocketbase/init_pocketbase.sh /app/init_pocketbase.sh
+RUN chmod +x /app/init_pocketbase.sh
+
+# Create non-root user
+RUN addgroup -g 1000 pocketbase && \
+    adduser -D -u 1000 -G pocketbase pocketbase && \
+    chown -R pocketbase:pocketbase /app
+
+USER pocketbase
 
 EXPOSE 8080
 
-ENTRYPOINT ["/app/pocketbase"]
-CMD ["serve", "--http=0.0.0.0:8080", "--dir=/pb_data"]
+ENTRYPOINT ["/app/init_pocketbase.sh"]

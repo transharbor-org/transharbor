@@ -7,8 +7,12 @@ class PocketBaseService {
   late final PocketBase pb;
 
   // PocketBase configuration
-  static const String baseUrl = 'http://127.0.0.1:8090';
-  // For production: static const String baseUrl = 'https://pb.transharbor.org';
+  // Use relative path '/api' which nginx proxies to PocketBase
+  // For local dev, use 'http://127.0.0.1:8090'
+  static const String baseUrl = String.fromEnvironment(
+    'POCKETBASE_URL',
+    defaultValue: '/api',
+  );
 
   // Collection names
   static const String usersCollection = 'users';
