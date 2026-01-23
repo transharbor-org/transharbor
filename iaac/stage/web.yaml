@@ -73,6 +73,8 @@ spec:
         app: web
         env: stage
     spec:
+      imagePullSecrets:
+      - name: ghcr-secret
       containers:
       - name: web
         image: ghcr.io/transharbor-org/transharbor/web:main

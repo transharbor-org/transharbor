@@ -27,6 +27,8 @@ spec:
         app: pocketbase
         env: stage
     spec:
+      imagePullSecrets:
+      - name: ghcr-secret
       containers:
       - name: pocketbase
         image: ghcr.io/transharbor-org/transharbor/pocketbase:main
