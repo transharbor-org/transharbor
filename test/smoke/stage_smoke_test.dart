@@ -9,7 +9,7 @@ void main() {
     'STAGE_URL',
     defaultValue: 'https://stage.transharbor.org',
   );
-  
+
   final pbUrl = const String.fromEnvironment(
     'STAGE_PB_URL',
     defaultValue: 'https://pb-stage.transharbor.org',
@@ -33,7 +33,7 @@ void main() {
         Uri.parse('$pbUrl/api/collections'),
         headers: {'Content-Type': 'application/json'},
       );
-      
+
       // Should return 401 (unauthorized) but endpoint exists
       expect(response.statusCode, anyOf(200, 401, 403));
     });
@@ -43,7 +43,7 @@ void main() {
       final response = await http.get(
         Uri.parse('$pbUrl/api/collections/phone_verification/records'),
       );
-      
+
       // Should return 401 (unauthorized) but endpoint exists
       expect(response.statusCode, anyOf(401, 403));
     });
@@ -52,8 +52,8 @@ void main() {
       final response = await http.get(
         Uri.parse('$pbUrl/api/collections/users/records'),
       );
-      
-      // Should return 401 (unauthorized) but endpoint exists  
+
+      // Should return 401 (unauthorized) but endpoint exists
       expect(response.statusCode, anyOf(401, 403));
     });
   });
@@ -63,7 +63,7 @@ void main() {
       final stopwatch = Stopwatch()..start();
       final response = await http.get(Uri.parse(stageUrl));
       stopwatch.stop();
-      
+
       expect(response.statusCode, 200);
       expect(stopwatch.elapsedMilliseconds, lessThan(3000),
           reason: 'Web app took ${stopwatch.elapsedMilliseconds}ms to load');
@@ -73,10 +73,11 @@ void main() {
       final stopwatch = Stopwatch()..start();
       final response = await http.get(Uri.parse('$pbUrl/api/health'));
       stopwatch.stop();
-      
+
       expect(response.statusCode, 200);
       expect(stopwatch.elapsedMilliseconds, lessThan(1000),
-          reason: 'PocketBase took ${stopwatch.elapsedMilliseconds}ms to respond');
+          reason:
+              'PocketBase took ${stopwatch.elapsedMilliseconds}ms to respond');
     });
   });
 }

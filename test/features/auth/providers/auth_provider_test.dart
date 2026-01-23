@@ -35,7 +35,7 @@ void main() {
     test('authentication state updates correctly', () {
       // Test that the provider notifies listeners properly
       expect(authProvider.isLoading, false);
-      
+
       // Can't directly test setUser since it's private now
       // Test basic state instead
       expect(authProvider.isAuthenticated, false);

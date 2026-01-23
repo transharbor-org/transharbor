@@ -10,7 +10,7 @@ void main() {
   group('Phone Verification Integration Tests', () {
     late PocketBase pb;
     late PhoneAuthService authService;
-    
+
     // Allow environment override for testing against different environments
     final pbUrl = const String.fromEnvironment(
       'STAGE_PB_URL',
@@ -44,7 +44,8 @@ void main() {
       // In production, user receives via SMS
       String? otp;
       try {
-        final record = await pb.collection('phone_verification').getOne(verificationId!);
+        final record =
+            await pb.collection('phone_verification').getOne(verificationId!);
         otp = record.data['otp'] as String;
         expect(otp, hasLength(6));
         expect(int.tryParse(otp), isNotNull);
@@ -114,12 +115,14 @@ void main() {
 
       // Send OTP
       final verificationId = await authService.sendOTP(testPhone);
-      final record = await pb.collection('phone_verification').getOne(verificationId);
+      final record =
+          await pb.collection('phone_verification').getOne(verificationId);
       final otp = record.data['otp'] as String;
 
       // Manually set expiration to past (requires admin access)
       await pb.collection('phone_verification').update(verificationId, body: {
-        'expires_at': DateTime.now().subtract(Duration(minutes: 15)).toIso8601String(),
+        'expires_at':
+            DateTime.now().subtract(Duration(minutes: 15)).toIso8601String(),
       });
 
       // Attempt verification
@@ -157,10 +160,11 @@ void main() {
 
       // Register first user
       final verificationId1 = await authService.sendOTP(testPhone);
-      final record1 = await pb.collection('phone_verification').getOne(verificationId1);
+      final record1 =
+          await pb.collection('phone_verification').getOne(verificationId1);
       final otp1 = record1.data['otp'] as String;
       await authService.verifyOTP(verificationId1, otp1);
-      
+
       final user1 = await authService.registerWithPhone(
         phoneNumber: testPhone,
         verificationId: verificationId1,
@@ -172,7 +176,8 @@ void main() {
 
       // Attempt to register second user with same phone
       final verificationId2 = await authService.sendOTP(testPhone);
-      final record2 = await pb.collection('phone_verification').getOne(verificationId2);
+      final record2 =
+          await pb.collection('phone_verification').getOne(verificationId2);
       final otp2 = record2.data['otp'] as String;
       await authService.verifyOTP(verificationId2, otp2);
 
@@ -199,10 +204,11 @@ void main() {
 
       // Register user
       final verificationId = await authService.sendOTP(testPhone);
-      final record = await pb.collection('phone_verification').getOne(verificationId);
+      final record =
+          await pb.collection('phone_verification').getOne(verificationId);
       final otp = record.data['otp'] as String;
       await authService.verifyOTP(verificationId, otp);
-      
+
       final user = await authService.registerWithPhone(
         phoneNumber: testPhone,
         verificationId: verificationId,
@@ -215,9 +221,9 @@ void main() {
 
       // Login with phone and password
       final authData = await pb.collection('users').authWithPassword(
-        testPhone,
-        password,
-      );
+            testPhone,
+            password,
+          );
 
       expect(authData.record.id, user.id);
       expect(authData.record.data['phone'], testPhone);
@@ -263,7 +269,7 @@ void main() {
       // Get OTP from database
       // Note: This requires test authentication
       // In real app, user receives SMS
-      
+
       // For now, verify UI state
       expect(find.text('Verify Code'), findsOneWidget);
       expect(find.text('Change Phone Number'), findsOneWidget);
@@ -323,7 +329,8 @@ void main() {
       final verificationId = await authService.sendOTP(testPhone);
 
       // Verify record exists
-      final record = await pb.collection('phone_verification').getOne(verificationId);
+      final record =
+          await pb.collection('phone_verification').getOne(verificationId);
       expect(record.id, verificationId);
 
       // In production, expired records should be cleaned up by cron job
@@ -341,7 +348,7 @@ void main() {
   group('PocketBase Hook Tests', () {
     testWidgets('OTP is generated automatically', (tester) async {
       final pb = PocketBase('https://dev.transharbor.org');
-      
+
       // Create verification record (hook should generate OTP)
       final record = await pb.collection('phone_verification').create(body: {
         'phone': '+15005550015',
@@ -360,7 +367,7 @@ void main() {
 
     testWidgets('Duplicate phone prevention works', (tester) async {
       final pb = PocketBase('https://dev.transharbor.org');
-      
+
       // This test requires the hook to be active
       // Create first user with phone
       // Attempt to create second user with same phone
@@ -381,9 +388,9 @@ void main() {
       );
 
       final stopwatch = Stopwatch()..start();
-      
+
       await authService.sendOTP('+15005550016');
-      
+
       stopwatch.stop();
 
       // Should complete in less than 5 seconds
@@ -399,13 +406,14 @@ void main() {
       );
 
       final verificationId = await authService.sendOTP('+15005550017');
-      final record = await pb.collection('phone_verification').getOne(verificationId);
+      final record =
+          await pb.collection('phone_verification').getOne(verificationId);
       final otp = record.data['otp'] as String;
 
       final stopwatch = Stopwatch()..start();
-      
+
       await authService.verifyOTP(verificationId, otp);
-      
+
       stopwatch.stop();
 
       // Should complete in less than 2 seconds

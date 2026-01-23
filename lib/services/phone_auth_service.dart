@@ -40,12 +40,13 @@ class PhoneAuthService {
   /// Verify OTP code
   Future<bool> verifyOTP(String verificationId, String code) async {
     try {
-      final record = await pb.collection('phone_verification').getOne(verificationId);
-      
+      final record =
+          await pb.collection('phone_verification').getOne(verificationId);
+
       // Check if OTP matches and is not expired (10 min)
       final createdAt = DateTime.parse(record.data['created']);
       final isExpired = DateTime.now().difference(createdAt).inMinutes > 10;
-      
+
       if (isExpired) {
         throw Exception('OTP expired. Please request a new code.');
       }
@@ -76,7 +77,8 @@ class PhoneAuthService {
   }) async {
     try {
       // Verify phone is verified
-      final verification = await pb.collection('phone_verification').getOne(verificationId);
+      final verification =
+          await pb.collection('phone_verification').getOne(verificationId);
       if (verification.data['verified'] != true) {
         throw Exception('Phone number not verified');
       }
@@ -93,9 +95,9 @@ class PhoneAuthService {
 
       // Authenticate
       await pb.collection('users').authWithPassword(
-        phoneNumber,
-        password,
-      );
+            phoneNumber,
+            password,
+          );
 
       return user;
     } catch (e) {
@@ -105,14 +107,15 @@ class PhoneAuthService {
 
   /// Send SMS via external API
   Future<void> _sendSMS(String phoneNumber, String otp) async {
-    final message = 'Your TransHarbor verification code is: $otp. Valid for 10 minutes.';
+    final message =
+        'Your TransHarbor verification code is: $otp. Valid for 10 minutes.';
     final client = httpClient ?? http.Client();
-    
+
     // Skip SMS in test mode (when using mock URL)
     if (smsApiUrl.contains('/test')) {
       return;
     }
-    
+
     // Example: Twilio
     if (smsApiUrl.contains('twilio')) {
       final response = await client.post(
@@ -166,14 +169,15 @@ class PhoneVerificationWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<PhoneVerificationWidget> createState() => _PhoneVerificationWidgetState();
+  State<PhoneVerificationWidget> createState() =>
+      _PhoneVerificationWidgetState();
 }
 
 class _PhoneVerificationWidgetState extends State<PhoneVerificationWidget> {
   final _phoneController = TextEditingController();
   final _otpController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  
+
   bool _isLoading = false;
   bool _otpSent = false;
   String? _verificationId;
@@ -255,7 +259,6 @@ class _PhoneVerificationWidgetState extends State<PhoneVerificationWidget> {
                 style: TextStyle(color: Colors.red.shade900),
               ),
             ),
-          
           if (!_otpSent) ...[
             TextFormField(
               controller: _phoneController,

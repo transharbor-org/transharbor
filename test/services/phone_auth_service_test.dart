@@ -17,7 +17,7 @@ void main() {
     mockPb = MockPocketBase();
     mockVerificationCollection = MockRecordService();
     mockUsersCollection = MockRecordService();
-    
+
     authService = PhoneAuthService(
       pb: mockPb,
       smsApiUrl: 'https://api.twilio.com/test',
@@ -35,7 +35,8 @@ void main() {
         'phone': '+12125551234',
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.create(body: anyNamed('body')))
           .thenAnswer((_) async => mockRecord);
 
@@ -52,7 +53,8 @@ void main() {
 
     test('throws exception when PocketBase create fails', () async {
       // Arrange
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.create(body: anyNamed('body')))
           .thenThrow(Exception('Network error'));
 
@@ -72,7 +74,8 @@ void main() {
         'phone': '+12125551234',
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.create(body: anyNamed('body')))
           .thenAnswer((_) async => mockRecord);
 
@@ -82,7 +85,8 @@ void main() {
 
     test('handles rate limiting correctly', () async {
       // Arrange
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.create(body: anyNamed('body')))
           .thenThrow(ClientException(
         statusCode: 400,
@@ -92,9 +96,9 @@ void main() {
       // Act & Assert
       expect(
         () => authService.sendOTP('+12125551234'),
-        throwsA(predicate((e) => 
-          e is Exception && e.toString().contains('Too many verification attempts')
-        )),
+        throwsA(predicate((e) =>
+            e is Exception &&
+            e.toString().contains('Too many verification attempts'))),
       );
     });
   });
@@ -106,14 +110,17 @@ void main() {
       when(mockRecord.data).thenReturn({
         'otp': '123456',
         'phone': '+12125551234',
-        'created': DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
+        'created':
+            DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
         'verified': false,
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockRecord);
-      when(mockVerificationCollection.update('verification_123', body: anyNamed('body')))
+      when(mockVerificationCollection.update('verification_123',
+              body: anyNamed('body')))
           .thenAnswer((_) async => mockRecord);
 
       // Act
@@ -132,11 +139,13 @@ void main() {
       when(mockRecord.data).thenReturn({
         'otp': '123456',
         'phone': '+12125551234',
-        'created': DateTime.now().subtract(Duration(minutes: 15)).toIso8601String(),
+        'created':
+            DateTime.now().subtract(Duration(minutes: 15)).toIso8601String(),
         'verified': false,
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockRecord);
 
@@ -153,11 +162,13 @@ void main() {
       when(mockRecord.data).thenReturn({
         'otp': '123456',
         'phone': '+12125551234',
-        'created': DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
+        'created':
+            DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
         'verified': false,
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockRecord);
 
@@ -170,7 +181,8 @@ void main() {
 
     test('handles network errors during verification', () async {
       // Arrange
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.getOne('verification_123'))
           .thenThrow(Exception('Network timeout'));
 
@@ -198,15 +210,16 @@ void main() {
         'phoneVerified': true,
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockPb.collection('users')).thenReturn(mockUsersCollection);
-      
+
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockVerificationRecord);
       when(mockUsersCollection.create(body: anyNamed('body')))
           .thenAnswer((_) async => mockUserRecord);
-      when(mockUsersCollection.authWithPassword(any, any))
-          .thenAnswer((_) async => RecordAuth(token: 'jwt_token', record: mockUserRecord));
+      when(mockUsersCollection.authWithPassword(any, any)).thenAnswer(
+          (_) async => RecordAuth(token: 'jwt_token', record: mockUserRecord));
 
       // Act
       final user = await authService.registerWithPhone(
@@ -233,7 +246,8 @@ void main() {
         'phone': '+12125551234',
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockVerificationRecord);
 
@@ -259,15 +273,16 @@ void main() {
       final mockUserRecord = MockRecordModel();
       when(mockUserRecord.id).thenReturn('user_123');
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockPb.collection('users')).thenReturn(mockUsersCollection);
-      
+
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockVerificationRecord);
       when(mockUsersCollection.create(body: anyNamed('body')))
           .thenAnswer((_) async => mockUserRecord);
-      when(mockUsersCollection.authWithPassword(any, any))
-          .thenAnswer((_) async => RecordAuth(token: 'jwt_token', record: mockUserRecord));
+      when(mockUsersCollection.authWithPassword(any, any)).thenAnswer(
+          (_) async => RecordAuth(token: 'jwt_token', record: mockUserRecord));
 
       // Act
       await authService.registerWithPhone(
@@ -297,9 +312,10 @@ void main() {
         'phone': '+12125551234',
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockPb.collection('users')).thenReturn(mockUsersCollection);
-      
+
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockVerificationRecord);
       when(mockUsersCollection.create(body: anyNamed('body')))
@@ -315,9 +331,8 @@ void main() {
           verificationId: 'verification_123',
           password: 'secure_password',
         ),
-        throwsA(predicate((e) => 
-          e is Exception && e.toString().contains('already registered')
-        )),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString().contains('already registered'))),
       );
     });
   });
@@ -332,13 +347,15 @@ void main() {
         'phone': '+12125551234',
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.create(body: anyNamed('body')))
           .thenAnswer((_) async => mockRecord);
 
       final twilioService = PhoneAuthService(
         pb: mockPb,
-        smsApiUrl: 'https://api.twilio.com/2010-04-01/Accounts/ACxxx/Messages.json',
+        smsApiUrl:
+            'https://api.twilio.com/2010-04-01/Accounts/ACxxx/Messages.json',
         smsApiKey: 'test_key',
       );
 
@@ -372,18 +389,18 @@ void main() {
   group('PhoneAuthService - Phone Number Validation', () {
     test('accepts valid E.164 format numbers from worldwide', () {
       final validNumbers = [
-        '+12125551234',      // US
-        '+442071234567',     // UK
-        '+33123456789',      // France
-        '+81312345678',      // Japan
-        '+5511987654321',    // Brazil
-        '+919876543210',     // India
-        '+8613812345678',    // China
-        '+61212345678',      // Australia
-        '+27123456789',      // South Africa
-        '+254712345678',     // Kenya
-        '+971501234567',     // UAE
-        '+82212345678',      // South Korea
+        '+12125551234', // US
+        '+442071234567', // UK
+        '+33123456789', // France
+        '+81312345678', // Japan
+        '+5511987654321', // Brazil
+        '+919876543210', // India
+        '+8613812345678', // China
+        '+61212345678', // Australia
+        '+27123456789', // South Africa
+        '+254712345678', // Kenya
+        '+971501234567', // UAE
+        '+82212345678', // South Korea
       ];
 
       for (final number in validNumbers) {
@@ -397,12 +414,12 @@ void main() {
 
     test('rejects invalid phone formats', () {
       final invalidNumbers = [
-        '12125551234',       // Missing +
-        '+0123456789',       // Starts with 0
-        '+1 212 555 1234',   // Contains spaces
-        '+1-212-555-1234',   // Contains dashes
-        '(212) 555-1234',    // Not E.164
-        '+1234567',          // Too short (8 chars min)
+        '12125551234', // Missing +
+        '+0123456789', // Starts with 0
+        '+1 212 555 1234', // Contains spaces
+        '+1-212-555-1234', // Contains dashes
+        '(212) 555-1234', // Not E.164
+        '+1234567', // Too short (8 chars min)
         '+1234567890123456', // Too long (17 chars, max is 15)
       ];
 
@@ -431,7 +448,8 @@ void main() {
         'created': DateTime.now().toIso8601String(),
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.getOne('verification_123'))
           .thenAnswer((_) async => mockRecord);
 
@@ -451,7 +469,8 @@ void main() {
         'verified': false,
       });
 
-      when(mockPb.collection('phone_verification')).thenReturn(mockVerificationCollection);
+      when(mockPb.collection('phone_verification'))
+          .thenReturn(mockVerificationCollection);
       when(mockVerificationCollection.getOne(any))
           .thenAnswer((_) async => mockRecord);
       when(mockVerificationCollection.update(any, body: anyNamed('body')))

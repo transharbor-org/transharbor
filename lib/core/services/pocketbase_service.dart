@@ -5,11 +5,11 @@ import 'storage_service.dart';
 class PocketBaseService {
   static final PocketBaseService _instance = PocketBaseService._internal();
   late final PocketBase pb;
-  
+
   // PocketBase configuration
   static const String baseUrl = 'http://127.0.0.1:8090';
   // For production: static const String baseUrl = 'https://pb.transharbor.org';
-  
+
   // Collection names
   static const String usersCollection = 'users';
   static const String personalsCollection = 'personals';
@@ -173,7 +173,9 @@ class PocketBaseService {
     int page = 1,
     int perPage = 20,
   }) async {
-    return await pb.collection(PocketBaseService.conversationsCollection).getList(
+    return await pb
+        .collection(PocketBaseService.conversationsCollection)
+        .getList(
           page: page,
           perPage: perPage,
           filter: 'participant_ids ~ "$currentUserId"',
@@ -343,7 +345,8 @@ class PocketBaseService {
     String? category,
     bool isPrivate = false,
   }) async {
-    final record = await pb.collection(PocketBaseService.groupsCollection).create(
+    final record =
+        await pb.collection(PocketBaseService.groupsCollection).create(
       body: {
         'name': name,
         'description': description,
@@ -383,7 +386,9 @@ class PocketBaseService {
     int page = 1,
     int perPage = 50,
   }) async {
-    return await pb.collection(PocketBaseService.groupMembersCollection).getList(
+    return await pb
+        .collection(PocketBaseService.groupMembersCollection)
+        .getList(
           page: page,
           perPage: perPage,
           filter: 'group_id = "$groupId"',
@@ -407,7 +412,9 @@ class PocketBaseService {
     int page = 1,
     int perPage = 20,
   }) async {
-    return await pb.collection(PocketBaseService.groupMembersCollection).getList(
+    return await pb
+        .collection(PocketBaseService.groupMembersCollection)
+        .getList(
           page: page,
           perPage: perPage,
           filter: 'user_id = "$currentUserId"',
@@ -446,8 +453,9 @@ class PocketBaseService {
           .delete(membership.id);
 
       // Decrement member count
-      final group =
-          await pb.collection(PocketBaseService.groupsCollection).getOne(groupId);
+      final group = await pb
+          .collection(PocketBaseService.groupsCollection)
+          .getOne(groupId);
       final newCount = (group.getIntValue('member_count') - 1).clamp(0, 999999);
       await pb.collection(PocketBaseService.groupsCollection).update(
         groupId,

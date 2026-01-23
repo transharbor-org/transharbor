@@ -107,9 +107,9 @@ void main() {
 
     testWidgets('validates multiple international formats', (tester) async {
       final validNumbers = [
-        '+12125551234',    // US
-        '+442071234567',   // UK
-        '+33123456789',    // France
+        '+12125551234', // US
+        '+442071234567', // UK
+        '+33123456789', // France
       ];
 
       for (final number in validNumbers) {
@@ -141,7 +141,8 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('transitions to OTP entry screen after sending', (tester) async {
+    testWidgets('transitions to OTP entry screen after sending',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest(
         onVerified: (phone, verificationId) {},
       ));
@@ -189,7 +190,8 @@ void main() {
   });
 
   group('PhoneVerificationWidget - OTP Verification', () {
-    testWidgets('displays OTP input field with correct properties', (tester) async {
+    testWidgets('displays OTP input field with correct properties',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest(
         onVerified: (phone, verificationId) {},
       ));
@@ -200,9 +202,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check OTP field properties - use decoration instead of direct properties
-      final otpFieldFinder = find.widgetWithText(TextFormField, 'Verification Code');
+      final otpFieldFinder =
+          find.widgetWithText(TextFormField, 'Verification Code');
       expect(otpFieldFinder, findsOneWidget);
-      
+
       // Verify the field accepts input
       await tester.enterText(otpFieldFinder, '123456');
       await tester.pump();
@@ -268,7 +271,8 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('calls onVerified callback on successful verification', (tester) async {
+    testWidgets('calls onVerified callback on successful verification',
+        (tester) async {
       String? verifiedPhone;
       String? verifiedId;
 
@@ -281,7 +285,7 @@ void main() {
 
       // Simulate successful verification flow
       // (In real test, mock the service to return success)
-      
+
       // For now, just verify the callback is set up correctly
       expect(verifiedPhone, isNull); // Not called yet
       expect(verifiedId, isNull);
@@ -289,7 +293,8 @@ void main() {
   });
 
   group('PhoneVerificationWidget - Change Phone Number', () {
-    testWidgets('shows Change Phone Number button on OTP screen', (tester) async {
+    testWidgets('shows Change Phone Number button on OTP screen',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest(
         onVerified: (phone, verificationId) {},
       ));
@@ -303,7 +308,8 @@ void main() {
       expect(find.byType(TextButton), findsOneWidget);
     });
 
-    testWidgets('returns to phone input when change phone tapped', (tester) async {
+    testWidgets('returns to phone input when change phone tapped',
+        (tester) async {
       await tester.pumpWidget(createWidgetUnderTest(
         onVerified: (phone, verificationId) {},
       ));
@@ -412,7 +418,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // OTP field should be available for focus
-      expect(find.widgetWithText(TextFormField, 'Verification Code'), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, 'Verification Code'),
+          findsOneWidget);
     });
 
     testWidgets('supports keyboard navigation', (tester) async {
@@ -452,7 +459,7 @@ void main() {
       // Enter phone
       await tester.enterText(find.byType(TextFormField), '+12125551234');
       await tester.pump();
-      
+
       // Verify phone was entered
       expect(find.text('+12125551234'), findsOneWidget);
     });
