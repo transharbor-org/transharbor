@@ -61,6 +61,7 @@ jobs:
         run: |
           flutter build web --release \
             --web-renderer html \
+            --dart-define=POCKETBASE_URL=/api \
             --dart-define=dart.vm.product=true \
             --tree-shake-icons \
             --pwa-strategy=offline-first \
