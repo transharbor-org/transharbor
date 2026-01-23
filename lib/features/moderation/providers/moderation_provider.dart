@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:pocketbase/pocketbase.dart';
 import '../../../core/services/pocketbase_service.dart';
 import '../models/report.dart';
 

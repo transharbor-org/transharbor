@@ -323,8 +323,7 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
                           _getRoleLabel(UserRole.fromString(role)),
                           style: const TextStyle(fontSize: 12),
                         ),
-                        backgroundColor:
-                            _getRoleColor(role).withValues(alpha: 0.2),
+                        backgroundColor: _getRoleColor(role).withOpacity(0.2),
                         padding: EdgeInsets.zero,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
@@ -342,8 +341,8 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
                           style: const TextStyle(fontSize: 12),
                         ),
                         backgroundColor: membershipType == 'voting_member'
-                            ? Colors.green.withValues(alpha: 0.2)
-                            : Colors.grey.withValues(alpha: 0.2),
+                            ? Colors.green.withOpacity(0.2)
+                            : Colors.grey.withOpacity(0.2),
                         padding: EdgeInsets.zero,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),

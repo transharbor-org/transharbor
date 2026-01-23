@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transharbor/features/personals/providers/personals_provider.dart';
-import 'package:transharbor/features/personals/models/personal.dart';
 import 'package:transharbor/core/services/pocketbase_service.dart';
 import '../../../helpers/mock_services.dart';
 

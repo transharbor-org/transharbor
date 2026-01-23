@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transharbor/features/messaging/providers/messaging_provider.dart';
-import 'package:transharbor/features/messaging/models/message.dart';
 import 'package:transharbor/core/services/pocketbase_service.dart';
 import '../../../helpers/mock_services.dart';
 

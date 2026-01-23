@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../features/auth/providers/auth_provider.dart';
 import '../../../core/utils/role_guard.dart';
 import '../models/report.dart';
 import '../providers/moderation_provider.dart';
