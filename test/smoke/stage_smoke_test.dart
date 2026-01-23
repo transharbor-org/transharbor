@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 /// Smoke tests to verify staging environment is functional
 /// Run with: flutter test test/smoke/stage_smoke_test.dart --dart-define=STAGE_URL=https://stage.transharbor.org

@@ -225,8 +225,8 @@ void main() {
             password,
           );
 
-      expect(authData.record.id, user.id);
-      expect(authData.record.data['phone'], testPhone);
+      expect(authData.record?.id, user.id);
+      expect(authData.record?.data['phone'], testPhone);
       expect(pb.authStore.isValid, true);
 
       // Cleanup
