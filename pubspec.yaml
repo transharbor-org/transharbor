@@ -17,7 +17,7 @@ dependencies:
   go_router: ^13.0.0
   
   # HTTP & API
-  pocketbase: ^0.18.0
+  pocketbase: ^0.23.2
   http: ^1.2.0
   
   # Local Storage
