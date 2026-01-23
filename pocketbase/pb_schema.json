@@ -12,13 +12,9 @@
         "required": true,
         "presentable": false,
         "unique": true,
-        "options": {
-          "min": 3,
-          "max": 50,
-          "pattern": "^[a-zA-Z0-9_]+$"
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 50,
         "min": 3,
         "pattern": "^[a-zA-Z0-9_]+$",
@@ -32,12 +28,9 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": 100
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 100,
         "min": null,
         "pattern": "",
@@ -51,12 +44,9 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": 500
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 500,
         "min": null,
         "pattern": "",
@@ -158,7 +148,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": true,
           "minSelect": null,
           "maxSelect": 1,
@@ -176,12 +166,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 1,
-          "max": 5000
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 5000,
         "min": 1,
         "pattern": "",
@@ -219,10 +206,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -236,10 +220,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -269,7 +250,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
           "minSelect": 2,
           "maxSelect": 10,
@@ -287,12 +268,9 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": 500
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 500,
         "min": null,
         "pattern": "",
@@ -320,10 +298,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -370,7 +345,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
           "minSelect": null,
           "maxSelect": 1,
@@ -388,12 +363,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 1,
-          "max": 2000
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 2000,
         "min": 1,
         "pattern": "",
@@ -434,12 +406,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 5,
-          "max": 200
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 200,
         "min": 5,
         "pattern": "",
@@ -453,12 +422,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 20,
-          "max": 5000
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 5000,
         "min": 20,
         "pattern": "",
@@ -473,7 +439,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
           "minSelect": null,
           "maxSelect": 1,
@@ -511,10 +477,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -528,10 +491,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -545,10 +505,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -627,7 +584,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": true,
           "minSelect": null,
           "maxSelect": 1,
@@ -680,12 +637,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 3,
-          "max": 100
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 100,
         "min": 3,
         "pattern": "",
@@ -699,12 +653,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 10,
-          "max": 1000
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 1000,
         "min": 10,
         "pattern": "",
@@ -740,7 +691,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
           "minSelect": null,
           "maxSelect": 1,
@@ -758,10 +709,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -846,7 +794,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": true,
           "minSelect": null,
           "maxSelect": 1,
@@ -918,7 +866,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
           "minSelect": null,
           "maxSelect": 1,
@@ -936,12 +884,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 1,
-          "max": 5000
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 5000,
         "min": 1,
         "pattern": "",
@@ -955,10 +900,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        },
+        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
@@ -989,7 +931,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
           "minSelect": null,
           "maxSelect": 1,
@@ -1007,12 +949,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 1,
-          "max": 255
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 255,
         "min": 1,
         "pattern": "",
@@ -1045,12 +984,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 1,
-          "max": 255
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 255,
         "min": 1,
         "pattern": "",
@@ -1064,12 +1000,9 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": 1,
-          "max": 1000
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 1000,
         "min": 1,
         "pattern": "",
@@ -1103,7 +1036,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "collectionId": "users",
+          "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
           "minSelect": null,
           "maxSelect": 1,
@@ -1121,12 +1054,9 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": 1000
-        },
-        "autogeneratePattern": "",
+        "options": {},
         "hidden": false,
+        "autogeneratePattern": "",
         "max": 1000,
         "min": null,
         "pattern": "",
