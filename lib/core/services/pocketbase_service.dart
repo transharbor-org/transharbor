@@ -7,11 +7,11 @@ class PocketBaseService {
   late final PocketBase pb;
 
   // PocketBase configuration
-  // Use relative path '/api' which nginx proxies to PocketBase
+  // SDK automatically adds /api/, so we just need the base path
   // For local dev, use 'http://127.0.0.1:8090'
   static const String baseUrl = String.fromEnvironment(
     'POCKETBASE_URL',
-    defaultValue: '/api',
+    defaultValue: '/',
   );
 
   // Collection names
