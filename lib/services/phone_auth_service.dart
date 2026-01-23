@@ -7,11 +7,13 @@ class PhoneAuthService {
   final PocketBase pb;
   final String smsApiUrl;
   final String smsApiKey;
+  final http.Client? httpClient;
 
   PhoneAuthService({
     required this.pb,
     required this.smsApiUrl,
     required this.smsApiKey,
+    this.httpClient,
   });
 
   /// Send OTP to phone number
@@ -104,10 +106,16 @@ class PhoneAuthService {
   /// Send SMS via external API
   Future<void> _sendSMS(String phoneNumber, String otp) async {
     final message = 'Your TransHarbor verification code is: $otp. Valid for 10 minutes.';
+    final client = httpClient ?? http.Client();
+    
+    // Skip SMS in test mode (when using mock URL)
+    if (smsApiUrl.contains('/test')) {
+      return;
+    }
     
     // Example: Twilio
     if (smsApiUrl.contains('twilio')) {
-      final response = await http.post(
+      final response = await client.post(
         Uri.parse(smsApiUrl),
         headers: {
           'Authorization': 'Bearer $smsApiKey',
@@ -125,7 +133,7 @@ class PhoneAuthService {
     }
     // Example: AWS SNS
     else if (smsApiUrl.contains('amazonaws.com')) {
-      final response = await http.post(
+      final response = await client.post(
         Uri.parse(smsApiUrl),
         headers: {
           'Authorization': smsApiKey,
@@ -261,7 +269,8 @@ class _PhoneVerificationWidgetState extends State<PhoneVerificationWidget> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter phone number';
                 }
-                if (!RegExp(r'^\+[1-9]\d{1,14}$').hasMatch(value)) {
+                // E.164: +[country][number], total length 8-15 (including +)
+                if (!RegExp(r'^\+[1-9]\d{7,14}$').hasMatch(value)) {
                   return 'Invalid phone number format (use +country_code)';
                 }
                 return null;

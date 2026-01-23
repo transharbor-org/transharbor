@@ -93,7 +93,9 @@ void main() {
       // Act & Assert
       expect(
         () => authService.sendOTP('+12125551234'),
-        throwsA(isA<ClientException>()),
+        throwsA(predicate((e) => 
+          e is Exception && e.toString().contains('Too many verification attempts')
+        )),
       );
     });
   });
@@ -314,7 +316,9 @@ void main() {
           verificationId: 'verification_123',
           password: 'secure_password',
         ),
-        throwsA(isA<ClientException>()),
+        throwsA(predicate((e) => 
+          e is Exception && e.toString().contains('already registered')
+        )),
       );
     });
   });
@@ -378,7 +382,7 @@ void main() {
 
       for (final number in validNumbers) {
         expect(
-          RegExp(r'^\+[1-9]\d{1,14}$').hasMatch(number),
+          RegExp(r'^\+[1-9]\d{7,14}$').hasMatch(number),
           true,
           reason: '$number should be valid E.164',
         );
@@ -392,12 +396,13 @@ void main() {
         '+1 212 555 1234',   // Contains spaces
         '+1-212-555-1234',   // Contains dashes
         '(212) 555-1234',    // Not E.164
-        '+123456789012345',  // Too long (>15 chars)
+        '+1234567',          // Too short (8 chars min)
+        '+1234567890123456', // Too long (17 chars, max is 15)
       ];
 
       for (final number in invalidNumbers) {
         expect(
-          RegExp(r'^\+[1-9]\d{1,14}$').hasMatch(number),
+          RegExp(r'^\+[1-9]\d{7,14}$').hasMatch(number),
           false,
           reason: '$number should be invalid E.164',
         );
