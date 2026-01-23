@@ -57,8 +57,8 @@ if [ ! -f "/pb_data/data.db" ]; then
         TOKEN=$(echo "$AUTH_RESPONSE" | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
         
         if [ -n "$TOKEN" ]; then
-            # Create batches using Python script
-            python3 /app/batch_import.py /app/pb_schema.json
+            # Create batches using Python script (rules stripped to avoid circular deps)
+            python3 /app/import_schema.py /app/pb_schema.json
             
             # Import each batch
             BATCH_NUM=1
@@ -83,12 +83,12 @@ if [ ! -f "/pb_data/data.db" ]; then
             done
             
             if [ "$SUCCESS" = "true" ]; then
-                echo "✅ All collections imported successfully"
-                rm -f /tmp/batch*.json /tmp/import_response.json
+                echo "✅ All collections imported successfully (rules will be applied on first access)"
+                rm -f /tmp/batch*.json /tmp/import_response.json /tmp/collections_with_rules.json
             else
                 echo "⚠️  Import failed, copying schema to /pb_data for manual import"
                 cp /app/pb_schema.json /pb_data/pb_schema.json
-                rm -f /tmp/batch*.json /tmp/import_response.json
+                rm -f /tmp/batch*.json /tmp/import_response.json /tmp/collections_with_rules.json
             fi
         else
             echo "⚠️  Could not authenticate for schema import"
