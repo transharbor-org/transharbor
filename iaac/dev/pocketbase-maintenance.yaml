@@ -1,0 +1,94 @@
+---
+# CronJob to vacuum PocketBase database weekly
+# Reclaims space and optimizes SQLite performance
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pocketbase-vacuum
+  namespace: transharbor
+spec:
+  schedule: "0 3 * * 0"  # 3 AM every Sunday
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: vacuum
+            image: alpine:3.18
+            command:
+            - sh
+            - -c
+            - |
+              apk add --no-cache sqlite
+              echo "Starting database vacuum..."
+              sqlite3 /pb_data/data.db "VACUUM;"
+              sqlite3 /pb_data/data.db "ANALYZE;"
+              echo "Vacuum complete. Database size:"
+              du -h /pb_data/data.db
+            volumeMounts:
+            - name: data
+              mountPath: /pb_data
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "64Mi"
+              limits:
+                cpu: "500m"
+                memory: "256Mi"
+          volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: pocketbase-data-dev
+---
+# CronJob to backup PocketBase database daily
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pocketbase-backup
+  namespace: transharbor
+spec:
+  schedule: "0 2 * * *"  # 2 AM daily
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: backup
+            image: alpine:3.18
+            command:
+            - sh
+            - -c
+            - |
+              apk add --no-cache sqlite
+              BACKUP_FILE="/pb_data/backups/backup-$(date +%Y%m%d-%H%M%S).db"
+              mkdir -p /pb_data/backups
+              echo "Creating backup: $BACKUP_FILE"
+              sqlite3 /pb_data/data.db ".backup $BACKUP_FILE"
+              gzip "$BACKUP_FILE"
+              echo "Backup complete: ${BACKUP_FILE}.gz"
+              echo "Backup size: $(du -h ${BACKUP_FILE}.gz)"
+              
+              # Keep only last 7 days
+              find /pb_data/backups -name "*.db.gz" -mtime +7 -delete
+              echo "Remaining backups:"
+              ls -lh /pb_data/backups
+            volumeMounts:
+            - name: data
+              mountPath: /pb_data
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "64Mi"
+              limits:
+                cpu: "500m"
+                memory: "256Mi"
+          volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: pocketbase-data-dev

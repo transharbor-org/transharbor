@@ -1,0 +1,58 @@
+---
+# Resource quotas for transharbor namespace
+# Prevents runaway pods from exhausting node resources
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: transharbor-quota
+  namespace: transharbor
+spec:
+  hard:
+    # Total resource limits across all pods
+    requests.cpu: "1500m"        # Max 1.5 CPU cores requested
+    requests.memory: "768Mi"     # Max 768Mi requested (leaves room for system)
+    limits.cpu: "3000m"          # Max 3 CPU cores at limit
+    limits.memory: "1536Mi"      # Max 1.5Gi at limit (leaves 500Mi buffer)
+    
+    # Pod counts
+    pods: "20"                   # Max 20 pods total
+    
+    # Storage
+    persistentvolumeclaims: "10"
+    requests.storage: "50Gi"
+---
+# Limit ranges - default and max values for individual pods
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: transharbor-limits
+  namespace: transharbor
+spec:
+  limits:
+  # Container limits
+  - max:
+      cpu: "1000m"
+      memory: "512Mi"
+    min:
+      cpu: "10m"
+      memory: "16Mi"
+    default:
+      cpu: "500m"
+      memory: "128Mi"
+    defaultRequest:
+      cpu: "50m"
+      memory: "32Mi"
+    type: Container
+  
+  # Pod limits (sum of all containers)
+  - max:
+      cpu: "2000m"
+      memory: "1Gi"
+    type: Pod
+  
+  # PVC limits
+  - max:
+      storage: "20Gi"
+    min:
+      storage: "100Mi"
+    type: PersistentVolumeClaim

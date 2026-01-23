@@ -55,7 +55,22 @@ jobs:
         run: flutter pub get
       
       - name: Build Web
-        run: flutter build web --release --web-renderer html
+        run: |
+          flutter build web --release \
+            --web-renderer html \
+            --dart-define=dart.vm.product=true \
+            --tree-shake-icons \
+            --pwa-strategy=offline-first \
+            --base-href=/
+          
+          # Compress assets for faster loading
+          find build/web -type f \( -name "*.js" -o -name "*.css" -o -name "*.html" \) \
+            -exec gzip -9 -k {} \;
+          
+          # Show build size
+          du -sh build/web
+          echo "Compressed assets:"
+          find build/web -name "*.gz" | wc -l
       
       - name: Upload Web artifact
         uses: actions/upload-artifact@v4

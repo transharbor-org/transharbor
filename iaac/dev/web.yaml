@@ -56,6 +56,11 @@ spec:
           preStop:
             exec:
               command: ["/bin/sh", "-c", "sleep 5"]
+        volumeMounts:
+        - name: cache
+          mountPath: /var/cache/nginx
+        - name: run
+          mountPath: /var/run
         resources:
           requests:
             cpu: "50m"
@@ -63,12 +68,18 @@ spec:
           limits:
             cpu: "500m"
             memory: "128Mi"
-          requests:
-            cpu: "250m"
-            memory: "256Mi"
         env:
         - name: POCKETBASE_URL
           value: "http://pocketbase-dev:8080"
+      volumes:
+      - name: cache
+        emptyDir:
+          medium: Memory
+          sizeLimit: 32Mi
+      - name: run
+        emptyDir:
+          medium: Memory
+          sizeLimit: 8Mi
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget

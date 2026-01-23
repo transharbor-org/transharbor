@@ -1,11 +1,12 @@
 # Build stage - download PocketBase
 FROM alpine:3.18 AS builder
 
-RUN apk add --no-cache wget unzip
+RUN apk add --no-cache wget unzip binutils
 
 ARG POCKETBASE_VERSION=0.18.10
 RUN wget https://github.com/pocketbase/pocketbase/releases/download/v${POCKETBASE_VERSION}/pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
     && unzip pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
+    && strip pocketbase \
     && chmod +x pocketbase
 
 # Runtime stage - distroless
