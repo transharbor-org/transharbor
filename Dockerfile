@@ -1,5 +1,8 @@
-# Stage 1: Serve pre-built Flutter web app with Nginx
+# Lightweight nginx with Flutter web app
 FROM nginx:alpine
+
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy pre-built web app (built in CI and moved to web/)
 COPY web /usr/share/nginx/html

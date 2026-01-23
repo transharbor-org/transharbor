@@ -1,26 +1,25 @@
-# Use --platform to ensure compatibility
-FROM --platform=linux/amd64 alpine:3.18
+# Build stage - download PocketBase
+FROM alpine:3.18 AS builder
 
-# Install dependencies
-RUN apk add --no-cache \
-    ca-certificates \
-    wget \
-    unzip
+RUN apk add --no-cache wget unzip
 
-# Download and install PocketBase
 ARG POCKETBASE_VERSION=0.18.10
 RUN wget https://github.com/pocketbase/pocketbase/releases/download/v${POCKETBASE_VERSION}/pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
     && unzip pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
-    && rm pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
-    && chmod +x pocketbase \
-    && mv pocketbase /usr/local/bin/
+    && chmod +x pocketbase
 
-# Create data directory
-RUN mkdir -p /pb_data
+# Runtime stage - distroless
+FROM gcr.io/distroless/static-debian12:nonroot
 
 WORKDIR /app
 
+# Copy PocketBase binary from builder
+COPY --from=builder /pocketbase /app/pocketbase
+
+# Create data directory with correct permissions
+USER nonroot:nonroot
+
 EXPOSE 8080
 
-# Run PocketBase
-CMD ["/usr/local/bin/pocketbase", "serve", "--http=0.0.0.0:8080"]
+ENTRYPOINT ["/app/pocketbase"]
+CMD ["serve", "--http=0.0.0.0:8080"]
