@@ -24,12 +24,6 @@ class AppTheme {
         backgroundColor: lightBackground,
         foregroundColor: Colors.black,
       ),
-      cardTheme: CardThemeData(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -54,12 +48,6 @@ class AppTheme {
         centerTitle: true,
         backgroundColor: darkBackground,
         foregroundColor: Colors.white,
-      ),
-      cardTheme: CardThemeData(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
