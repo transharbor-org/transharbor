@@ -1,0 +1,91 @@
+name: Manual Smoke Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to test'
+        required: true
+        type: choice
+        options:
+          - stage
+          - production
+          - dev
+      web_url:
+        description: 'Web URL (optional override)'
+        required: false
+        type: string
+      pb_url:
+        description: 'PocketBase URL (optional override)'
+        required: false
+        type: string
+
+jobs:
+  smoke-tests:
+    name: Smoke Tests - ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.x'
+          channel: 'stable'
+          cache: true
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Set environment URLs
+        id: urls
+        run: |
+          # Set default URLs based on environment
+          case "${{ inputs.environment }}" in
+            stage)
+              WEB_URL="https://stage.transharbor.org"
+              PB_URL="https://pb-stage.transharbor.org"
+              ;;
+            production)
+              WEB_URL="https://transharbor.org"
+              PB_URL="https://pb.transharbor.org"
+              ;;
+            dev)
+              WEB_URL="https://dev.transharbor.org"
+              PB_URL="https://dev.transharbor.org"
+              ;;
+          esac
+          
+          # Override with manual input if provided
+          if [ -n "${{ inputs.web_url }}" ]; then
+            WEB_URL="${{ inputs.web_url }}"
+          fi
+          if [ -n "${{ inputs.pb_url }}" ]; then
+            PB_URL="${{ inputs.pb_url }}"
+          fi
+          
+          echo "web_url=$WEB_URL" >> $GITHUB_OUTPUT
+          echo "pb_url=$PB_URL" >> $GITHUB_OUTPUT
+          
+          echo "Testing against:"
+          echo "  Web: $WEB_URL"
+          echo "  PocketBase: $PB_URL"
+      
+      - name: Run smoke tests
+        run: |
+          flutter test test/smoke/stage_smoke_test.dart \
+            --dart-define=STAGE_URL=${{ steps.urls.outputs.web_url }} \
+            --dart-define=STAGE_PB_URL=${{ steps.urls.outputs.pb_url }} \
+            --reporter=expanded
+      
+      - name: Summary
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ Smoke tests passed for ${{ inputs.environment }}"
+            echo "Environment is healthy!"
+          else
+            echo "❌ Smoke tests failed for ${{ inputs.environment }}"
+            echo "Check the logs above for details"
+          fi

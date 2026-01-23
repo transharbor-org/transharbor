@@ -10,10 +10,16 @@ void main() {
   group('Phone Verification Integration Tests', () {
     late PocketBase pb;
     late PhoneAuthService authService;
+    
+    // Allow environment override for testing against different environments
+    final pbUrl = const String.fromEnvironment(
+      'STAGE_PB_URL',
+      defaultValue: 'https://dev.transharbor.org',
+    );
 
     setUp(() {
-      // Initialize with test PocketBase instance
-      pb = PocketBase('https://dev.transharbor.org');
+      // Initialize with configurable PocketBase instance
+      pb = PocketBase(pbUrl);
       authService = PhoneAuthService(
         pb: pb,
         smsApiUrl: const String.fromEnvironment('SMS_API_URL'),
