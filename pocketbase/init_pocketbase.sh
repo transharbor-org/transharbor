@@ -49,17 +49,34 @@ if [ ! -f "/pb_data/data.db" ]; then
         echo "✅ Admin account configured"
     fi
     
-    # Import schema using migrations approach
+    # Import schema via API
     if [ -f "/app/pb_schema.json" ]; then
         echo "📋 Schema found - importing collections..."
         
-        # PocketBase doesn't have a direct import command in serve mode
-        # The schema will need to be imported via admin UI or migrations
-        # For now, we'll copy it to a known location
-        cp /app/pb_schema.json /pb_data/pb_schema.json
+        # Authenticate as admin to get token
+        AUTH_RESPONSE=$(curl -s -X POST http://localhost:8080/api/admins/auth-with-password \
+            -H "Content-Type: application/json" \
+            -d "{\"identity\":\"$PB_ADMIN_EMAIL\",\"password\":\"$PB_ADMIN_PASSWORD\"}")
         
-        echo "⚠️  Schema available at /pb_data/pb_schema.json"
-        echo "   Import via Admin UI: Settings > Import collections"
+        TOKEN=$(echo "$AUTH_RESPONSE" | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
+        
+        if [ -n "$TOKEN" ]; then
+            # Import collections using the API
+            IMPORT_RESPONSE=$(curl -s -X PUT http://localhost:8080/api/collections/import \
+                -H "Authorization: $TOKEN" \
+                -H "Content-Type: application/json" \
+                -d @/app/pb_schema.json)
+            
+            if echo "$IMPORT_RESPONSE" | grep -q '"collections"'; then
+                echo "✅ Schema imported successfully"
+            else
+                echo "⚠️  Schema import failed, copying to /pb_data for manual import"
+                cp /app/pb_schema.json /pb_data/pb_schema.json
+            fi
+        else
+            echo "⚠️  Could not authenticate for schema import"
+            cp /app/pb_schema.json /pb_data/pb_schema.json
+        fi
     fi
     
     # Stop temporary instance
