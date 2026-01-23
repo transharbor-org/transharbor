@@ -42,15 +42,18 @@ def create_batches(collections):
         iteration += 1
         batch = []
         
+        # Check which collections can be added (don't update created set yet)
         for coll in remaining:
             deps = get_dependencies(coll)
             # Can add if all dependencies are created
             if deps.issubset(created):
                 batch.append(coll)
-                created.add(coll['name'])
         
         if batch:
             batches.append(batch)
+            # Now update created set for next iteration
+            for coll in batch:
+                created.add(coll['name'])
             remaining = [c for c in remaining if c not in batch]
         else:
             # No progress, add all remaining (circular deps or errors)
