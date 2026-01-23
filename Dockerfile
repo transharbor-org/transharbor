@@ -8,12 +8,15 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY web /usr/share/nginx/html
 
 # Copy custom nginx config template
-COPY docker/nginx.conf /etc/nginx/templates/default.conf.template
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf.template
+
+# Copy entrypoint script
+COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 # Set default POCKETBASE_URL if not provided
 ENV POCKETBASE_URL=http://pocketbase:8080
 
 EXPOSE 80
 
-# nginx:alpine automatically processes templates in /etc/nginx/templates/
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
