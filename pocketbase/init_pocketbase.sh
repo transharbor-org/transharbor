@@ -82,7 +82,7 @@ if [ ! -f "/pb_data/.initialized" ]; then
             
             # PART 2: Query API to get collection IDs and update remaining batches
             echo "🔍 Part 2: Resolving collection IDs..."
-            python3 << 'PYTHON_SCRIPT'
+            python3 << PYTHON_SCRIPT
 import json
 import urllib.request
 
