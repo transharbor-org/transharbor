@@ -1,0 +1,126 @@
+---
+# Secret for S3 credentials and encryption key
+# Fill in your values and apply manually:
+# kubectl create secret generic pocketbase-s3-backup -n transharbor \
+#   --from-literal=S3_ENDPOINT=https://s3.civo.com \
+#   --from-literal=S3_BUCKET=transharbor-backups \
+#   --from-literal=AWS_ACCESS_KEY_ID=your-access-key \
+#   --from-literal=AWS_SECRET_ACCESS_KEY=your-secret-key \
+#   --from-literal=ENCRYPTION_PASSWORD=your-strong-password
+#
+# For Cloudflare R2:
+#   S3_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
+#   S3_BUCKET=transharbor-backups
+---
+# CronJob to backup PocketBase to S3 with encryption
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pocketbase-s3-backup
+  namespace: transharbor
+spec:
+  schedule: "0 3 * * *"  # 3 AM daily (after local backup at 2 AM)
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: backup
+            image: alpine:3.18
+            command:
+            - sh
+            - -c
+            - |
+              set -e
+              
+              # Install required tools
+              apk add --no-cache sqlite gnupg aws-cli
+              
+              TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+              BACKUP_FILE="/tmp/backup-${TIMESTAMP}.db"
+              ENCRYPTED_FILE="/tmp/backup-${TIMESTAMP}.db.gpg"
+              
+              echo "Creating database backup..."
+              sqlite3 /pb_data/data.db ".backup $BACKUP_FILE"
+              
+              echo "Database size: $(du -h $BACKUP_FILE | cut -f1)"
+              
+              echo "Encrypting backup with GPG..."
+              echo "$ENCRYPTION_PASSWORD" | gpg --batch --yes --passphrase-fd 0 \
+                --symmetric --cipher-algo AES256 -o "$ENCRYPTED_FILE" "$BACKUP_FILE"
+              
+              rm "$BACKUP_FILE"
+              echo "Encrypted backup size: $(du -h $ENCRYPTED_FILE | cut -f1)"
+              
+              echo "Uploading to S3: s3://${S3_BUCKET}/pocketbase/backup-${TIMESTAMP}.db.gpg"
+              aws s3 cp "$ENCRYPTED_FILE" \
+                "s3://${S3_BUCKET}/pocketbase/backup-${TIMESTAMP}.db.gpg" \
+                --endpoint-url="${S3_ENDPOINT}"
+              
+              echo "Backup uploaded successfully!"
+              
+              # List recent backups
+              echo "Recent S3 backups:"
+              aws s3 ls "s3://${S3_BUCKET}/pocketbase/" \
+                --endpoint-url="${S3_ENDPOINT}" | tail -10
+              
+              # Optional: Delete old backups (keep last 30 days)
+              echo "Cleaning up old backups (>30 days)..."
+              aws s3 ls "s3://${S3_BUCKET}/pocketbase/" \
+                --endpoint-url="${S3_ENDPOINT}" | \
+              while read -r line; do
+                createDate=$(echo $line | awk '{print $1" "$2}')
+                fileName=$(echo $line | awk '{print $4}')
+                createTS=$(date -d "$createDate" +%s 2>/dev/null || echo "0")
+                olderThan=$(date -d "30 days ago" +%s)
+                if [ $createTS -ne 0 ] && [ $createTS -lt $olderThan ]; then
+                  echo "Deleting old backup: $fileName"
+                  aws s3 rm "s3://${S3_BUCKET}/pocketbase/$fileName" \
+                    --endpoint-url="${S3_ENDPOINT}"
+                fi
+              done
+              
+              echo "S3 backup complete!"
+            env:
+            - name: S3_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-s3-backup
+                  key: S3_ENDPOINT
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-s3-backup
+                  key: S3_BUCKET
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-s3-backup
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-s3-backup
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: ENCRYPTION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-s3-backup
+                  key: ENCRYPTION_PASSWORD
+            volumeMounts:
+            - name: data
+              mountPath: /pb_data
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "64Mi"
+              limits:
+                cpu: "500m"
+                memory: "256Mi"
+          volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: pocketbase-data-dev
