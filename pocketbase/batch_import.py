@@ -11,8 +11,11 @@ def get_dependencies(collection):
     for field in collection.get('fields', []):
         if field.get('type') == 'relation':
             coll_id = field.get('collectionId', '')
-            # Skip system collections like _pb_users_auth_
-            if not coll_id.startswith('_pb_'):
+            # Map special IDs back to collection names
+            if coll_id == '_pb_users_auth_':
+                deps.add('users')
+            elif not coll_id.startswith('_pb_') and not coll_id.startswith('pbc_'):
+                # Regular collection name reference
                 deps.add(coll_id)
     return deps
 
