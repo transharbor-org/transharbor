@@ -125,7 +125,7 @@ Community moderation system allowing users to report inappropriate content (post
 
 #### PocketBase Schema
 - Added `role` field to users collection
-- Added `reports` collection to `pb_schema.json`
+- Added `reports` collection to `pocketbase/pb_schema.json`
   - Fields: reporter, reportedItem, type, reason, description, status, moderator, moderatorNotes
   - Relations to users collection
   - Indexes on reporter, status, type, created

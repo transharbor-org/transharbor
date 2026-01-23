@@ -108,10 +108,10 @@ async function main() {
     // Load schema
     const fs = require('fs');
     const path = require('path');
-    const schemaPath = path.join(__dirname, '..', 'pb_schema.json');
+    const schemaPath = path.join(__dirname, 'pb_schema.json');
     
     if (!fs.existsSync(schemaPath)) {
-      throw new Error('pb_schema.json not found! Make sure it exists in the project root.');
+      throw new Error('pb_schema.json not found! Make sure it exists in the pocketbase/ directory.');
     }
 
     const collections = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));

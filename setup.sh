@@ -40,7 +40,7 @@ flutter pub get
 
 echo ""
 echo "📦 Step 2: Setting up PocketBase..."
-./setup_pocketbase.sh
+./pocketbase/setup_pocketbase.sh
 
 echo ""
 echo "✅ Setup complete!"
@@ -61,7 +61,7 @@ echo ""
 echo "   ${YELLOW}Option B${NC} - Manual import:"
 echo "   - Go to http://127.0.0.1:8090/_/"
 echo "   - Settings > Import collections"
-echo "   - Upload pb_schema.json"
+echo "   - Upload pocketbase/pb_schema.json"
 echo ""
 echo "4. Run the Flutter app:"
 echo "   ${GREEN}flutter run${NC}"

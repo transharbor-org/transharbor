@@ -14,7 +14,11 @@ This directory contains PocketBase-related files.
 
 2. Or use the setup script from the project root:
    ```bash
-   ./setup_pocketbase.sh
+# From project root:
+./pocketbase/setup_pocketbase.sh
+
+# Or from pocketbase directory:
+cd pocketbase
    ```
 
 ## Contents

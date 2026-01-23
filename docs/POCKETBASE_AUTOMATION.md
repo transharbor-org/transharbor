@@ -8,7 +8,7 @@ This directory contains scripts to automatically download, configure, and run Po
 
 ```bash
 # 1. Run the setup script
-./setup_pocketbase.sh
+./pocketbase/setup_pocketbase.sh
 
 # 2. Start PocketBase
 cd pocketbase && ./pocketbase serve
@@ -25,7 +25,7 @@ node pocketbase/create_pocketbase_schema.js
 
 ```bash
 # 1. Run the setup script
-./setup_pocketbase.sh
+./pocketbase/setup_pocketbase.sh
 
 # 2. Start PocketBase
 cd pocketbase && ./pocketbase serve
@@ -34,7 +34,7 @@ cd pocketbase && ./pocketbase serve
 #    - Open http://127.0.0.1:8090/_/
 #    - Create admin account
 #    - Go to Settings > Import collections
-#    - Upload pb_schema.json
+#    - Upload pocketbase/pb_schema.json
 ```
 
 ### Option 3: Using Environment Variables
@@ -51,8 +51,8 @@ node pocketbase/create_pocketbase_schema.js
 
 ## Files Included
 
-- **`setup_pocketbase.sh`** - Downloads and installs PocketBase
-- **`pb_schema.json`** - Complete database schema for all collections
+- **`pocketbase/setup_pocketbase.sh`** - Downloads and installs PocketBase
+- **`pocketbase/pb_schema.json`** - Complete database schema for all collections
 - **`pocketbase/create_pocketbase_schema.js`** - Node.js script to create collections via API
 
 ## What Gets Created
@@ -125,7 +125,7 @@ The script will skip existing collections and only create missing ones.
 To start fresh:
 ```bash
 rm -rf pocketbase/pb_data
-./setup_pocketbase.sh
+./pocketbase/setup_pocketbase.sh
 ```
 
 ### Node.js version too old
