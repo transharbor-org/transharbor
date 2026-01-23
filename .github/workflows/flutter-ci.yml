@@ -136,3 +136,15 @@ jobs:
           labels: ${{ steps.meta-pb.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      
+      - name: Update dev deployment annotation
+        run: |
+          # Update the image-version annotation to trigger ArgoCD rolling deployment
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          sed -i "s/image-version: \".*\"/image-version: \"main-${SHORT_SHA}\"/" iaac/dev/web.yaml
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add iaac/dev/web.yaml
+          git commit -m "Deploy: Update dev image to main-${SHORT_SHA} [skip ci]" || echo "No changes to commit"
+          git push

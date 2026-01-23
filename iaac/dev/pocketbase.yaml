@@ -32,6 +32,7 @@ spec:
       containers:
       - name: pocketbase
         image: ghcr.io/transharbor-org/transharbor/pocketbase:main
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         resources:

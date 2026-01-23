@@ -77,12 +77,16 @@ spec:
       labels:
         app: web
         env: stage
+      annotations:
+        # Update this SHA via promotion workflow to trigger deployment
+        image-version: "main-placeholder"
     spec:
       imagePullSecrets:
       - name: ghcr-secret
       containers:
       - name: web
         image: ghcr.io/transharbor-org/transharbor/web:main
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         readinessProbe:
