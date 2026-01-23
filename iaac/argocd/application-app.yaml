@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: transharbor-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/transharbor-org/transharbor.git
+    targetRevision: main
+    path: iaac/app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: transharbor
+  syncPolicy:
+    # Production requires manual sync for safety
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

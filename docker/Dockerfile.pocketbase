@@ -1,0 +1,26 @@
+# Use --platform to ensure compatibility
+FROM --platform=linux/amd64 alpine:3.18
+
+# Install dependencies
+RUN apk add --no-cache \
+    ca-certificates \
+    wget \
+    unzip
+
+# Download and install PocketBase
+ARG POCKETBASE_VERSION=0.18.10
+RUN wget https://github.com/pocketbase/pocketbase/releases/download/v${POCKETBASE_VERSION}/pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
+    && unzip pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
+    && rm pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip \
+    && chmod +x pocketbase \
+    && mv pocketbase /usr/local/bin/
+
+# Create data directory
+RUN mkdir -p /pb_data
+
+WORKDIR /app
+
+EXPOSE 8080
+
+# Run PocketBase
+CMD ["/usr/local/bin/pocketbase", "serve", "--http=0.0.0.0:8080"]

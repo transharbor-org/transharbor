@@ -1,0 +1,54 @@
+# Docker ignore file for TransHarbor
+
+# Flutter build outputs
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+
+# Tests
+test/
+coverage/
+
+# Documentation
+*.md
+!README.md
+
+# Infrastructure (not needed in image)
+iaac/
+
+# PocketBase data
+pocketbase/
+pb_data/
+
+# Dependencies that will be fetched
+pubspec.lock
+
+# iOS/Android (not needed for web builds)
+ios/
+android/
+macos/
+linux/
+windows/
