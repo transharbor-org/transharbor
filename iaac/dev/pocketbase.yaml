@@ -69,7 +69,7 @@ spec:
             memory: "128Mi"
         volumeMounts:
         - name: data
-          mountPath: /pb_data
+          mountPath: /app/pb_data
         env:
         - name: PB_ADMIN_EMAIL
           value: "admin@transharbor.org"
