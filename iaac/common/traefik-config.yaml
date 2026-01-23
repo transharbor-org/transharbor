@@ -1,0 +1,43 @@
+---
+# Traefik configuration with built-in ACME/Let's Encrypt
+# Replaces cert-manager to save ~70MB RAM
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-config
+  namespace: kube-system
+data:
+  traefik.yaml: |
+    # Enable ACME (Let's Encrypt)
+    certificatesResolvers:
+      letsencrypt:
+        acme:
+          email: admin@transharbor.org
+          storage: /data/acme.json
+          httpChallenge:
+            entryPoint: web
+    
+    # Redirect HTTP to HTTPS
+    entryPoints:
+      web:
+        address: ":80"
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+      websecure:
+        address: ":443"
+---
+# Add volume for ACME storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: traefik-acme
+  namespace: kube-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 128Mi

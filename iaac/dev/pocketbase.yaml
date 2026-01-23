@@ -27,6 +27,7 @@ spec:
         app: pocketbase
         env: dev
     spec:
+      priorityClassName: high-priority
       imagePullSecrets:
       - name: ghcr-secret
       containers:
@@ -35,13 +36,37 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 12
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 10"]
         resources:
+          requests:
+            cpu: "50m"
+            memory: "32Mi"
           limits:
             cpu: "500m"
-            memory: "512Mi"
-          requests:
-            cpu: "250m"
-            memory: "256Mi"
+            memory: "128Mi"
         volumeMounts:
         - name: data
           mountPath: /pb_data

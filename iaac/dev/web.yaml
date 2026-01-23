@@ -38,10 +38,31 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 12
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 5"]
         resources:
+          requests:
+            cpu: "50m"
+            memory: "32Mi"
           limits:
             cpu: "500m"
-            memory: "512Mi"
+            memory: "128Mi"
           requests:
             cpu: "250m"
             memory: "256Mi"
