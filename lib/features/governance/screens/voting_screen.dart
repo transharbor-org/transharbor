@@ -6,7 +6,7 @@ import '../models/proposal.dart';
 
 class VotingScreen extends StatefulWidget {
   final String proposalId;
-  
+
   const VotingScreen({
     super.key,
     required this.proposalId,
@@ -19,22 +19,23 @@ class VotingScreen extends StatefulWidget {
 class _VotingScreenState extends State<VotingScreen> {
   VoteChoice? _selectedChoice;
   bool _isSubmitting = false;
-  
+
   Future<void> _submitVote() async {
     if (_selectedChoice == null) return;
-    
+
     setState(() {
       _isSubmitting = true;
     });
-    
+
     final provider = context.read<GovernanceProvider>();
-    final success = await provider.submitVote(widget.proposalId, _selectedChoice!);
-    
+    final success =
+        await provider.submitVote(widget.proposalId, _selectedChoice!);
+
     if (mounted) {
       setState(() {
         _isSubmitting = false;
       });
-      
+
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Vote submitted successfully')),
@@ -47,7 +48,7 @@ class _VotingScreenState extends State<VotingScreen> {
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,13 +60,13 @@ class _VotingScreenState extends State<VotingScreen> {
           final proposal = provider.proposals
               .where((p) => p.id == widget.proposalId)
               .firstOrNull;
-          
+
           if (proposal == null) {
             return const Center(
               child: Text('Proposal not found'),
             );
           }
-          
+
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -97,7 +98,8 @@ class _VotingScreenState extends State<VotingScreen> {
                           children: [
                             Text(
                               'Total Votes: ${proposal.totalVotes}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Ends: ${proposal.votingEndsAt.toString().substring(0, 16)}',
@@ -188,7 +190,7 @@ class _VoteOption extends StatelessWidget {
   final Color color;
   final bool isSelected;
   final VoidCallback onTap;
-  
+
   const _VoteOption({
     required this.choice,
     required this.label,
@@ -197,7 +199,7 @@ class _VoteOption extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -208,9 +210,7 @@ class _VoteOption extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            border: isSelected
-                ? Border.all(color: color, width: 2)
-                : null,
+            border: isSelected ? Border.all(color: color, width: 2) : null,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -222,7 +222,8 @@ class _VoteOption extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight:
+                        isSelected ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
               ),

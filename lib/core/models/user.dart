@@ -14,7 +14,7 @@ class User {
   final MembershipType membershipType;
   final DateTime createdAt;
   final bool isActive;
-  
+
   const User({
     required this.id,
     required this.email,
@@ -43,7 +43,7 @@ class User {
 
   /// Check if user is a full member
   bool get isFullMember => membershipType.isFullMember;
-  
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] as String,
@@ -54,18 +54,19 @@ class User {
       pronouns: json['pronouns'] as String?,
       avatar: json['avatar'] as String?,
       role: UserRole.fromString(json['role'] as String? ?? 'user'),
-      membershipType: MembershipType.fromString(json['membership_type'] as String? ?? 'non_voting'),
+      membershipType: MembershipType.fromString(
+          json['membership_type'] as String? ?? 'non_voting'),
       createdAt: DateTime.parse(json['created_at'] as String),
       isActive: json['is_active'] as bool? ?? true,
     );
   }
-  
+
   factory User.fromPocketBase(RecordModel record) {
     return User(
       id: record.id,
       email: record.getStringValue('email'),
-      username: record.getStringValue('username').isNotEmpty 
-          ? record.getStringValue('username') 
+      username: record.getStringValue('username').isNotEmpty
+          ? record.getStringValue('username')
           : null,
       displayName: record.getStringValue('displayName').isNotEmpty
           ? record.getStringValue('displayName')
@@ -80,12 +81,13 @@ class User {
           ? record.getStringValue('avatar')
           : null,
       role: UserRole.fromString(record.getStringValue('role')),
-      membershipType: MembershipType.fromString(record.getStringValue('membership_type')),
+      membershipType:
+          MembershipType.fromString(record.getStringValue('membership_type')),
       createdAt: DateTime.parse(record.created),
       isActive: true,
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

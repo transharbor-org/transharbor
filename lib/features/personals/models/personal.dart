@@ -8,7 +8,7 @@ class Personal {
   final DateTime? updatedAt;
   final int likesCount;
   final int commentsCount;
-  
+
   Personal({
     required this.id,
     required this.userId,
@@ -18,21 +18,21 @@ class Personal {
     this.likesCount = 0,
     this.commentsCount = 0,
   });
-  
+
   factory Personal.fromJson(Map<String, dynamic> json) {
     return Personal(
       id: json['id'] as String,
       userId: json['user_id'] as String,
       content: json['content'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] != null 
+      updatedAt: json['updated_at'] != null
           ? DateTime.parse(json['updated_at'] as String)
           : null,
       likesCount: json['likes_count'] as int? ?? 0,
       commentsCount: json['comments_count'] as int? ?? 0,
     );
   }
-  
+
   factory Personal.fromPocketBase(RecordModel record) {
     return Personal(
       id: record.id,
@@ -44,7 +44,7 @@ class Personal {
       commentsCount: record.getIntValue('comments_count'),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

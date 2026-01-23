@@ -55,17 +55,89 @@ void main() {
     });
 
     test('parses all report types correctly', () {
-      expect(Report.fromJson({'type': 'post', 'reporter': 'u1', 'reportedItem': 'i1', 'reason': 'r', 'description': 'd', 'status': 'pending'}).type, ReportType.post);
-      expect(Report.fromJson({'type': 'user', 'reporter': 'u1', 'reportedItem': 'i1', 'reason': 'r', 'description': 'd', 'status': 'pending'}).type, ReportType.user);
-      expect(Report.fromJson({'type': 'groupPost', 'reporter': 'u1', 'reportedItem': 'i1', 'reason': 'r', 'description': 'd', 'status': 'pending'}).type, ReportType.groupPost);
-      expect(Report.fromJson({'type': 'message', 'reporter': 'u1', 'reportedItem': 'i1', 'reason': 'r', 'description': 'd', 'status': 'pending'}).type, ReportType.message);
+      expect(
+          Report.fromJson({
+            'type': 'post',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'reason': 'r',
+            'description': 'd',
+            'status': 'pending'
+          }).type,
+          ReportType.post);
+      expect(
+          Report.fromJson({
+            'type': 'user',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'reason': 'r',
+            'description': 'd',
+            'status': 'pending'
+          }).type,
+          ReportType.user);
+      expect(
+          Report.fromJson({
+            'type': 'groupPost',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'reason': 'r',
+            'description': 'd',
+            'status': 'pending'
+          }).type,
+          ReportType.groupPost);
+      expect(
+          Report.fromJson({
+            'type': 'message',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'reason': 'r',
+            'description': 'd',
+            'status': 'pending'
+          }).type,
+          ReportType.message);
     });
 
     test('parses all report statuses correctly', () {
-      expect(Report.fromJson({'status': 'pending', 'reporter': 'u1', 'reportedItem': 'i1', 'type': 'post', 'reason': 'r', 'description': 'd'}).status, ReportStatus.pending);
-      expect(Report.fromJson({'status': 'underReview', 'reporter': 'u1', 'reportedItem': 'i1', 'type': 'post', 'reason': 'r', 'description': 'd'}).status, ReportStatus.underReview);
-      expect(Report.fromJson({'status': 'resolved', 'reporter': 'u1', 'reportedItem': 'i1', 'type': 'post', 'reason': 'r', 'description': 'd'}).status, ReportStatus.resolved);
-      expect(Report.fromJson({'status': 'dismissed', 'reporter': 'u1', 'reportedItem': 'i1', 'type': 'post', 'reason': 'r', 'description': 'd'}).status, ReportStatus.dismissed);
+      expect(
+          Report.fromJson({
+            'status': 'pending',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'type': 'post',
+            'reason': 'r',
+            'description': 'd'
+          }).status,
+          ReportStatus.pending);
+      expect(
+          Report.fromJson({
+            'status': 'underReview',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'type': 'post',
+            'reason': 'r',
+            'description': 'd'
+          }).status,
+          ReportStatus.underReview);
+      expect(
+          Report.fromJson({
+            'status': 'resolved',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'type': 'post',
+            'reason': 'r',
+            'description': 'd'
+          }).status,
+          ReportStatus.resolved);
+      expect(
+          Report.fromJson({
+            'status': 'dismissed',
+            'reporter': 'u1',
+            'reportedItem': 'i1',
+            'type': 'post',
+            'reason': 'r',
+            'description': 'd'
+          }).status,
+          ReportStatus.dismissed);
     });
 
     test('status helper methods work correctly', () {
@@ -86,7 +158,8 @@ void main() {
       expect(pendingReport.isResolved, false);
       expect(pendingReport.isDismissed, false);
 
-      final resolvedReport = pendingReport.copyWith(status: ReportStatus.resolved);
+      final resolvedReport =
+          pendingReport.copyWith(status: ReportStatus.resolved);
 
       expect(resolvedReport.isPending, false);
       expect(resolvedReport.isResolved, true);

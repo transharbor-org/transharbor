@@ -12,10 +12,10 @@ import 'core/services/pocketbase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize services
   // await initializeServices();
-  
+
   runApp(const TransHarborApp());
 }
 
@@ -25,7 +25,7 @@ class TransHarborApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pbService = PocketBaseService();
-    
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),

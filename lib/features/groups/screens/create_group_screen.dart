@@ -17,22 +17,27 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   String? _selectedCategory;
   bool _isPrivate = false;
   bool _isSubmitting = false;
-  
-  final List<String> _categories = ['social', 'support', 'creative', 'activism'];
-  
+
+  final List<String> _categories = [
+    'social',
+    'support',
+    'creative',
+    'activism'
+  ];
+
   @override
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
       });
-      
+
       final provider = context.read<GroupsProvider>();
       final success = await provider.createGroup(
         name: _nameController.text.trim(),
@@ -40,12 +45,12 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         category: _selectedCategory,
         isPrivate: _isPrivate,
       );
-      
+
       if (mounted) {
         setState(() {
           _isSubmitting = false;
         });
-        
+
         if (success) {
           context.pop();
           ScaffoldMessenger.of(context).showSnackBar(
@@ -53,13 +58,15 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to create group: ${provider.errorMessage}')),
+            SnackBar(
+                content:
+                    Text('Failed to create group: ${provider.errorMessage}')),
           );
         }
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

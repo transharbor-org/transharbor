@@ -10,19 +10,21 @@ class PersonalsProvider extends ChangeNotifier {
 
   PersonalsProvider({PocketBaseService? pocketBaseService})
       : _pb = pocketBaseService ?? PocketBaseService();
-  
+
   List<Personal> get personals => _personals;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  
+
   Future<void> loadPersonals() async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final result = await _pb.getPersonals();
-      _personals = result.items.map((record) => Personal.fromPocketBase(record)).toList();
+      _personals = result.items
+          .map((record) => Personal.fromPocketBase(record))
+          .toList();
     } catch (e) {
       _errorMessage = e.toString();
     } finally {
@@ -30,7 +32,7 @@ class PersonalsProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<bool> createPersonal(String content) async {
     try {
       final record = await _pb.createPersonal(content);
@@ -43,7 +45,7 @@ class PersonalsProvider extends ChangeNotifier {
       return false;
     }
   }
-  
+
   Future<bool> deletePersonal(String personalId) async {
     try {
       await _pb.deletePersonal(personalId);

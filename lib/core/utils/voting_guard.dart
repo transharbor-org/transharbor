@@ -72,10 +72,13 @@ class MembershipBasedWidget extends StatelessWidget {
     return Consumer<AuthProvider>(
       builder: (context, auth, _) {
         final membershipType = auth.currentUser?.membershipType;
-        
+
         switch (membershipType) {
           case MembershipType.votingMember:
-            return votingMemberWidget ?? nonVotingWidget ?? fallback ?? const SizedBox.shrink();
+            return votingMemberWidget ??
+                nonVotingWidget ??
+                fallback ??
+                const SizedBox.shrink();
           case MembershipType.nonVoting:
             return nonVotingWidget ?? fallback ?? const SizedBox.shrink();
           default:
@@ -123,8 +126,8 @@ class NonVotingMemberBanner extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  customMessage ?? 
-                  'You are a non-voting member. Full voting privileges are required to participate in governance decisions.',
+                  customMessage ??
+                      'You are a non-voting member. Full voting privileges are required to participate in governance decisions.',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),

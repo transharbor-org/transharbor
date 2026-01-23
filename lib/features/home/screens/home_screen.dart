@@ -10,7 +10,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,14 +137,14 @@ class _FeatureCard extends StatelessWidget {
   final String title;
   final String description;
   final VoidCallback onTap;
-  
+
   const _FeatureCard({
     required this.icon,
     required this.title,
     required this.description,
     required this.onTap,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return Card(

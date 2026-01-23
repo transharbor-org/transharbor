@@ -8,7 +8,7 @@ import '../../../helpers/mock_services.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  
+
   late AuthProvider authProvider;
   late PocketBaseService fakePocketBaseService;
 

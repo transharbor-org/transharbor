@@ -128,12 +128,19 @@ class RoleBasedWidget extends StatelessWidget {
     return Consumer<AuthProvider>(
       builder: (context, auth, _) {
         final role = auth.currentUser?.role;
-        
+
         switch (role) {
           case UserRole.admin:
-            return adminWidget ?? moderatorWidget ?? userWidget ?? fallback ?? const SizedBox.shrink();
+            return adminWidget ??
+                moderatorWidget ??
+                userWidget ??
+                fallback ??
+                const SizedBox.shrink();
           case UserRole.moderator:
-            return moderatorWidget ?? userWidget ?? fallback ?? const SizedBox.shrink();
+            return moderatorWidget ??
+                userWidget ??
+                fallback ??
+                const SizedBox.shrink();
           case UserRole.user:
             return userWidget ?? fallback ?? const SizedBox.shrink();
           default:

@@ -5,7 +5,7 @@ import '../models/report.dart';
 
 class ModerationProvider with ChangeNotifier {
   final PocketBaseService _pb;
-  
+
   List<Report> _reports = [];
   List<Report> _pendingReports = [];
   bool _isLoading = false;
@@ -27,11 +27,12 @@ class ModerationProvider with ChangeNotifier {
     try {
       final filter = status != null ? 'status="${status.name}"' : '';
       final records = await _pb.pb.collection('reports').getFullList(
-        sort: '-created',
-        filter: filter,
-      );
+            sort: '-created',
+            filter: filter,
+          );
 
-      _reports = records.map((record) => Report.fromPocketBase(record)).toList();
+      _reports =
+          records.map((record) => Report.fromPocketBase(record)).toList();
       _updatePendingReports();
     } catch (e) {
       _error = e.toString();
@@ -54,11 +55,12 @@ class ModerationProvider with ChangeNotifier {
       }
 
       final records = await _pb.pb.collection('reports').getFullList(
-        sort: '-created',
-        filter: 'reporter="${currentUser.id}"',
-      );
+            sort: '-created',
+            filter: 'reporter="${currentUser.id}"',
+          );
 
-      _reports = records.map((record) => Report.fromPocketBase(record)).toList();
+      _reports =
+          records.map((record) => Report.fromPocketBase(record)).toList();
       _updatePendingReports();
     } catch (e) {
       _error = e.toString();
@@ -134,7 +136,8 @@ class ModerationProvider with ChangeNotifier {
         if (moderatorNotes != null) 'moderatorNotes': moderatorNotes,
       };
 
-      final record = await _pb.pb.collection('reports').update(reportId, body: data);
+      final record =
+          await _pb.pb.collection('reports').update(reportId, body: data);
       final updatedReport = Report.fromPocketBase(record);
 
       final index = _reports.indexWhere((r) => r.id == reportId);

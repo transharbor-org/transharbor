@@ -10,10 +10,11 @@ class GroupsListScreen extends StatefulWidget {
   State<GroupsListScreen> createState() => _GroupsListScreenState();
 }
 
-class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerProviderStateMixin {
+class _GroupsListScreenState extends State<GroupsListScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String? _selectedCategory;
-  
+
   @override
   void initState() {
     super.initState();
@@ -24,13 +25,13 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
       provider.loadMyGroups();
     });
   }
-  
+
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +60,7 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
       ),
     );
   }
-  
+
   Widget _buildDiscoverTab() {
     return Consumer<GroupsProvider>(
       builder: (context, provider, child) {
@@ -74,7 +75,7 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
       },
     );
   }
-  
+
   Widget _buildMyGroupsTab() {
     return Consumer<GroupsProvider>(
       builder: (context, provider, child) {
@@ -99,15 +100,15 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
             ),
           );
         }
-        
+
         return _buildGroupsList(provider.myGroups, provider);
       },
     );
   }
-  
+
   Widget _buildCategoryFilter(GroupsProvider provider) {
     final categories = ['All', 'social', 'support', 'creative', 'activism'];
-    
+
     return Container(
       height: 50,
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -117,12 +118,14 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final category = categories[index];
-          final isSelected = _selectedCategory == (category == 'All' ? null : category);
-          
+          final isSelected =
+              _selectedCategory == (category == 'All' ? null : category);
+
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: FilterChip(
-              label: Text(category == 'All' ? category : category.toUpperCase()),
+              label:
+                  Text(category == 'All' ? category : category.toUpperCase()),
               selected: isSelected,
               onSelected: (selected) {
                 setState(() {
@@ -136,12 +139,12 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
       ),
     );
   }
-  
+
   Widget _buildGroupsList(List<dynamic> groups, GroupsProvider provider) {
     if (provider.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (groups.isEmpty) {
       return Center(
         child: Column(
@@ -161,7 +164,7 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
         ),
       );
     }
-    
+
     return RefreshIndicator(
       onRefresh: () => provider.loadGroups(category: _selectedCategory),
       child: ListView.builder(
@@ -182,7 +185,8 @@ class _GroupsListScreenState extends State<GroupsListScreen> with SingleTickerPr
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primaryContainer,
                           child: Icon(
                             Icons.group,
                             color: Theme.of(context).colorScheme.primary,

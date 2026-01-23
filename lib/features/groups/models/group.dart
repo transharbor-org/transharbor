@@ -10,7 +10,7 @@ class Group {
   final int memberCount;
   final String? bannerUrl;
   final DateTime createdAt;
-  
+
   Group({
     required this.id,
     required this.name,
@@ -22,7 +22,7 @@ class Group {
     this.bannerUrl,
     required this.createdAt,
   });
-  
+
   factory Group.fromJson(Map<String, dynamic> json) {
     return Group(
       id: json['id'] as String,
@@ -36,7 +36,7 @@ class Group {
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
-  
+
   factory Group.fromPocketBase(RecordModel record) {
     return Group(
       id: record.id,
@@ -54,7 +54,7 @@ class Group {
       createdAt: DateTime.parse(record.created),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -82,7 +82,7 @@ class GroupMember {
   final String userId;
   final GroupRole role;
   final DateTime joinedAt;
-  
+
   GroupMember({
     required this.id,
     required this.groupId,
@@ -90,7 +90,7 @@ class GroupMember {
     required this.role,
     required this.joinedAt,
   });
-  
+
   factory GroupMember.fromJson(Map<String, dynamic> json) {
     return GroupMember(
       id: json['id'] as String,
@@ -103,7 +103,7 @@ class GroupMember {
       joinedAt: DateTime.parse(json['joined_at'] as String),
     );
   }
-  
+
   factory GroupMember.fromPocketBase(RecordModel record) {
     return GroupMember(
       id: record.id,
@@ -116,7 +116,7 @@ class GroupMember {
       joinedAt: DateTime.parse(record.getStringValue('joined_at')),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -136,7 +136,7 @@ class GroupPost {
   final int likesCount;
   final int commentsCount;
   final DateTime createdAt;
-  
+
   GroupPost({
     required this.id,
     required this.groupId,
@@ -146,7 +146,7 @@ class GroupPost {
     this.commentsCount = 0,
     required this.createdAt,
   });
-  
+
   factory GroupPost.fromJson(Map<String, dynamic> json) {
     return GroupPost(
       id: json['id'] as String,
@@ -158,7 +158,7 @@ class GroupPost {
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
-  
+
   factory GroupPost.fromPocketBase(RecordModel record) {
     return GroupPost(
       id: record.id,
@@ -170,7 +170,7 @@ class GroupPost {
       createdAt: DateTime.parse(record.created),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

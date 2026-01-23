@@ -11,7 +11,7 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider({PocketBaseService? pocketBaseService})
       : _pb = pocketBaseService ?? PocketBaseService();
-  
+
   User? get currentUser => _currentUser;
   bool get isAuthenticated => _pb.isAuthenticated;
   bool get isLoading => _isLoading;
@@ -28,11 +28,11 @@ class AuthProvider extends ChangeNotifier {
 
   /// Get current user's role
   UserRole? get userRole => _currentUser?.role;
-  
+
   Future<void> checkAuthStatus() async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       if (_pb.isAuthenticated && _pb.currentUser != null) {
         _currentUser = User.fromPocketBase(_pb.currentUser!);
@@ -44,11 +44,12 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<void> refreshUser() async {
     try {
       if (_pb.isAuthenticated && _pb.currentUserId != null) {
-        final record = await _pb.pb.collection('users').getOne(_pb.currentUserId!);
+        final record =
+            await _pb.pb.collection('users').getOne(_pb.currentUserId!);
         _currentUser = User.fromPocketBase(record);
         notifyListeners();
       }
@@ -56,12 +57,12 @@ class AuthProvider extends ChangeNotifier {
       _errorMessage = e.toString();
     }
   }
-  
+
   Future<bool> login(String email, String password) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final authData = await _pb.login(email, password);
       if (authData.record != null) {
@@ -76,12 +77,13 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
-  Future<bool> register(String email, String password, {String? username}) async {
+
+  Future<bool> register(String email, String password,
+      {String? username}) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final authData = await _pb.register(
         email: email,
@@ -100,7 +102,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<void> logout() async {
     _pb.logout();
     _currentUser = null;

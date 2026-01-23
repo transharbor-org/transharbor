@@ -7,7 +7,7 @@ class AppTheme {
   static const Color accentColor = Color(0xFFFFFFFF); // Trans flag white
   static const Color darkBackground = Color(0xFF1A1A1A);
   static const Color lightBackground = Color(0xFFFAFAFA);
-  
+
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -39,7 +39,7 @@ class AppTheme {
       ),
     );
   }
-  
+
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,

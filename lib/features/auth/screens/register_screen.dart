@@ -17,7 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
-  
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _confirmPasswordController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _handleRegister() async {
     if (_formKey.currentState!.validate()) {
       final authProvider = context.read<AuthProvider>();
@@ -33,19 +33,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _emailController.text,
         _passwordController.text,
       );
-      
+
       if (mounted) {
         if (success) {
           context.go('/home');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Registration failed. Please try again.')),
+            const SnackBar(
+                content: Text('Registration failed. Please try again.')),
           );
         }
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +107,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                         onPressed: () {
                           setState(() {
@@ -134,7 +137,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                          _obscureConfirmPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                         onPressed: () {
                           setState(() {
@@ -157,7 +162,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Consumer<AuthProvider>(
                     builder: (context, authProvider, child) {
                       return ElevatedButton(
-                        onPressed: authProvider.isLoading ? null : _handleRegister,
+                        onPressed:
+                            authProvider.isLoading ? null : _handleRegister,
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
@@ -165,7 +171,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2),
                               )
                             : const Text('Register'),
                       );

@@ -30,15 +30,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() => _isUploading = true);
 
       await _pb.uploadUserAvatar(image.path);
-      
+
       // Refresh user data
       if (!mounted) return;
-      
+
       final authProvider = context.read<AuthProvider>();
       await authProvider.refreshUser();
-      
+
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Profile picture updated!')),
       );
@@ -104,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
           final user = authProvider.currentUser;
-          
+
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(

@@ -13,13 +13,13 @@ class CreatePersonalScreen extends StatefulWidget {
 class _CreatePersonalScreenState extends State<CreatePersonalScreen> {
   final _contentController = TextEditingController();
   bool _isSubmitting = false;
-  
+
   @override
   void dispose() {
     _contentController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _handleSubmit() async {
     if (_contentController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -27,19 +27,20 @@ class _CreatePersonalScreenState extends State<CreatePersonalScreen> {
       );
       return;
     }
-    
+
     setState(() {
       _isSubmitting = true;
     });
-    
+
     final provider = context.read<PersonalsProvider>();
-    final success = await provider.createPersonal(_contentController.text.trim());
-    
+    final success =
+        await provider.createPersonal(_contentController.text.trim());
+
     if (mounted) {
       setState(() {
         _isSubmitting = false;
       });
-      
+
       if (success) {
         context.pop();
       } else {
@@ -49,7 +50,7 @@ class _CreatePersonalScreenState extends State<CreatePersonalScreen> {
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

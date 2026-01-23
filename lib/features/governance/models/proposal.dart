@@ -11,7 +11,7 @@ class Proposal {
   final int votesFor;
   final int votesAgainst;
   final int votesAbstain;
-  
+
   Proposal({
     required this.id,
     required this.title,
@@ -24,7 +24,7 @@ class Proposal {
     this.votesAgainst = 0,
     this.votesAbstain = 0,
   });
-  
+
   factory Proposal.fromJson(Map<String, dynamic> json) {
     return Proposal(
       id: json['id'] as String,
@@ -42,7 +42,7 @@ class Proposal {
       votesAbstain: json['votes_abstain'] as int? ?? 0,
     );
   }
-  
+
   factory Proposal.fromPocketBase(RecordModel record) {
     return Proposal(
       id: record.id,
@@ -60,7 +60,7 @@ class Proposal {
       votesAbstain: record.getIntValue('votes_abstain'),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -75,7 +75,7 @@ class Proposal {
       'votes_abstain': votesAbstain,
     };
   }
-  
+
   int get totalVotes => votesFor + votesAgainst + votesAbstain;
 }
 

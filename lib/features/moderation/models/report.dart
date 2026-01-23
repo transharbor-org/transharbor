@@ -55,8 +55,10 @@ class Report {
       status: _parseReportStatus(json['status'] ?? 'pending'),
       moderatorId: json['moderator'],
       moderatorNotes: json['moderatorNotes'],
-      created: DateTime.parse(json['created'] ?? DateTime.now().toIso8601String()),
-      updated: DateTime.parse(json['updated'] ?? DateTime.now().toIso8601String()),
+      created:
+          DateTime.parse(json['created'] ?? DateTime.now().toIso8601String()),
+      updated:
+          DateTime.parse(json['updated'] ?? DateTime.now().toIso8601String()),
     );
   }
 
@@ -69,8 +71,12 @@ class Report {
       reason: record.getStringValue('reason'),
       description: record.getStringValue('description'),
       status: _parseReportStatus(record.getStringValue('status')),
-      moderatorId: record.getStringValue('moderator').isEmpty ? null : record.getStringValue('moderator'),
-      moderatorNotes: record.getStringValue('moderatorNotes').isEmpty ? null : record.getStringValue('moderatorNotes'),
+      moderatorId: record.getStringValue('moderator').isEmpty
+          ? null
+          : record.getStringValue('moderator'),
+      moderatorNotes: record.getStringValue('moderatorNotes').isEmpty
+          ? null
+          : record.getStringValue('moderatorNotes'),
       created: DateTime.parse(record.created),
       updated: DateTime.parse(record.updated),
     );

@@ -6,13 +6,14 @@ import '../../../helpers/mock_services.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  
+
   late PersonalsProvider personalsProvider;
   late PocketBaseService fakePocketBaseService;
 
   setUp(() {
     fakePocketBaseService = FakePocketBaseService();
-    personalsProvider = PersonalsProvider(pocketBaseService: fakePocketBaseService);
+    personalsProvider =
+        PersonalsProvider(pocketBaseService: fakePocketBaseService);
   });
 
   group('PersonalsProvider', () {

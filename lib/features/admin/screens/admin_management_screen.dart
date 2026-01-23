@@ -46,9 +46,9 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
 
     try {
       final records = await _pb.pb.collection('users').getFullList(
-        sort: '-created',
-        expand: '',
-      );
+            sort: '-created',
+            expand: '',
+          );
 
       setState(() {
         _users = records.map((record) {
@@ -100,7 +100,8 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
     }
   }
 
-  Future<void> _updateUserMembership(String userId, String newMembershipType) async {
+  Future<void> _updateUserMembership(
+      String userId, String newMembershipType) async {
     try {
       await _pb.pb.collection('users').update(userId, body: {
         'membership_type': newMembershipType,
@@ -322,25 +323,27 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
                           _getRoleLabel(UserRole.fromString(role)),
                           style: const TextStyle(fontSize: 12),
                         ),
-                        backgroundColor: _getRoleColor(role).withValues(alpha: 0.2),
+                        backgroundColor:
+                            _getRoleColor(role).withValues(alpha: 0.2),
                         padding: EdgeInsets.zero,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
                       const SizedBox(width: 8),
                       Chip(
                         avatar: Icon(
-                          membershipType == 'voting_member' 
-                            ? Icons.how_to_vote 
-                            : Icons.visibility,
+                          membershipType == 'voting_member'
+                              ? Icons.how_to_vote
+                              : Icons.visibility,
                           size: 16,
                         ),
                         label: Text(
-                          _getMembershipLabel(MembershipType.fromString(membershipType)),
+                          _getMembershipLabel(
+                              MembershipType.fromString(membershipType)),
                           style: const TextStyle(fontSize: 12),
                         ),
                         backgroundColor: membershipType == 'voting_member'
-                          ? Colors.green.withValues(alpha: 0.2)
-                          : Colors.grey.withValues(alpha: 0.2),
+                            ? Colors.green.withValues(alpha: 0.2)
+                            : Colors.grey.withValues(alpha: 0.2),
                         padding: EdgeInsets.zero,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),

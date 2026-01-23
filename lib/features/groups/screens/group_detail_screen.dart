@@ -7,7 +7,7 @@ import '../../auth/providers/auth_provider.dart';
 
 class GroupDetailScreen extends StatefulWidget {
   final String groupId;
-  
+
   const GroupDetailScreen({
     super.key,
     required this.groupId,
@@ -17,10 +17,11 @@ class GroupDetailScreen extends StatefulWidget {
   State<GroupDetailScreen> createState() => _GroupDetailScreenState();
 }
 
-class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTickerProviderStateMixin {
+class _GroupDetailScreenState extends State<GroupDetailScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final _postController = TextEditingController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -33,14 +34,14 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
       provider.loadGroupMembers(widget.groupId);
     });
   }
-  
+
   @override
   void dispose() {
     _tabController.dispose();
     _postController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _handleJoinLeave(GroupsProvider provider, bool isMember) async {
     if (isMember) {
       final confirmed = await showDialog<bool>(
@@ -60,7 +61,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
           ],
         ),
       );
-      
+
       if (confirmed == true && mounted) {
         final success = await provider.leaveGroup(widget.groupId);
         if (success && mounted) {
@@ -76,21 +77,21 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
       }
     }
   }
-  
+
   Future<void> _createPost(GroupsProvider provider) async {
     if (_postController.text.trim().isEmpty) return;
-    
+
     final success = await provider.createGroupPost(
       widget.groupId,
       _postController.text.trim(),
     );
-    
+
     if (success && mounted) {
       _postController.clear();
       FocusScope.of(context).unfocus();
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupsProvider>(
@@ -108,10 +109,10 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
             ),
           ),
         );
-        
+
         final isMember = provider.isMember(widget.groupId);
         final isAdmin = provider.isAdmin(widget.groupId);
-        
+
         return Scaffold(
           appBar: AppBar(
             title: Text(group.name),
@@ -157,8 +158,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
       },
     );
   }
-  
-  Widget _buildGroupHeader(Group group, GroupsProvider provider, bool isMember) {
+
+  Widget _buildGroupHeader(
+      Group group, GroupsProvider provider, bool isMember) {
     return Card(
       margin: const EdgeInsets.all(16),
       child: Padding(
@@ -170,7 +172,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer,
                   child: Icon(
                     Icons.group,
                     size: 30,
@@ -207,7 +210,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
                             Icon(
                               Icons.lock,
                               size: 16,
-                              color: Theme.of(context).textTheme.bodySmall?.color,
+                              color:
+                                  Theme.of(context).textTheme.bodySmall?.color,
                             ),
                             const SizedBox(width: 4),
                             Text(
@@ -239,8 +243,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
                 icon: Icon(isMember ? Icons.logout : Icons.login),
                 label: Text(isMember ? 'Leave Group' : 'Join Group'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isMember 
-                      ? Theme.of(context).colorScheme.error 
+                  backgroundColor: isMember
+                      ? Theme.of(context).colorScheme.error
                       : Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                 ),
@@ -251,10 +255,10 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
       ),
     );
   }
-  
+
   Widget _buildPostsTab(GroupsProvider provider) {
     final posts = provider.getGroupPosts(widget.groupId);
-    
+
     return Column(
       children: [
         Container(
@@ -277,7 +281,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
                   decoration: const InputDecoration(
                     hintText: 'Share something with the group...',
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   ),
                   maxLines: null,
                 ),
@@ -302,8 +307,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
                   itemBuilder: (context, index) {
                     final post = posts[index];
                     final authProvider = context.read<AuthProvider>();
-                    final isMyPost = post.userId == authProvider.currentUser?.id;
-                    
+                    final isMyPost =
+                        post.userId == authProvider.currentUser?.id;
+
                     return Card(
                       margin: const EdgeInsets.only(bottom: 12),
                       child: Padding(
@@ -320,15 +326,19 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Member',
-                                        style: const TextStyle(fontWeight: FontWeight.bold),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         _formatDate(post.createdAt),
-                                        style: Theme.of(context).textTheme.bodySmall,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
                                       ),
                                     ],
                                   ),
@@ -355,22 +365,22 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
       ],
     );
   }
-  
+
   Widget _buildMembersTab(GroupsProvider provider) {
     final members = provider.getGroupMembers(widget.groupId);
-    
+
     if (members.isEmpty) {
       return const Center(
         child: Text('No members found'),
       );
     }
-    
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: members.length,
       itemBuilder: (context, index) {
         final member = members[index];
-        
+
         return ListTile(
           leading: const CircleAvatar(
             child: Icon(Icons.person),
@@ -388,11 +398,11 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> with SingleTicker
       },
     );
   }
-  
+
   String _formatDate(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
-    
+
     if (difference.inDays > 0) {
       return '${difference.inDays}d ago';
     } else if (difference.inHours > 0) {

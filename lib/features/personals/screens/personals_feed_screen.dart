@@ -18,7 +18,7 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
       context.read<PersonalsProvider>().loadPersonals();
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +36,7 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           if (provider.personals.isEmpty) {
             return Center(
               child: Column(
@@ -45,7 +45,8 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
                   Icon(
                     Icons.article_outlined,
                     size: 80,
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.5),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -58,7 +59,7 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
               ),
             );
           }
-          
+
           return RefreshIndicator(
             onRefresh: () => provider.loadPersonals(),
             child: ListView.builder(
@@ -66,7 +67,8 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
               itemBuilder: (context, index) {
                 final personal = provider.personals[index];
                 return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
@@ -84,11 +86,13 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
                                 children: [
                                   Text(
                                     'User ${personal.userId.substring(0, 8)}',
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     _formatDate(personal.createdAt),
-                                    style: Theme.of(context).textTheme.bodySmall,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
                                   ),
                                 ],
                               ),
@@ -123,11 +127,11 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
       ),
     );
   }
-  
+
   String _formatDate(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
-    
+
     if (difference.inDays > 0) {
       return '${difference.inDays}d ago';
     } else if (difference.inHours > 0) {

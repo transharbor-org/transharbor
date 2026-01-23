@@ -7,7 +7,7 @@ class Message {
   final String content;
   final DateTime createdAt;
   final bool isRead;
-  
+
   Message({
     required this.id,
     required this.conversationId,
@@ -16,7 +16,7 @@ class Message {
     required this.createdAt,
     this.isRead = false,
   });
-  
+
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
       id: json['id'] as String,
@@ -27,7 +27,7 @@ class Message {
       isRead: json['is_read'] as bool? ?? false,
     );
   }
-  
+
   factory Message.fromPocketBase(RecordModel record) {
     return Message(
       id: record.id,
@@ -38,7 +38,7 @@ class Message {
       isRead: record.getBoolValue('is_read'),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -57,7 +57,7 @@ class Conversation {
   final Message? lastMessage;
   final int unreadCount;
   final DateTime createdAt;
-  
+
   Conversation({
     required this.id,
     required this.participantIds,
@@ -65,7 +65,7 @@ class Conversation {
     this.unreadCount = 0,
     required this.createdAt,
   });
-  
+
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       id: json['id'] as String,
@@ -77,13 +77,13 @@ class Conversation {
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
-  
+
   factory Conversation.fromPocketBase(RecordModel record) {
     // PocketBase stores arrays as JSON arrays
     final participantIds = (record.data['participant_ids'] as List)
         .map((e) => e.toString())
         .toList();
-    
+
     return Conversation(
       id: record.id,
       participantIds: participantIds,
@@ -92,7 +92,7 @@ class Conversation {
       createdAt: DateTime.parse(record.created),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

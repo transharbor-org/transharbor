@@ -18,7 +18,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
       context.read<MessagingProvider>().loadConversations();
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           if (provider.conversations.isEmpty) {
             return Center(
               child: Column(
@@ -39,7 +39,8 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   Icon(
                     Icons.message_outlined,
                     size: 80,
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.5),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -52,7 +53,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
               ),
             );
           }
-          
+
           return RefreshIndicator(
             onRefresh: () => provider.loadConversations(),
             child: ListView.builder(
@@ -63,7 +64,8 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   leading: CircleAvatar(
                     child: Text('${index + 1}'),
                   ),
-                  title: Text('Conversation ${conversation.id.substring(0, 8)}'),
+                  title:
+                      Text('Conversation ${conversation.id.substring(0, 8)}'),
                   subtitle: conversation.lastMessage != null
                       ? Text(
                           conversation.lastMessage!.content,

@@ -11,41 +11,42 @@ class GroupsProvider extends ChangeNotifier {
   Map<String, GroupMember?> _myMemberships = {};
   bool _isLoading = false;
   String? _errorMessage;
-  
+
   List<Group> get groups => _groups;
   List<Group> get myGroups => _myGroups;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  
+
   List<GroupPost> getGroupPosts(String groupId) {
     return _groupPosts[groupId] ?? [];
   }
-  
+
   List<GroupMember> getGroupMembers(String groupId) {
     return _groupMembers[groupId] ?? [];
   }
-  
+
   GroupMember? getMyMembership(String groupId) {
     return _myMemberships[groupId];
   }
-  
+
   bool isMember(String groupId) {
     return _myMemberships[groupId] != null;
   }
-  
+
   bool isAdmin(String groupId) {
     final membership = _myMemberships[groupId];
     return membership?.role == GroupRole.admin;
   }
-  
+
   Future<void> loadGroups({String? category}) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final result = await _pb.getGroups(category: category);
-      _groups = result.items.map((record) => Group.fromPocketBase(record)).toList();
+      _groups =
+          result.items.map((record) => Group.fromPocketBase(record)).toList();
     } catch (e) {
       _errorMessage = e.toString();
     } finally {
@@ -53,34 +54,33 @@ class GroupsProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<void> loadMyGroups() async {
     try {
       final result = await _pb.getUserGroups();
       _myGroups = result.items
           .where((record) => record.expand?['group_id'] != null)
           .map((record) {
-            final groupData = record.expand!['group_id']!.first;
-            return Group.fromPocketBase(groupData);
-          })
-          .toList();
+        final groupData = record.expand!['group_id']!.first;
+        return Group.fromPocketBase(groupData);
+      }).toList();
       notifyListeners();
     } catch (e) {
       _errorMessage = e.toString();
     }
   }
-  
+
   Future<Group?> loadGroup(String groupId) async {
     try {
       final record = await _pb.getGroup(groupId);
       final group = Group.fromPocketBase(record);
-      
+
       // Update in lists if exists
       final index = _groups.indexWhere((g) => g.id == groupId);
       if (index != -1) {
         _groups[index] = group;
       }
-      
+
       notifyListeners();
       return group;
     } catch (e) {
@@ -88,7 +88,7 @@ class GroupsProvider extends ChangeNotifier {
       return null;
     }
   }
-  
+
   Future<bool> createGroup({
     required String name,
     required String description,
@@ -112,12 +112,12 @@ class GroupsProvider extends ChangeNotifier {
       return false;
     }
   }
-  
+
   Future<bool> joinGroup(String groupId) async {
     try {
       final membership = await _pb.joinGroup(groupId);
       _myMemberships[groupId] = GroupMember.fromPocketBase(membership);
-      
+
       // Update member count in local group
       final index = _groups.indexWhere((g) => g.id == groupId);
       if (index != -1) {
@@ -134,7 +134,7 @@ class GroupsProvider extends ChangeNotifier {
           createdAt: group.createdAt,
         );
       }
-      
+
       await loadMyGroups();
       notifyListeners();
       return true;
@@ -143,13 +143,13 @@ class GroupsProvider extends ChangeNotifier {
       return false;
     }
   }
-  
+
   Future<bool> leaveGroup(String groupId) async {
     try {
       await _pb.leaveGroup(groupId);
       _myMemberships[groupId] = null;
       _myGroups.removeWhere((g) => g.id == groupId);
-      
+
       // Update member count in local group
       final index = _groups.indexWhere((g) => g.id == groupId);
       if (index != -1) {
@@ -166,7 +166,7 @@ class GroupsProvider extends ChangeNotifier {
           createdAt: group.createdAt,
         );
       }
-      
+
       notifyListeners();
       return true;
     } catch (e) {
@@ -174,7 +174,7 @@ class GroupsProvider extends ChangeNotifier {
       return false;
     }
   }
-  
+
   Future<void> loadGroupPosts(String groupId) async {
     try {
       final result = await _pb.getGroupPosts(groupId: groupId);
@@ -186,7 +186,7 @@ class GroupsProvider extends ChangeNotifier {
       _errorMessage = e.toString();
     }
   }
-  
+
   Future<bool> createGroupPost(String groupId, String content) async {
     try {
       final record = await _pb.createGroupPost(
@@ -194,7 +194,7 @@ class GroupsProvider extends ChangeNotifier {
         content: content,
       );
       final newPost = GroupPost.fromPocketBase(record);
-      
+
       if (_groupPosts[groupId] == null) {
         _groupPosts[groupId] = [];
       }
@@ -206,7 +206,7 @@ class GroupsProvider extends ChangeNotifier {
       return false;
     }
   }
-  
+
   Future<bool> deleteGroupPost(String groupId, String postId) async {
     try {
       await _pb.deleteGroupPost(postId);
@@ -218,7 +218,7 @@ class GroupsProvider extends ChangeNotifier {
       return false;
     }
   }
-  
+
   Future<void> loadGroupMembers(String groupId) async {
     try {
       final result = await _pb.getGroupMembers(groupId: groupId);
@@ -230,13 +230,12 @@ class GroupsProvider extends ChangeNotifier {
       _errorMessage = e.toString();
     }
   }
-  
+
   Future<void> loadMyMembership(String groupId) async {
     try {
       final membership = await _pb.getUserGroupMembership(groupId);
-      _myMemberships[groupId] = membership != null 
-          ? GroupMember.fromPocketBase(membership)
-          : null;
+      _myMemberships[groupId] =
+          membership != null ? GroupMember.fromPocketBase(membership) : null;
       notifyListeners();
     } catch (e) {
       _errorMessage = e.toString();

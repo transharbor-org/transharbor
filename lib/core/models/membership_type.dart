@@ -2,7 +2,7 @@
 enum MembershipType {
   /// Non-voting member - can participate but cannot vote on governance
   nonVoting('non_voting'),
-  
+
   /// Full voting member - can participate and vote on all governance matters
   votingMember('voting_member');
 

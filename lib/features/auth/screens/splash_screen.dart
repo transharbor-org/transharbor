@@ -16,11 +16,11 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _checkAuth();
   }
-  
+
   Future<void> _checkAuth() async {
     final authProvider = context.read<AuthProvider>();
     await authProvider.checkAuthStatus();
-    
+
     if (mounted) {
       if (authProvider.isAuthenticated) {
         context.go('/home');
@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

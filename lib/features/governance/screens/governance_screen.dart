@@ -19,7 +19,7 @@ class _GovernanceScreenState extends State<GovernanceScreen> {
       context.read<GovernanceProvider>().loadProposals();
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ class _GovernanceScreenState extends State<GovernanceScreen> {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -94,7 +94,10 @@ class _GovernanceScreenState extends State<GovernanceScreen> {
                           Icon(
                             Icons.ballot_outlined,
                             size: 60,
-                            color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.5),
                           ),
                           const SizedBox(height: 16),
                           const Text('No proposals at the moment'),
@@ -105,7 +108,8 @@ class _GovernanceScreenState extends State<GovernanceScreen> {
                 else
                   ...provider.proposals.map((proposal) => _ProposalCard(
                         proposal: proposal,
-                        onTap: () => context.push('/governance/vote/${proposal.id}'),
+                        onTap: () =>
+                            context.push('/governance/vote/${proposal.id}'),
                       )),
               ],
             ),
@@ -119,12 +123,12 @@ class _GovernanceScreenState extends State<GovernanceScreen> {
 class _ProposalCard extends StatelessWidget {
   final Proposal proposal;
   final VoidCallback onTap;
-  
+
   const _ProposalCard({
     required this.proposal,
     required this.onTap,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -184,11 +188,11 @@ class _ProposalCard extends StatelessWidget {
       ),
     );
   }
-  
+
   String _formatDate(DateTime date) {
     final now = DateTime.now();
     final difference = date.difference(now);
-    
+
     if (difference.isNegative) {
       return 'ended';
     } else if (difference.inDays > 0) {
@@ -203,14 +207,14 @@ class _ProposalCard extends StatelessWidget {
 
 class _StatusBadge extends StatelessWidget {
   final ProposalStatus status;
-  
+
   const _StatusBadge({required this.status});
-  
+
   @override
   Widget build(BuildContext context) {
     Color color;
     String text;
-    
+
     switch (status) {
       case ProposalStatus.active:
         color = Colors.blue;
@@ -229,7 +233,7 @@ class _StatusBadge extends StatelessWidget {
         text = 'Expired';
         break;
     }
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -250,17 +254,17 @@ class _StatusBadge extends StatelessWidget {
 
 class _VoteProgressBar extends StatelessWidget {
   final Proposal proposal;
-  
+
   const _VoteProgressBar({required this.proposal});
-  
+
   @override
   Widget build(BuildContext context) {
     final total = proposal.totalVotes;
     if (total == 0) return const SizedBox.shrink();
-    
+
     final forPercent = proposal.votesFor / total;
     final againstPercent = proposal.votesAgainst / total;
-    
+
     return Row(
       children: [
         Expanded(
@@ -269,7 +273,8 @@ class _VoteProgressBar extends StatelessWidget {
             height: 8,
             decoration: BoxDecoration(
               color: Colors.green,
-              borderRadius: const BorderRadius.horizontal(left: Radius.circular(4)),
+              borderRadius:
+                  const BorderRadius.horizontal(left: Radius.circular(4)),
             ),
           ),
         ),
@@ -286,7 +291,8 @@ class _VoteProgressBar extends StatelessWidget {
             height: 8,
             decoration: BoxDecoration(
               color: Colors.grey,
-              borderRadius: const BorderRadius.horizontal(right: Radius.circular(4)),
+              borderRadius:
+                  const BorderRadius.horizontal(right: Radius.circular(4)),
             ),
           ),
         ),

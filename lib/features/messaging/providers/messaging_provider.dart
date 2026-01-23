@@ -11,23 +11,25 @@ class MessagingProvider extends ChangeNotifier {
 
   MessagingProvider({PocketBaseService? pocketBaseService})
       : _pb = pocketBaseService ?? PocketBaseService();
-  
+
   List<Conversation> get conversations => _conversations;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  
+
   List<Message> getMessages(String conversationId) {
     return _messages[conversationId] ?? [];
   }
-  
+
   Future<void> loadConversations() async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final result = await _pb.getConversations();
-      _conversations = result.items.map((record) => Conversation.fromPocketBase(record)).toList();
+      _conversations = result.items
+          .map((record) => Conversation.fromPocketBase(record))
+          .toList();
     } catch (e) {
       _errorMessage = e.toString();
     } finally {
@@ -35,17 +37,18 @@ class MessagingProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<void> loadMessages(String conversationId) async {
     try {
       final result = await _pb.getMessages(conversationId: conversationId);
-      _messages[conversationId] = result.items.map((record) => Message.fromPocketBase(record)).toList();
+      _messages[conversationId] =
+          result.items.map((record) => Message.fromPocketBase(record)).toList();
       notifyListeners();
     } catch (e) {
       _errorMessage = e.toString();
     }
   }
-  
+
   Future<bool> sendMessage(String conversationId, String content) async {
     try {
       final record = await _pb.sendMessage(
@@ -53,7 +56,7 @@ class MessagingProvider extends ChangeNotifier {
         content: content,
       );
       final newMessage = Message.fromPocketBase(record);
-      
+
       if (_messages[conversationId] == null) {
         _messages[conversationId] = [];
       }

@@ -11,7 +11,8 @@ Widget createTestWidget(Widget child) {
 }
 
 /// Wraps a widget with MaterialApp and providers for testing
-Widget createTestWidgetWithProviders(Widget child, List<ChangeNotifierProvider> providers) {
+Widget createTestWidgetWithProviders(
+    Widget child, List<ChangeNotifierProvider> providers) {
   return MultiProvider(
     providers: providers,
     child: MaterialApp(

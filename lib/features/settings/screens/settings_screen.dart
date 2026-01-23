@@ -118,7 +118,8 @@ class SettingsScreen extends StatelessWidget {
               'Delete Account',
               style: TextStyle(color: Colors.red),
             ),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.red),
+            trailing: const Icon(Icons.arrow_forward_ios,
+                size: 16, color: Colors.red),
             onTap: () {
               // Show delete account dialog
             },

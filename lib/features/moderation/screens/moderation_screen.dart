@@ -211,7 +211,8 @@ class ReportCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildInfoRow('Reporter ID:', report.reporterId, theme),
-                _buildInfoRow('Reported Item ID:', report.reportedItemId, theme),
+                _buildInfoRow(
+                    'Reported Item ID:', report.reportedItemId, theme),
                 _buildInfoRow('Type:', _getTypeLabel(), theme),
                 _buildInfoRow('Status:', _getStatusLabel(), theme),
                 const SizedBox(height: 16),
@@ -338,11 +339,8 @@ class ReportCard extends StatelessWidget {
   }
 
   Future<void> _updateStatus(
-    BuildContext context,
-    ReportStatus status,
-    String successMessage,
-    {String? notes}
-  ) async {
+      BuildContext context, ReportStatus status, String successMessage,
+      {String? notes}) async {
     final provider = context.read<ModerationProvider>();
     final success = await provider.updateReportStatus(
       reportId: report.id,

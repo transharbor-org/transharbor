@@ -6,23 +6,23 @@ import 'storage_service.dart';
 class PocketBaseService {
   static final PocketBaseService _instance = PocketBaseService._internal();
   late final PocketBase pb;
-  
+
   factory PocketBaseService() {
     return _instance;
   }
-  
+
   PocketBaseService._internal() {
     pb = PocketBase(ApiConstants.baseUrl);
     _initializeAuth();
   }
-  
+
   Future<void> _initializeAuth() async {
     // Restore auth from storage
     final token = await StorageService.getAuthToken();
     if (token != null) {
       pb.authStore.save(token, null);
     }
-    
+
     // Listen to auth changes
     pb.authStore.onChange.listen((e) {
       if (e.token.isNotEmpty) {
@@ -32,18 +32,19 @@ class PocketBaseService {
       }
     });
   }
-  
+
   // Auth Methods
   Future<RecordAuth> login(String email, String password) async {
     try {
-      final authData = await pb.collection(ApiConstants.usersCollection)
+      final authData = await pb
+          .collection(ApiConstants.usersCollection)
           .authWithPassword(email, password);
       return authData;
     } catch (e) {
       rethrow;
     }
   }
-  
+
   Future<RecordAuth> register({
     required String email,
     required String password,
@@ -58,32 +59,33 @@ class PocketBaseService {
         'passwordConfirm': passwordConfirm,
         'emailVisibility': false,
       };
-      
+
       if (username != null) body['username'] = username;
       if (displayName != null) body['displayName'] = displayName;
-      
+
       await pb.collection(ApiConstants.usersCollection).create(body: body);
-      
+
       // Auto-login after registration
-      final authData = await pb.collection(ApiConstants.usersCollection)
+      final authData = await pb
+          .collection(ApiConstants.usersCollection)
           .authWithPassword(email, password);
-      
+
       return authData;
     } catch (e) {
       rethrow;
     }
   }
-  
+
   void logout() {
     pb.authStore.clear();
   }
-  
+
   bool get isAuthenticated => pb.authStore.isValid;
-  
+
   RecordModel? get currentUser => pb.authStore.model;
-  
+
   String? get currentUserId => pb.authStore.model?.id;
-  
+
   // User Profile Methods
   Future<RecordModel> updateUserProfile({
     String? displayName,
@@ -94,13 +96,13 @@ class PocketBaseService {
     if (displayName != null) body['displayName'] = displayName;
     if (bio != null) body['bio'] = bio;
     if (pronouns != null) body['pronouns'] = pronouns;
-    
+
     return await pb.collection(ApiConstants.usersCollection).update(
-      currentUserId!,
-      body: body,
-    );
+          currentUserId!,
+          body: body,
+        );
   }
-  
+
   Future<RecordModel> uploadUserAvatar(String filePath) async {
     return await pb.collection(ApiConstants.usersCollection).update(
       currentUserId!,
@@ -110,17 +112,18 @@ class PocketBaseService {
       ],
     );
   }
-  
+
   Future<String> getAvatarUrl(String userId, String? avatarFilename) async {
     if (avatarFilename == null || avatarFilename.isEmpty) return '';
     try {
-      final record = await pb.collection(ApiConstants.usersCollection).getOne(userId);
+      final record =
+          await pb.collection(ApiConstants.usersCollection).getOne(userId);
       return pb.files.getUrl(record, avatarFilename).toString();
     } catch (e) {
       return '';
     }
   }
-  
+
   // Personals Methods
   Future<ResultList<RecordModel>> getPersonals({
     int page = 1,
@@ -128,14 +131,14 @@ class PocketBaseService {
     String? filter,
   }) async {
     return await pb.collection(ApiConstants.personalsCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: filter,
-      sort: '-created',
-      expand: 'user_id',
-    );
+          page: page,
+          perPage: perPage,
+          filter: filter,
+          sort: '-created',
+          expand: 'user_id',
+        );
   }
-  
+
   Future<RecordModel> createPersonal(String content) async {
     return await pb.collection(ApiConstants.personalsCollection).create(
       body: {
@@ -146,37 +149,37 @@ class PocketBaseService {
       },
     );
   }
-  
+
   Future<void> deletePersonal(String id) async {
     await pb.collection(ApiConstants.personalsCollection).delete(id);
   }
-  
+
   // Messaging Methods
   Future<ResultList<RecordModel>> getConversations({
     int page = 1,
     int perPage = 20,
   }) async {
     return await pb.collection(ApiConstants.conversationsCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: 'participant_ids ~ "$currentUserId"',
-      sort: '-updated',
-    );
+          page: page,
+          perPage: perPage,
+          filter: 'participant_ids ~ "$currentUserId"',
+          sort: '-updated',
+        );
   }
-  
+
   Future<ResultList<RecordModel>> getMessages({
     required String conversationId,
     int page = 1,
     int perPage = 50,
   }) async {
     return await pb.collection(ApiConstants.messagesCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: 'conversation_id = "$conversationId"',
-      sort: 'created',
-    );
+          page: page,
+          perPage: perPage,
+          filter: 'conversation_id = "$conversationId"',
+          sort: 'created',
+        );
   }
-  
+
   Future<RecordModel> sendMessage({
     required String conversationId,
     required String content,
@@ -190,7 +193,7 @@ class PocketBaseService {
       },
     );
   }
-  
+
   // Governance Methods
   Future<ResultList<RecordModel>> getProposals({
     int page = 1,
@@ -198,14 +201,14 @@ class PocketBaseService {
     String? filter,
   }) async {
     return await pb.collection(ApiConstants.proposalsCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: filter,
-      sort: '-created',
-      expand: 'author_id',
-    );
+          page: page,
+          perPage: perPage,
+          filter: filter,
+          sort: '-created',
+          expand: 'author_id',
+        );
   }
-  
+
   Future<RecordModel> createProposal({
     required String title,
     required String description,
@@ -224,20 +227,22 @@ class PocketBaseService {
       },
     );
   }
-  
+
   Future<RecordModel> submitVote({
     required String proposalId,
     required String choice, // 'for', 'against', 'abstain'
   }) async {
     // Check if user already voted
-    final existingVotes = await pb.collection(ApiConstants.votesCollection).getList(
-      filter: 'proposal_id = "$proposalId" && user_id = "$currentUserId"',
-    );
-    
+    final existingVotes = await pb
+        .collection(ApiConstants.votesCollection)
+        .getList(
+          filter: 'proposal_id = "$proposalId" && user_id = "$currentUserId"',
+        );
+
     if (existingVotes.items.isNotEmpty) {
       throw Exception('Already voted on this proposal');
     }
-    
+
     // Create vote record
     final vote = await pb.collection(ApiConstants.votesCollection).create(
       body: {
@@ -246,15 +251,17 @@ class PocketBaseService {
         'choice': choice,
       },
     );
-    
+
     // Update proposal vote counts
-    final proposal = await pb.collection(ApiConstants.proposalsCollection).getOne(proposalId);
+    final proposal = await pb
+        .collection(ApiConstants.proposalsCollection)
+        .getOne(proposalId);
     final votes = {
       'votes_for': proposal.getIntValue('votes_for'),
       'votes_against': proposal.getIntValue('votes_against'),
       'votes_abstain': proposal.getIntValue('votes_abstain'),
     };
-    
+
     switch (choice) {
       case 'for':
         votes['votes_for'] = votes['votes_for']! + 1;
@@ -266,12 +273,14 @@ class PocketBaseService {
         votes['votes_abstain'] = votes['votes_abstain']! + 1;
         break;
     }
-    
-    await pb.collection(ApiConstants.proposalsCollection).update(proposalId, body: votes);
-    
+
+    await pb
+        .collection(ApiConstants.proposalsCollection)
+        .update(proposalId, body: votes);
+
     return vote;
   }
-  
+
   // Realtime Subscriptions
   Future<void> subscribeToCollection(
     String collection,
@@ -279,11 +288,11 @@ class PocketBaseService {
   ) async {
     await pb.collection(collection).subscribe('*', callback);
   }
-  
+
   void unsubscribeFromCollection(String collection) {
     pb.collection(collection).unsubscribe();
   }
-  
+
   // Groups Methods
   Future<ResultList<RecordModel>> getGroups({
     int page = 1,
@@ -297,23 +306,23 @@ class PocketBaseService {
           ? 'category = "$category"'
           : '$finalFilter && category = "$category"';
     }
-    
+
     return await pb.collection(ApiConstants.groupsCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: finalFilter.isNotEmpty ? finalFilter : null,
-      sort: '-created',
-      expand: 'creator_id',
-    );
+          page: page,
+          perPage: perPage,
+          filter: finalFilter.isNotEmpty ? finalFilter : null,
+          sort: '-created',
+          expand: 'creator_id',
+        );
   }
-  
+
   Future<RecordModel> getGroup(String groupId) async {
     return await pb.collection(ApiConstants.groupsCollection).getOne(
-      groupId,
-      expand: 'creator_id',
-    );
+          groupId,
+          expand: 'creator_id',
+        );
   }
-  
+
   Future<RecordModel> createGroup({
     required String name,
     required String description,
@@ -330,7 +339,7 @@ class PocketBaseService {
         'member_count': 1,
       },
     );
-    
+
     // Auto-join creator as admin
     await pb.collection(ApiConstants.groupMembersCollection).create(
       body: {
@@ -340,18 +349,20 @@ class PocketBaseService {
         'joined_at': DateTime.now().toIso8601String(),
       },
     );
-    
+
     return record;
   }
-  
+
   Future<void> updateGroup(String groupId, Map<String, dynamic> data) async {
-    await pb.collection(ApiConstants.groupsCollection).update(groupId, body: data);
+    await pb
+        .collection(ApiConstants.groupsCollection)
+        .update(groupId, body: data);
   }
-  
+
   Future<void> deleteGroup(String groupId) async {
     await pb.collection(ApiConstants.groupsCollection).delete(groupId);
   }
-  
+
   // Group Members Methods
   Future<ResultList<RecordModel>> getGroupMembers({
     required String groupId,
@@ -359,39 +370,41 @@ class PocketBaseService {
     int perPage = 50,
   }) async {
     return await pb.collection(ApiConstants.groupMembersCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: 'group_id = "$groupId"',
-      expand: 'user_id',
-    );
+          page: page,
+          perPage: perPage,
+          filter: 'group_id = "$groupId"',
+          expand: 'user_id',
+        );
   }
-  
+
   Future<RecordModel?> getUserGroupMembership(String groupId) async {
     try {
-      final result = await pb.collection(ApiConstants.groupMembersCollection).getList(
-        filter: 'group_id = "$groupId" && user_id = "$currentUserId"',
-      );
+      final result =
+          await pb.collection(ApiConstants.groupMembersCollection).getList(
+                filter: 'group_id = "$groupId" && user_id = "$currentUserId"',
+              );
       return result.items.isNotEmpty ? result.items.first : null;
     } catch (e) {
       return null;
     }
   }
-  
+
   Future<ResultList<RecordModel>> getUserGroups({
     int page = 1,
     int perPage = 20,
   }) async {
     return await pb.collection(ApiConstants.groupMembersCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: 'user_id = "$currentUserId"',
-      expand: 'group_id',
-      sort: '-created',
-    );
+          page: page,
+          perPage: perPage,
+          filter: 'user_id = "$currentUserId"',
+          expand: 'group_id',
+          sort: '-created',
+        );
   }
-  
+
   Future<RecordModel> joinGroup(String groupId) async {
-    final membership = await pb.collection(ApiConstants.groupMembersCollection).create(
+    final membership =
+        await pb.collection(ApiConstants.groupMembersCollection).create(
       body: {
         'group_id': groupId,
         'user_id': currentUserId,
@@ -399,24 +412,28 @@ class PocketBaseService {
         'joined_at': DateTime.now().toIso8601String(),
       },
     );
-    
+
     // Increment member count
-    final group = await pb.collection(ApiConstants.groupsCollection).getOne(groupId);
+    final group =
+        await pb.collection(ApiConstants.groupsCollection).getOne(groupId);
     await pb.collection(ApiConstants.groupsCollection).update(
       groupId,
       body: {'member_count': group.getIntValue('member_count') + 1},
     );
-    
+
     return membership;
   }
-  
+
   Future<void> leaveGroup(String groupId) async {
     final membership = await getUserGroupMembership(groupId);
     if (membership != null) {
-      await pb.collection(ApiConstants.groupMembersCollection).delete(membership.id);
-      
+      await pb
+          .collection(ApiConstants.groupMembersCollection)
+          .delete(membership.id);
+
       // Decrement member count
-      final group = await pb.collection(ApiConstants.groupsCollection).getOne(groupId);
+      final group =
+          await pb.collection(ApiConstants.groupsCollection).getOne(groupId);
       final newCount = (group.getIntValue('member_count') - 1).clamp(0, 999999);
       await pb.collection(ApiConstants.groupsCollection).update(
         groupId,
@@ -424,7 +441,7 @@ class PocketBaseService {
       );
     }
   }
-  
+
   // Group Posts Methods
   Future<ResultList<RecordModel>> getGroupPosts({
     required String groupId,
@@ -432,14 +449,14 @@ class PocketBaseService {
     int perPage = 20,
   }) async {
     return await pb.collection(ApiConstants.groupPostsCollection).getList(
-      page: page,
-      perPage: perPage,
-      filter: 'group_id = "$groupId"',
-      sort: '-created',
-      expand: 'user_id',
-    );
+          page: page,
+          perPage: perPage,
+          filter: 'group_id = "$groupId"',
+          sort: '-created',
+          expand: 'user_id',
+        );
   }
-  
+
   Future<RecordModel> createGroupPost({
     required String groupId,
     required String content,
@@ -454,7 +471,7 @@ class PocketBaseService {
       },
     );
   }
-  
+
   Future<void> deleteGroupPost(String postId) async {
     await pb.collection(ApiConstants.groupPostsCollection).delete(postId);
   }

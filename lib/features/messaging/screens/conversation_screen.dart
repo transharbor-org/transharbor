@@ -4,7 +4,7 @@ import '../providers/messaging_provider.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String conversationId;
-  
+
   const ConversationScreen({
     super.key,
     required this.conversationId,
@@ -17,7 +17,7 @@ class ConversationScreen extends StatefulWidget {
 class _ConversationScreenState extends State<ConversationScreen> {
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -25,23 +25,23 @@ class _ConversationScreenState extends State<ConversationScreen> {
       context.read<MessagingProvider>().loadMessages(widget.conversationId);
     });
   }
-  
+
   @override
   void dispose() {
     _messageController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _sendMessage() async {
     if (_messageController.text.trim().isEmpty) return;
-    
+
     final provider = context.read<MessagingProvider>();
     final content = _messageController.text.trim();
     _messageController.clear();
-    
+
     final success = await provider.sendMessage(widget.conversationId, content);
-    
+
     if (success && mounted) {
       _scrollController.animateTo(
         0,
@@ -50,7 +50,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
       );
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,13 +63,13 @@ class _ConversationScreenState extends State<ConversationScreen> {
             child: Consumer<MessagingProvider>(
               builder: (context, provider, child) {
                 final messages = provider.getMessages(widget.conversationId);
-                
+
                 if (messages.isEmpty) {
                   return const Center(
                     child: Text('No messages yet. Start the conversation!'),
                   );
                 }
-                
+
                 return ListView.builder(
                   controller: _scrollController,
                   reverse: true,
@@ -79,7 +79,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     final message = messages[messages.length - 1 - index];
                     // For now, assume current user ID is 'current-user'
                     final isCurrentUser = message.senderId == 'current-user';
-                    
+
                     return Align(
                       alignment: isCurrentUser
                           ? Alignment.centerRight

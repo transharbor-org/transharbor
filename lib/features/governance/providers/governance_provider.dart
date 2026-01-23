@@ -10,22 +10,24 @@ class GovernanceProvider extends ChangeNotifier {
 
   GovernanceProvider({PocketBaseService? pocketBaseService})
       : _pb = pocketBaseService ?? PocketBaseService();
-  
+
   List<Proposal> get proposals => _proposals;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  
+
   List<Proposal> get activeProposals =>
       _proposals.where((p) => p.status == ProposalStatus.active).toList();
-  
+
   Future<void> loadProposals() async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final result = await _pb.getProposals();
-      _proposals = result.items.map((record) => Proposal.fromPocketBase(record)).toList();
+      _proposals = result.items
+          .map((record) => Proposal.fromPocketBase(record))
+          .toList();
     } catch (e) {
       _errorMessage = e.toString();
     } finally {
@@ -33,14 +35,14 @@ class GovernanceProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   Future<bool> submitVote(String proposalId, VoteChoice choice) async {
     try {
       await _pb.submitVote(
         proposalId: proposalId,
         choice: choice.value,
       );
-      
+
       // Reload proposals to get updated vote counts
       await loadProposals();
       return true;
@@ -49,7 +51,7 @@ class GovernanceProvider extends ChangeNotifier {
       return false;
     }
   }
-  
+
   Future<bool> createProposal(String title, String description) async {
     try {
       final votingEndsAt = DateTime.now().add(const Duration(days: 7));
