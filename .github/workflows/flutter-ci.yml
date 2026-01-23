@@ -135,3 +135,27 @@ jobs:
           labels: ${{ steps.meta-pb.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy-dev:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    needs: build-and-push-images
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Deploy to dev server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: dev.transharbor.org
+          username: root
+          key: ${{ secrets.DEV_SSH_KEY }}
+          script: |
+            # Restart deployments to pull new images
+            kubectl rollout restart deployment/web-dev -n transharbor
+            kubectl rollout restart deployment/pocketbase-dev -n transharbor
+            
+            # Wait for rollouts to complete
+            kubectl rollout status deployment/web-dev -n transharbor --timeout=300s
+            kubectl rollout status deployment/pocketbase-dev -n transharbor --timeout=300s
+            
+            echo "✅ Dev deployment complete"
