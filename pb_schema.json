@@ -1,0 +1,809 @@
+[
+  {
+    "id": "users",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "schema": [
+      {
+        "id": "username",
+        "name": "username",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "min": 3,
+          "max": 50,
+          "pattern": "^[a-zA-Z0-9_]+$"
+        }
+      },
+      {
+        "id": "name",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": 100
+        }
+      },
+      {
+        "id": "bio",
+        "name": "bio",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": 500
+        }
+      },
+      {
+        "id": "avatar",
+        "name": "avatar",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": ["image/jpeg", "image/png", "image/gif", "image/webp"],
+          "thumbs": ["100x100", "300x300"]
+        }
+      },
+      {
+        "id": "role",
+        "name": "role",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["user", "moderator", "admin"]
+        }
+      },
+      {
+        "id": "membership_type",
+        "name": "membership_type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["non_voting", "voting_member"]
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX idx_username ON users (username)",
+      "CREATE INDEX idx_role ON users (role)",
+      "CREATE INDEX idx_membership_type ON users (membership_type)"
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "",
+    "updateRule": "@request.auth.id = id",
+    "deleteRule": "@request.auth.id = id"
+  },
+  {
+    "id": "personals",
+    "name": "personals",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "user",
+        "name": "user",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "content",
+        "name": "content",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 5000
+        }
+      },
+      {
+        "id": "images",
+        "name": "images",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 4,
+          "maxSize": 5242880,
+          "mimeTypes": ["image/jpeg", "image/png", "image/gif", "image/webp"],
+          "thumbs": ["200x200", "500x500"]
+        }
+      },
+      {
+        "id": "likes",
+        "name": "likes",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "comments",
+        "name": "comments",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX idx_personals_user ON personals (user)",
+      "CREATE INDEX idx_personals_created ON personals (created)"
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && @request.auth.id = user",
+    "updateRule": "@request.auth.id = user",
+    "deleteRule": "@request.auth.id = user"
+  },
+  {
+    "id": "conversations",
+    "name": "conversations",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "participants",
+        "name": "participants",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": 2,
+          "maxSelect": 10,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "lastMessage",
+        "name": "lastMessage",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": 500
+        }
+      },
+      {
+        "id": "lastMessageTime",
+        "name": "lastMessageTime",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "unreadCount",
+        "name": "unreadCount",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX idx_conversations_participants ON conversations (participants)",
+      "CREATE INDEX idx_conversations_updated ON conversations (updated)"
+    ],
+    "listRule": "@request.auth.id != '' && participants ~ @request.auth.id",
+    "viewRule": "@request.auth.id != '' && participants ~ @request.auth.id",
+    "createRule": "@request.auth.id != '' && participants ~ @request.auth.id",
+    "updateRule": "@request.auth.id != '' && participants ~ @request.auth.id",
+    "deleteRule": "@request.auth.id != '' && participants ~ @request.auth.id"
+  },
+  {
+    "id": "messages",
+    "name": "messages",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "conversation",
+        "name": "conversation",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "conversations",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "sender",
+        "name": "sender",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "content",
+        "name": "content",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 2000
+        }
+      },
+      {
+        "id": "read",
+        "name": "read",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX idx_messages_conversation ON messages (conversation)",
+      "CREATE INDEX idx_messages_sender ON messages (sender)",
+      "CREATE INDEX idx_messages_created ON messages (created)"
+    ],
+    "listRule": "@request.auth.id != '' && conversation.participants ~ @request.auth.id",
+    "viewRule": "@request.auth.id != '' && conversation.participants ~ @request.auth.id",
+    "createRule": "@request.auth.id != '' && @request.auth.id = sender && conversation.participants ~ @request.auth.id",
+    "updateRule": "@request.auth.id != '' && conversation.participants ~ @request.auth.id",
+    "deleteRule": "@request.auth.id = sender"
+  },
+  {
+    "id": "proposals",
+    "name": "proposals",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "title",
+        "name": "title",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 5,
+          "max": 200
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 20,
+          "max": 5000
+        }
+      },
+      {
+        "id": "author",
+        "name": "author",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "status",
+        "name": "status",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["pending", "active", "passed", "failed", "cancelled"]
+        }
+      },
+      {
+        "id": "votesFor",
+        "name": "votesFor",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "votesAgainst",
+        "name": "votesAgainst",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "votesAbstain",
+        "name": "votesAbstain",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "startDate",
+        "name": "startDate",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "endDate",
+        "name": "endDate",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX idx_proposals_status ON proposals (status)",
+      "CREATE INDEX idx_proposals_author ON proposals (author)",
+      "CREATE INDEX idx_proposals_dates ON proposals (startDate, endDate)"
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && @request.auth.id = author",
+    "updateRule": "@request.auth.id = author && status = 'pending'",
+    "deleteRule": "@request.auth.id = author && status = 'pending'"
+  },
+  {
+    "id": "votes",
+    "name": "votes",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "proposal",
+        "name": "proposal",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "proposals",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["title"]
+        }
+      },
+      {
+        "id": "user",
+        "name": "user",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "vote",
+        "name": "vote",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["for", "against", "abstain"]
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX idx_votes_unique ON votes (proposal, user)",
+      "CREATE INDEX idx_votes_proposal ON votes (proposal)",
+      "CREATE INDEX idx_votes_user ON votes (user)"
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && @request.auth.id = user && proposal.status = 'active'",
+    "updateRule": "@request.auth.id = user && proposal.status = 'active'",
+    "deleteRule": "@request.auth.id = user && proposal.status = 'active'"
+  },
+  {
+    "id": "groups",
+    "name": "groups",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "name",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 3,
+          "max": 100
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 10,
+          "max": 1000
+        }
+      },
+      {
+        "id": "category",
+        "name": "category",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["social", "support", "hobbies", "activism", "professional", "other"]
+        }
+      },
+      {
+        "id": "creator",
+        "name": "creator",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "members",
+        "name": "members",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "isPrivate",
+        "name": "isPrivate",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "avatar",
+        "name": "avatar",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": ["image/jpeg", "image/png", "image/gif", "image/webp"],
+          "thumbs": ["100x100", "300x300"]
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX idx_groups_category ON groups (category)",
+      "CREATE INDEX idx_groups_creator ON groups (creator)",
+      "CREATE INDEX idx_groups_created ON groups (created)"
+    ],
+    "listRule": "@request.auth.id != '' && (isPrivate = false || @collection.group_members.group = id && @collection.group_members.user = @request.auth.id)",
+    "viewRule": "@request.auth.id != '' && (isPrivate = false || @collection.group_members.group = id && @collection.group_members.user = @request.auth.id)",
+    "createRule": "@request.auth.id != '' && @request.auth.id = creator",
+    "updateRule": "@request.auth.id != '' && (@request.auth.id = creator || @collection.group_members.group = id && @collection.group_members.user = @request.auth.id && @collection.group_members.role = 'admin')",
+    "deleteRule": "@request.auth.id = creator"
+  },
+  {
+    "id": "group_members",
+    "name": "group_members",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "group",
+        "name": "group",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "groups",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "user",
+        "name": "user",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "role",
+        "name": "role",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["member", "admin"]
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX idx_group_members_unique ON group_members (group, user)",
+      "CREATE INDEX idx_group_members_group ON group_members (group)",
+      "CREATE INDEX idx_group_members_user ON group_members (user)"
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && @request.auth.id = user",
+    "updateRule": "@request.auth.id = user || (group.creator = @request.auth.id || @collection.group_members.group = group && @collection.group_members.user = @request.auth.id && @collection.group_members.role = 'admin')",
+    "deleteRule": "@request.auth.id = user || group.creator = @request.auth.id"
+  },
+  {
+    "id": "group_posts",
+    "name": "group_posts",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "group",
+        "name": "group",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "groups",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "author",
+        "name": "author",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "content",
+        "name": "content",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 5000
+        }
+      },
+      {
+        "id": "likes",
+        "name": "likes",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX idx_group_posts_group ON group_posts (group)",
+      "CREATE INDEX idx_group_posts_author ON group_posts (author)",
+      "CREATE INDEX idx_group_posts_created ON group_posts (created)"
+    ],
+    "listRule": "@request.auth.id != '' && @collection.group_members.group = group && @collection.group_members.user = @request.auth.id",
+    "viewRule": "@request.auth.id != '' && @collection.group_members.group = group && @collection.group_members.user = @request.auth.id",
+    "createRule": "@request.auth.id != '' && @request.auth.id = author && @collection.group_members.group = group && @collection.group_members.user = @request.auth.id",
+    "updateRule": "@request.auth.id = author",
+    "deleteRule": "@request.auth.id = author || group.creator = @request.auth.id || (@collection.group_members.group = group && @collection.group_members.user = @request.auth.id && @collection.group_members.role = 'admin')"
+  },
+  {
+    "id": "reports",
+    "name": "reports",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "reporter",
+        "name": "reporter",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "reportedItem",
+        "name": "reportedItem",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 255
+        }
+      },
+      {
+        "id": "type",
+        "name": "type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["post", "user", "groupPost", "message"]
+        }
+      },
+      {
+        "id": "reason",
+        "name": "reason",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 255
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 1000
+        }
+      },
+      {
+        "id": "status",
+        "name": "status",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": ["pending", "underReview", "resolved", "dismissed"]
+        }
+      },
+      {
+        "id": "moderator",
+        "name": "moderator",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "moderatorNotes",
+        "name": "moderatorNotes",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": 1000
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX idx_reports_reporter ON reports (reporter)",
+      "CREATE INDEX idx_reports_status ON reports (status)",
+      "CREATE INDEX idx_reports_type ON reports (type)",
+      "CREATE INDEX idx_reports_created ON reports (created)"
+    ],
+    "listRule": "@request.auth.id != '' && (reporter = @request.auth.id || @request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "viewRule": "@request.auth.id != '' && (reporter = @request.auth.id || @request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "deleteRule": "@request.auth.id != '' && @request.auth.role = 'admin'"
+  }
+]
+

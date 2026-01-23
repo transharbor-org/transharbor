@@ -116,4 +116,25 @@ app.*.symbols
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-!/dev/ci/**/Gemfile.lock
+!/dev/ci/**/Gemfile.lock# PocketBase data and binaries
+pocketbase/pb_data/
+pocketbase/pocketbase
+pocketbase/*.zip
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Environment variables
+.env
+.env.local
+
+# Test coverage
+coverage/
+test/.test_coverage.dart
+
+# Temporary files
+*.tmp
+*.temp
+~*
