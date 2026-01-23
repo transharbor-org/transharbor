@@ -9,19 +9,20 @@ RUN wget https://github.com/pocketbase/pocketbase/releases/download/v${POCKETBAS
     && strip pocketbase \
     && chmod +x pocketbase
 
-# Runtime stage - needs shell for init script
+# Runtime stage - needs shell for init script and Python for batch import
 FROM alpine:3.18
 
 WORKDIR /app
 
-# Install curl for health checks
-RUN apk add --no-cache curl
+# Install curl for health checks and Python for batch import script
+RUN apk add --no-cache curl python3
 
 # Copy PocketBase binary from builder
 COPY --from=builder /pocketbase /app/pocketbase
 
-# Copy schema and init script
+# Copy schema, batch import script, and init script
 COPY pocketbase/pb_schema.json /app/pb_schema.json
+COPY pocketbase/batch_import.py /app/batch_import.py
 COPY pocketbase/init_pocketbase.sh /app/init_pocketbase.sh
 RUN chmod +x /app/init_pocketbase.sh
 
