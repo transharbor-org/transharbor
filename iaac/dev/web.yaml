@@ -5,7 +5,12 @@ metadata:
   name: web-dev
   namespace: transharbor
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: web
@@ -23,6 +28,12 @@ spec:
         image: ghcr.io/transharbor-org/transharbor/web:main
         ports:
         - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
         resources:
           limits:
             cpu: "500m"
@@ -33,6 +44,18 @@ spec:
         env:
         - name: POCKETBASE_URL
           value: "http://pocketbase-dev:8080"
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: web-dev-pdb
+  namespace: transharbor
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: web
+      env: dev
 ---
 apiVersion: v1
 kind: Service
