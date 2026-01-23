@@ -60,45 +60,10 @@ if [ ! -f "/pb_data/data.db" ]; then
             # Create batches using Python script (rules stripped to avoid circular deps)
             python3 /app/import_schema.py /app/pb_schema.json
             
-            # Import each batch
-            BATCH_NUM=1
-            SUCCESS=true
-            
-            while [ -f "/tmp/batch${BATCH_NUM}.json" ]; do
-                # For batch 3+, try importing collections one at a time to allow ID resolution
-                if [ $BATCH_NUM -ge 3 ]; then
-                    echo "📦 Importing batch $BATCH_NUM collections individually..."
-                    python3 -c "
-import json
-with open('/tmp/batch${BATCH_NUM}.json', 'r') as f:
-    data = json.load(f)
-for coll in data['collections']:
-    output = {'collections': [coll], 'deleteMissing': False}
-    filename = f'/tmp/batch${BATCH_NUM}_{coll[\"name\"]}.json'
-    with open(filename, 'w') as f:
-        json.dump(output, f)
-    print(filename)
-"
-                    # Import each collection separately
-                    for coll_file in /tmp/batch${BATCH_NUM}_*.json; do
-                        COLL_NAME=$(basename "$coll_file" .json | sed "s/batch${BATCH_NUM}_//")
-                        HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
-                            -H "Authorization: $TOKEN" \
-                            -H "Content-Type: application/json" \
-                            -d @$coll_file)
-                        
-                        if [ "$HTTP_CODE" = "204" ]; then
-                            echo "  ✅ $COLL_NAME imported"
-                        else
-                            echo "  ⚠️  $COLL_NAME import failed (HTTP $HTTP_CODE)"
-                            cat /tmp/import_response.json
-                            SUCCESS=false
-                            break 2
-                        fi
-                    done
-                    echo "✅ Batch $BATCH_NUM imported successfully"
-                else
-                    # Import batch as a whole
+            # PART 1: Import batches 1 and 2 (no complex dependencies)
+            echo "📦 Part 1: Importing foundation collections..."
+            for BATCH_NUM in 1 2; do
+                if [ -f "/tmp/batch${BATCH_NUM}.json" ]; then
                     HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
                         -H "Authorization: $TOKEN" \
                         -H "Content-Type: application/json" \
@@ -109,9 +74,72 @@ for coll in data['collections']:
                     else
                         echo "⚠️  Batch $BATCH_NUM import failed (HTTP $HTTP_CODE)"
                         cat /tmp/import_response.json
-                        SUCCESS=false
-                        break
+                        cp /app/pb_schema.json /pb_data/pb_schema.json
+                        exit 1
                     fi
+                fi
+            done
+            
+            # PART 2: Query API to get collection IDs and update remaining batches
+            echo "🔍 Part 2: Resolving collection IDs..."
+            python3 << 'PYTHON_SCRIPT'
+import json
+import urllib.request
+
+# Get all collections
+req = urllib.request.Request('http://localhost:8080/api/collections?perPage=100',
+                             headers={'Authorization': '$TOKEN'})
+resp = urllib.request.urlopen(req)
+collections = json.loads(resp.read())['items']
+
+# Build name -> ID mapping
+id_map = {c['name']: c['id'] for c in collections}
+print(f"✅ Found {len(id_map)} collections")
+
+# Update batch 3+ with actual collection IDs
+for batch_num in range(3, 10):
+    batch_file = f'/tmp/batch{batch_num}.json'
+    try:
+        with open(batch_file, 'r') as f:
+            data = json.load(f)
+        
+        # Update collectionId fields in relations
+        updated = False
+        for coll in data['collections']:
+            for field in coll.get('fields', []):
+                if field.get('type') == 'relation':
+                    coll_id = field.get('collectionId', '')
+                    # Replace name with actual ID if we have it
+                    if coll_id in id_map:
+                        field['collectionId'] = id_map[coll_id]
+                        updated = True
+        
+        if updated:
+            with open(batch_file, 'w') as f:
+                json.dump(data, f)
+            print(f"✅ Updated batch {batch_num} with collection IDs")
+    except FileNotFoundError:
+        break
+PYTHON_SCRIPT
+            
+            # Import remaining batches with resolved IDs
+            echo "📦 Part 2: Importing remaining collections with resolved IDs..."
+            BATCH_NUM=3
+            SUCCESS=true
+            
+            while [ -f "/tmp/batch${BATCH_NUM}.json" ]; do
+                HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
+                    -H "Authorization: $TOKEN" \
+                    -H "Content-Type: application/json" \
+                    -d @/tmp/batch${BATCH_NUM}.json)
+                
+                if [ "$HTTP_CODE" = "204" ]; then
+                    echo "✅ Batch $BATCH_NUM imported successfully"
+                else
+                    echo "⚠️  Batch $BATCH_NUM import failed (HTTP $HTTP_CODE)"
+                    cat /tmp/import_response.json
+                    SUCCESS=false
+                    break
                 fi
                 
                 BATCH_NUM=$((BATCH_NUM + 1))
