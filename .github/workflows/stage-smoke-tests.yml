@@ -1,0 +1,114 @@
+name: Stage Smoke Tests
+
+on:
+  # Run after successful deployment to stage
+  workflow_run:
+    workflows: ["Promote to Stage"]
+    types:
+      - completed
+  
+  # Also allow manual trigger
+  workflow_dispatch:
+  
+  # Run daily to catch environment drift
+  schedule:
+    - cron: '0 8 * * *'  # 8am UTC daily
+
+jobs:
+  smoke-tests:
+    name: Smoke Tests Against Stage
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name != 'workflow_run' }}
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.x'
+          channel: 'stable'
+          cache: true
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Wait for deployment to stabilize
+        if: github.event_name == 'workflow_run'
+        run: sleep 30
+      
+      - name: Run smoke tests against stage
+        run: |
+          flutter test test/smoke/stage_smoke_test.dart \
+            --dart-define=STAGE_URL=https://stage.transharbor.org \
+            --dart-define=STAGE_PB_URL=https://pb-stage.transharbor.org \
+            --reporter=expanded
+      
+      - name: Report results
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🔥 Stage Smoke Tests Failed',
+              body: `Smoke tests failed on stage environment.\n\n` +
+                    `Workflow: ${context.workflow}\n` +
+                    `Run: ${context.runNumber}\n` +
+                    `Commit: ${context.sha}\n\n` +
+                    `Check the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.`,
+              labels: ['bug', 'stage', 'automated']
+            })
+
+  integration-tests:
+    name: Integration Tests Against Stage
+    runs-on: ubuntu-latest
+    needs: smoke-tests
+    if: success()
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.x'
+          channel: 'stable'
+          cache: true
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Setup Chrome Driver
+        uses: nanasess/setup-chromedriver@v2
+      
+      - name: Start Chrome Driver
+        run: |
+          export DISPLAY=:99
+          chromedriver --port=4444 &
+      
+      - name: Run integration tests against stage
+        env:
+          STAGE_URL: https://stage.transharbor.org
+          STAGE_PB_URL: https://pb-stage.transharbor.org
+          SMS_API_URL: ${{ secrets.SMS_API_URL }}
+          SMS_API_KEY: ${{ secrets.SMS_API_KEY }}
+        run: |
+          # Run integration tests in web mode against stage
+          flutter drive \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/phone_verification_test.dart \
+            --dart-define=STAGE_URL=$STAGE_URL \
+            --dart-define=STAGE_PB_URL=$STAGE_PB_URL \
+            --dart-define=SMS_API_URL=$SMS_API_URL \
+            --dart-define=SMS_API_KEY=$SMS_API_KEY \
+            -d web-server
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-results
+          path: build/integration_test_results/
+          retention-days: 7
