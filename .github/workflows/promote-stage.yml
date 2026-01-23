@@ -1,0 +1,49 @@
+name: Promote to Stage
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Image tag to promote (e.g., main-abc1234)'
+        required: true
+        type: string
+
+jobs:
+  promote-stage:
+    name: Promote to Stage
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Update stage manifests
+        run: |
+          TAG="${{ inputs.image_tag }}"
+          
+          # Update web image
+          sed -i "s|image: ghcr.io/transharbor-org/transharbor/web:.*|image: ghcr.io/transharbor-org/transharbor/web:${TAG}|g" iaac/stage/web.yaml
+          
+          # Update pocketbase image
+          sed -i "s|image: ghcr.io/transharbor-org/transharbor/pocketbase:.*|image: ghcr.io/transharbor-org/transharbor/pocketbase:${TAG}|g" iaac/stage/pocketbase.yaml
+          
+          cat iaac/stage/web.yaml
+          cat iaac/stage/pocketbase.yaml
+      
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add iaac/stage/
+          git commit -m "Promote to stage: ${{ inputs.image_tag }}"
+          git push
+      
+      - name: Trigger ArgoCD sync
+        uses: clowdhaus/argo-cd-action@v2.2.0
+        with:
+          command: app sync transharbor-stage
+          options: --server-creds
+        env:
+          ARGOCD_SERVER: dev.transharbor.org:443
+          ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}

@@ -15,10 +15,10 @@ spec:
     server: https://kubernetes.default.svc
     namespace: transharbor
   syncPolicy:
+    # Stage requires manual promotion from dev
     automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: false
+      prune: false
+      selfHeal: false
     syncOptions:
       - CreateNamespace=true
     retry:
