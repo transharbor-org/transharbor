@@ -82,6 +82,9 @@ jobs:
           name: web-build
           path: build/web
       
+      - name: Verify build artifact
+        run: ls -la build/web/
+      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
