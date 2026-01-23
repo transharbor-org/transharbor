@@ -112,6 +112,8 @@ jobs:
           labels: ${{ steps.meta-web.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-contexts: |
+            build=build
       
       - name: Extract metadata for pocketbase image
         id: meta-pb
