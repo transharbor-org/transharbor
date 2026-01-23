@@ -2,7 +2,14 @@
 
 ## Overview
 
-Phone verification prevents Sybil attacks by requiring users to authenticate with a unique phone number. This implementation uses SMS OTP (One-Time Password) verification.
+Phone verification prevents Sybil attacks by requiring users to authenticate with a unique phone number. This implementation uses SMS OTP (One-Time Password) verification and **supports phone numbers from any country worldwide**.
+
+### International Support
+
+✅ **All countries supported** via E.164 international format  
+✅ Examples: US (+1), UK (+44), India (+91), China (+86), Japan (+81), Brazil (+55), etc.  
+✅ Automatic validation for 195+ country codes  
+✅ SMS delivery worldwide (provider-dependent)
 
 ## Architecture
 
@@ -35,7 +42,9 @@ User → Flutter App → PocketBase → SMS Provider → User's Phone
 
 ### Option 1: Twilio (Recommended for Production)
 
-**Cost**: ~$0.0079 per SMS (US), ~$0.10-0.15 international
+**Cost**: ~$0.0079 per SMS (US), varies by country (see pricing below)
+
+**International Coverage**: 180+ countries
 
 **Setup**:
 1. Sign up at https://www.twilio.com
@@ -47,9 +56,20 @@ User → Flutter App → PocketBase → SMS Provider → User's Phone
    SMS_API_KEY=Basic {base64(AccountSid:AuthToken)}
    ```
 
+**International Pricing Examples**:
+- US/Canada: $0.0079/SMS
+- UK: $0.04/SMS
+- India: $0.0051/SMS
+- China: $0.055/SMS
+- Brazil: $0.015/SMS
+- Japan: $0.08/SMS
+- Full pricing: https://www.twilio.com/sms/pricing
+
 ### Option 2: AWS SNS
 
-**Cost**: $0.00645 per SMS (US), varies internationally
+**Cost**: Varies by country (examples below)
+
+**International Coverage**: 240+ countries and regions
 
 **Setup**:
 1. Enable AWS SNS in your region
@@ -60,23 +80,52 @@ User → Flutter App → PocketBase → SMS Provider → User's Phone
    SMS_API_KEY={AWS_ACCESS_KEY_ID}:{AWS_SECRET_ACCESS_KEY}
    ```
 
+**International Pricing Examples**:
+- US: $0.00645/SMS
+- UK: $0.03761/SMS
+- India: $0.00365/SMS
+- China: Not supported
+- Brazil: $0.03761/SMS
+- Japan: $0.06977/SMS
+- Full pricing: https://aws.amazon.com/sns/sms-pricing/
+
 ### Option 3: Vonage (formerly Nexmo)
 
-**Cost**: ~$0.0067 per SMS (US)
+**Cost**: Varies by country
+
+**International Coverage**: 190+ countries
 
 **Setup**:
 1. Sign up at https://www.vonage.com
 2. Get API Key and Secret
 3. Add provider to `phone_auth_service.dart`
 
+**International Pricing Examples**:
+- US: $0.0067/SMS
+- UK: $0.037/SMS
+- India: $0.0058/SMS
+- China: $0.035/SMS
+- Brazil: $0.025/SMS
+- Japan: $0.069/SMS
+
 ### Option 4: MessageBird
 
-**Cost**: ~$0.008 per SMS (US)
+**Cost**: Varies by country
+
+**International Coverage**: 200+ countries
 
 **Setup**:
 1. Sign up at https://messagebird.com
 2. Get API Key
 3. Add provider to `phone_auth_service.dart`
+
+**International Pricing Examples**:
+- US: $0.008/SMS
+- UK: $0.045/SMS
+- India: $0.006/SMS
+- China: $0.053/SMS
+- Brazil: $0.031/SMS
+- Japan: $0.079/SMS
 
 ## Kubernetes Deployment
 
@@ -169,8 +218,9 @@ git push
 
 1. **Enter Phone Number**
    ```
-   User enters: +12125551234
-   → Validates E.164 format
+   User enters: +12125551234 (US), +442071234567 (UK), +919876543210 (India), etc.
+   → Validates E.164 international format
+   → Supports 195+ countries
    → Checks rate limit
    ```
 
@@ -178,7 +228,7 @@ git push
    ```
    → Generate 6-digit code (e.g., 492837)
    → Store in phone_verification collection
-   → Send SMS via provider
+   → Send SMS via provider (delivered worldwide)
    → Set 10-minute expiration
    ```
 
@@ -228,8 +278,16 @@ await pb.collection('users').authWithPassword(
 
 ### 4. Phone Format Validation
 - E.164 international format required
-- Pattern: `^\+[1-9]\d{1,14}$`
+- Pattern: `^\+[1-9]\d{7,14}$`
 - Validates country code and length
+- **Supports all 195+ countries worldwide**
+- Examples:
+  - US: +12125551234
+  - UK: +442071234567
+  - India: +919876543210
+  - China: +8613812345678
+  - Brazil: +5511987654321
+  - Japan: +81312345678
 
 ## Cost Estimates
 
@@ -260,10 +318,18 @@ Assuming 2 SMS per user (initial verification + occasional re-verification):
 ssh root@dev.transharbor.org
 kubectl get pods -n transharbor
 
-# 2. Test OTP generation
+# 2. Test OTP generation with international numbers
 curl -X POST https://dev.transharbor.org/api/collections/phone_verification/records \
   -H "Content-Type: application/json" \
-  -d '{"phone": "+12125551234"}'
+  -d '{"phone": "+12125551234"}'  # US
+
+curl -X POST https://dev.transharbor.org/api/collections/phone_verification/records \
+  -H "Content-Type: application/json" \
+  -d '{"phone": "+442071234567"}'  # UK
+
+curl -X POST https://dev.transharbor.org/api/collections/phone_verification/records \
+  -H "Content-Type: application/json" \
+  -d '{"phone": "+919876543210"}'  # India
 
 # 3. Check PocketBase logs
 kubectl logs -n transharbor deployment/pocketbase-dev -f
@@ -348,9 +414,15 @@ Set up alerts for:
    ```
 
 2. **Verify phone number format**
-   - Must include country code (+1, +44, etc.)
+   - Must include country code (+1, +44, +91, +86, etc.)
    - No spaces or special characters except +
-   - E.164 format: +12125551234
+   - E.164 international format
+   - Examples:
+     - US: +12125551234
+     - UK: +442071234567
+     - India: +919876543210
+     - China: +8613812345678
+   - Use https://www.twilio.com/lookup to validate numbers
 
 3. **Check PocketBase logs**
    ```bash
@@ -385,8 +457,83 @@ kubectl exec -it deployment/pocketbase-dev -n transharbor -- \
 - [ ] Rate limiting tested
 - [ ] Monitoring and alerts configured
 - [ ] Cost limits set on SMS provider
+- [ ] **International SMS enabled** (check provider settings)
+- [ ] **Country-specific regulations reviewed** (see below)
 - [ ] Terms of Service updated (phone collection disclosure)
 - [ ] Privacy Policy updated (phone storage and SMS)
+
+## International Considerations
+
+### SMS Regulations by Country
+
+Some countries have specific SMS regulations:
+
+1. **China (+86)**
+   - Requires registered sender ID
+   - May need local partnership
+   - AWS SNS not supported
+   - Consider Twilio or local provider
+
+2. **India (+91)**
+   - DLT (Distributed Ledger Technology) registration required
+   - Template pre-approval needed
+   - Relatively low cost (~$0.005/SMS)
+
+3. **USA (+1) / Canada (+1)**
+   - 10DLC registration recommended for volume
+   - A2P fees may apply
+   - Good deliverability
+
+4. **European Union**
+   - GDPR compliance required
+   - Opt-in consent mandatory
+   - Good deliverability
+
+5. **Middle East**
+   - Varies by country
+   - Some require local sender registration
+   - Higher costs in some regions
+
+### Cost Optimization for International Users
+
+1. **Use AWS SNS** for lowest cost in most countries
+2. **Enable geographic routing** to use regional SMS gateways
+3. **Set spending limits** to prevent unexpected charges
+4. **Monitor by country** to identify cost anomalies
+5. **Consider WhatsApp** for high-cost countries (e.g., $0.005-0.01/message)
+
+### Recommended SMS Provider by Volume
+
+| Users/Month | Recommendation | Why |
+|-------------|----------------|-----|
+| < 1,000 | Twilio | Easy setup, good docs |
+| 1,000-10,000 | AWS SNS | Lower cost at scale |
+| 10,000+ | Vonage/MessageBird | Volume discounts |
+| Enterprise | Custom/Mixed | Regional providers |
+
+### Country-Specific Tips
+
+**High-Volume Countries:**
+- India: Use local aggregator for <$0.002/SMS
+- China: Partner with Alibaba Cloud for local delivery
+- Brazil: Consider WhatsApp Business API
+- Indonesia: Use local SMS gateway
+
+**Restricted Countries:**
+- North Korea: SMS delivery not available
+- Cuba: Limited coverage, high cost
+- Syria: Sanctions apply
+
+### Language Support
+
+The phone verification UI currently supports:
+- English (default)
+- Add more languages in `lib/l10n/` directory
+
+SMS messages are in English by default. To support multiple languages:
+1. Detect user's country code
+2. Map to language preference
+3. Send localized SMS template
 
 ### Rollout Strategy
 

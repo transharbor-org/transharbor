@@ -371,13 +371,20 @@ void main() {
   });
 
   group('PhoneAuthService - Phone Number Validation', () {
-    test('accepts valid E.164 format numbers', () {
+    test('accepts valid E.164 format numbers from worldwide', () {
       final validNumbers = [
         '+12125551234',      // US
         '+442071234567',     // UK
         '+33123456789',      // France
         '+81312345678',      // Japan
         '+5511987654321',    // Brazil
+        '+919876543210',     // India
+        '+8613812345678',    // China
+        '+61212345678',      // Australia
+        '+27123456789',      // South Africa
+        '+254712345678',     // Kenya
+        '+971501234567',     // UAE
+        '+82212345678',      // South Korea
       ];
 
       for (final number in validNumbers) {

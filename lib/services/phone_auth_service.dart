@@ -260,8 +260,9 @@ class _PhoneVerificationWidgetState extends State<PhoneVerificationWidget> {
             TextFormField(
               controller: _phoneController,
               decoration: const InputDecoration(
-                labelText: 'Phone Number',
-                hintText: '+1234567890',
+                labelText: 'Phone Number (International)',
+                hintText: '+1234567890, +442071234567, +919876543210',
+                helperText: 'Enter your phone number with country code',
                 prefixIcon: Icon(Icons.phone),
               ),
               keyboardType: TextInputType.phone,
@@ -270,8 +271,9 @@ class _PhoneVerificationWidgetState extends State<PhoneVerificationWidget> {
                   return 'Please enter phone number';
                 }
                 // E.164: +[country][number], total length 8-15 (including +)
+                // Supports all countries worldwide
                 if (!RegExp(r'^\+[1-9]\d{7,14}$').hasMatch(value)) {
-                  return 'Invalid phone number format (use +country_code)';
+                  return 'Use international format: +[country code][number]';
                 }
                 return null;
               },
