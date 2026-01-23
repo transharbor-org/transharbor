@@ -8,8 +8,8 @@ echo "========================================"
 # Create data directory
 mkdir -p /pb_data
 
-# Check if this is first run (no database file)
-if [ ! -f "/pb_data/data.db" ]; then
+# Check if this is first run (no initialization marker)
+if [ ! -f "/pb_data/.initialized" ]; then
     echo "📦 First run detected - initializing database..."
     
     # Start PocketBase in background to initialize DB
@@ -148,14 +148,17 @@ PYTHON_SCRIPT
             if [ "$SUCCESS" = "true" ]; then
                 echo "✅ All collections imported successfully (rules will be applied on first access)"
                 rm -f /tmp/batch*.json /tmp/import_response.json /tmp/collections_with_rules.json
+                touch /pb_data/.initialized
             else
                 echo "⚠️  Import failed, copying schema to /pb_data for manual import"
                 cp /app/pb_schema.json /pb_data/pb_schema.json
                 rm -f /tmp/batch*.json /tmp/import_response.json /tmp/collections_with_rules.json
+                touch /pb_data/.initialized
             fi
         else
             echo "⚠️  Could not authenticate for schema import"
             cp /app/pb_schema.json /pb_data/pb_schema.json
+            touch /pb_data/.initialized
         fi
     fi
     
