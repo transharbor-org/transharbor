@@ -35,26 +35,22 @@ if [ ! -f "/pb_data/data.db" ]; then
     
     echo "✅ PocketBase started"
     
-    # Create admin account if credentials are provided
+    # Create superuser account if credentials are provided (v0.23+ uses superusers)
     if [ -n "$PB_ADMIN_EMAIL" ] && [ -n "$PB_ADMIN_PASSWORD" ]; then
-        echo "👤 Creating admin account..."
+        echo "👤 Creating superuser account..."
         
-        # Use the PocketBase admin API to create admin
-        # Note: This uses the undocumented endpoint, alternatively we could use pb_migrations
-        curl -s -X POST http://localhost:8080/api/admins \
-            -H "Content-Type: application/json" \
-            -d "{\"email\":\"$PB_ADMIN_EMAIL\",\"password\":\"$PB_ADMIN_PASSWORD\",\"passwordConfirm\":\"$PB_ADMIN_PASSWORD\"}" \
-            > /dev/null 2>&1 || echo "   (Admin may already exist)"
+        # Use PocketBase CLI to create superuser
+        /app/pocketbase --dir=/pb_data superuser upsert "$PB_ADMIN_EMAIL" "$PB_ADMIN_PASSWORD" > /dev/null 2>&1 || echo "   (Superuser may already exist)"
         
-        echo "✅ Admin account configured"
+        echo "✅ Superuser account configured"
     fi
     
     # Import schema via API
     if [ -f "/app/pb_schema.json" ]; then
         echo "📋 Schema found - importing collections..."
         
-        # Authenticate as admin to get token
-        AUTH_RESPONSE=$(curl -s -X POST http://localhost:8080/api/admins/auth-with-password \
+        # Authenticate as superuser to get token (v0.23+ uses _superusers collection)
+        AUTH_RESPONSE=$(curl -s -X POST http://localhost:8080/api/collections/_superusers/auth-with-password \
             -H "Content-Type: application/json" \
             -d "{\"identity\":\"$PB_ADMIN_EMAIL\",\"password\":\"$PB_ADMIN_PASSWORD\"}")
         
