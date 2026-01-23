@@ -8,7 +8,7 @@
  * Usage:
  *   1. Start PocketBase: cd pocketbase && ./pocketbase serve
  *   2. Create admin account via http://127.0.0.1:8090/_/
- *   3. Run this script: node scripts/create_pocketbase_schema.js
+ *   3. Run this script: node pocketbase/create_pocketbase_schema.js
  * 
  * Or set environment variables:
  *   POCKETBASE_URL=http://127.0.0.1:8090

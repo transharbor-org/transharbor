@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:http/http.dart' as http;
 import 'package:transharbor/services/phone_auth_service.dart';
 
 @GenerateMocks([PocketBase, RecordService, RecordModel])
