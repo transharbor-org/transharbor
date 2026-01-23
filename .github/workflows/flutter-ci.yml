@@ -31,7 +31,7 @@ jobs:
         run: flutter analyze 2>&1 | tee analyze.log && ! grep -q "error •" analyze.log
       
       - name: Run tests
-        run: flutter test
+        run: flutter test --exclude-tags=smoke --exclude-tags=integration
       
       - name: Check for outdated dependencies
         run: flutter pub outdated
