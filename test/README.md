@@ -45,7 +45,7 @@ Tests for core services that handle business logic and external interactions.
 
 - **StorageService**: Local storage, secure token storage
 - **PocketBaseService**: Backend API integration, authentication, CRUD operations
-- **ApiService**: HTTP client configuration and methods
+- **PhoneAuthService**: SMS OTP verification and phone number validation
 
 ### 3. Provider Tests
 Tests for state management providers using the Provider pattern.

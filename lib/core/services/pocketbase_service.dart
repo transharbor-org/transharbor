@@ -1,18 +1,32 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:http/http.dart' as http;
-import '../constants/api_constants.dart';
 import 'storage_service.dart';
 
 class PocketBaseService {
   static final PocketBaseService _instance = PocketBaseService._internal();
   late final PocketBase pb;
+  
+  // PocketBase configuration
+  static const String baseUrl = 'http://127.0.0.1:8090';
+  // For production: static const String baseUrl = 'https://pb.transharbor.org';
+  
+  // Collection names
+  static const String usersCollection = 'users';
+  static const String personalsCollection = 'personals';
+  static const String messagesCollection = 'messages';
+  static const String conversationsCollection = 'conversations';
+  static const String proposalsCollection = 'proposals';
+  static const String votesCollection = 'votes';
+  static const String groupsCollection = 'groups';
+  static const String groupMembersCollection = 'group_members';
+  static const String groupPostsCollection = 'group_posts';
 
   factory PocketBaseService() {
     return _instance;
   }
 
   PocketBaseService._internal() {
-    pb = PocketBase(ApiConstants.baseUrl);
+    pb = PocketBase(baseUrl);
     _initializeAuth();
   }
 
@@ -37,7 +51,7 @@ class PocketBaseService {
   Future<RecordAuth> login(String email, String password) async {
     try {
       final authData = await pb
-          .collection(ApiConstants.usersCollection)
+          .collection(PocketBaseService.usersCollection)
           .authWithPassword(email, password);
       return authData;
     } catch (e) {
@@ -63,11 +77,11 @@ class PocketBaseService {
       if (username != null) body['username'] = username;
       if (displayName != null) body['displayName'] = displayName;
 
-      await pb.collection(ApiConstants.usersCollection).create(body: body);
+      await pb.collection(PocketBaseService.usersCollection).create(body: body);
 
       // Auto-login after registration
       final authData = await pb
-          .collection(ApiConstants.usersCollection)
+          .collection(PocketBaseService.usersCollection)
           .authWithPassword(email, password);
 
       return authData;
@@ -97,14 +111,14 @@ class PocketBaseService {
     if (bio != null) body['bio'] = bio;
     if (pronouns != null) body['pronouns'] = pronouns;
 
-    return await pb.collection(ApiConstants.usersCollection).update(
+    return await pb.collection(PocketBaseService.usersCollection).update(
           currentUserId!,
           body: body,
         );
   }
 
   Future<RecordModel> uploadUserAvatar(String filePath) async {
-    return await pb.collection(ApiConstants.usersCollection).update(
+    return await pb.collection(PocketBaseService.usersCollection).update(
       currentUserId!,
       body: {},
       files: [
@@ -117,7 +131,7 @@ class PocketBaseService {
     if (avatarFilename == null || avatarFilename.isEmpty) return '';
     try {
       final record =
-          await pb.collection(ApiConstants.usersCollection).getOne(userId);
+          await pb.collection(PocketBaseService.usersCollection).getOne(userId);
       return pb.files.getUrl(record, avatarFilename).toString();
     } catch (e) {
       return '';
@@ -130,7 +144,7 @@ class PocketBaseService {
     int perPage = 20,
     String? filter,
   }) async {
-    return await pb.collection(ApiConstants.personalsCollection).getList(
+    return await pb.collection(PocketBaseService.personalsCollection).getList(
           page: page,
           perPage: perPage,
           filter: filter,
@@ -140,7 +154,7 @@ class PocketBaseService {
   }
 
   Future<RecordModel> createPersonal(String content) async {
-    return await pb.collection(ApiConstants.personalsCollection).create(
+    return await pb.collection(PocketBaseService.personalsCollection).create(
       body: {
         'user_id': currentUserId,
         'content': content,
@@ -151,7 +165,7 @@ class PocketBaseService {
   }
 
   Future<void> deletePersonal(String id) async {
-    await pb.collection(ApiConstants.personalsCollection).delete(id);
+    await pb.collection(PocketBaseService.personalsCollection).delete(id);
   }
 
   // Messaging Methods
@@ -159,7 +173,7 @@ class PocketBaseService {
     int page = 1,
     int perPage = 20,
   }) async {
-    return await pb.collection(ApiConstants.conversationsCollection).getList(
+    return await pb.collection(PocketBaseService.conversationsCollection).getList(
           page: page,
           perPage: perPage,
           filter: 'participant_ids ~ "$currentUserId"',
@@ -172,7 +186,7 @@ class PocketBaseService {
     int page = 1,
     int perPage = 50,
   }) async {
-    return await pb.collection(ApiConstants.messagesCollection).getList(
+    return await pb.collection(PocketBaseService.messagesCollection).getList(
           page: page,
           perPage: perPage,
           filter: 'conversation_id = "$conversationId"',
@@ -184,7 +198,7 @@ class PocketBaseService {
     required String conversationId,
     required String content,
   }) async {
-    return await pb.collection(ApiConstants.messagesCollection).create(
+    return await pb.collection(PocketBaseService.messagesCollection).create(
       body: {
         'conversation_id': conversationId,
         'sender_id': currentUserId,
@@ -200,7 +214,7 @@ class PocketBaseService {
     int perPage = 20,
     String? filter,
   }) async {
-    return await pb.collection(ApiConstants.proposalsCollection).getList(
+    return await pb.collection(PocketBaseService.proposalsCollection).getList(
           page: page,
           perPage: perPage,
           filter: filter,
@@ -214,7 +228,7 @@ class PocketBaseService {
     required String description,
     required DateTime votingEndsAt,
   }) async {
-    return await pb.collection(ApiConstants.proposalsCollection).create(
+    return await pb.collection(PocketBaseService.proposalsCollection).create(
       body: {
         'title': title,
         'description': description,
@@ -234,7 +248,7 @@ class PocketBaseService {
   }) async {
     // Check if user already voted
     final existingVotes = await pb
-        .collection(ApiConstants.votesCollection)
+        .collection(PocketBaseService.votesCollection)
         .getList(
           filter: 'proposal_id = "$proposalId" && user_id = "$currentUserId"',
         );
@@ -244,7 +258,7 @@ class PocketBaseService {
     }
 
     // Create vote record
-    final vote = await pb.collection(ApiConstants.votesCollection).create(
+    final vote = await pb.collection(PocketBaseService.votesCollection).create(
       body: {
         'proposal_id': proposalId,
         'user_id': currentUserId,
@@ -254,7 +268,7 @@ class PocketBaseService {
 
     // Update proposal vote counts
     final proposal = await pb
-        .collection(ApiConstants.proposalsCollection)
+        .collection(PocketBaseService.proposalsCollection)
         .getOne(proposalId);
     final votes = {
       'votes_for': proposal.getIntValue('votes_for'),
@@ -275,7 +289,7 @@ class PocketBaseService {
     }
 
     await pb
-        .collection(ApiConstants.proposalsCollection)
+        .collection(PocketBaseService.proposalsCollection)
         .update(proposalId, body: votes);
 
     return vote;
@@ -307,7 +321,7 @@ class PocketBaseService {
           : '$finalFilter && category = "$category"';
     }
 
-    return await pb.collection(ApiConstants.groupsCollection).getList(
+    return await pb.collection(PocketBaseService.groupsCollection).getList(
           page: page,
           perPage: perPage,
           filter: finalFilter.isNotEmpty ? finalFilter : null,
@@ -317,7 +331,7 @@ class PocketBaseService {
   }
 
   Future<RecordModel> getGroup(String groupId) async {
-    return await pb.collection(ApiConstants.groupsCollection).getOne(
+    return await pb.collection(PocketBaseService.groupsCollection).getOne(
           groupId,
           expand: 'creator_id',
         );
@@ -329,7 +343,7 @@ class PocketBaseService {
     String? category,
     bool isPrivate = false,
   }) async {
-    final record = await pb.collection(ApiConstants.groupsCollection).create(
+    final record = await pb.collection(PocketBaseService.groupsCollection).create(
       body: {
         'name': name,
         'description': description,
@@ -341,7 +355,7 @@ class PocketBaseService {
     );
 
     // Auto-join creator as admin
-    await pb.collection(ApiConstants.groupMembersCollection).create(
+    await pb.collection(PocketBaseService.groupMembersCollection).create(
       body: {
         'group_id': record.id,
         'user_id': currentUserId,
@@ -355,12 +369,12 @@ class PocketBaseService {
 
   Future<void> updateGroup(String groupId, Map<String, dynamic> data) async {
     await pb
-        .collection(ApiConstants.groupsCollection)
+        .collection(PocketBaseService.groupsCollection)
         .update(groupId, body: data);
   }
 
   Future<void> deleteGroup(String groupId) async {
-    await pb.collection(ApiConstants.groupsCollection).delete(groupId);
+    await pb.collection(PocketBaseService.groupsCollection).delete(groupId);
   }
 
   // Group Members Methods
@@ -369,7 +383,7 @@ class PocketBaseService {
     int page = 1,
     int perPage = 50,
   }) async {
-    return await pb.collection(ApiConstants.groupMembersCollection).getList(
+    return await pb.collection(PocketBaseService.groupMembersCollection).getList(
           page: page,
           perPage: perPage,
           filter: 'group_id = "$groupId"',
@@ -380,7 +394,7 @@ class PocketBaseService {
   Future<RecordModel?> getUserGroupMembership(String groupId) async {
     try {
       final result =
-          await pb.collection(ApiConstants.groupMembersCollection).getList(
+          await pb.collection(PocketBaseService.groupMembersCollection).getList(
                 filter: 'group_id = "$groupId" && user_id = "$currentUserId"',
               );
       return result.items.isNotEmpty ? result.items.first : null;
@@ -393,7 +407,7 @@ class PocketBaseService {
     int page = 1,
     int perPage = 20,
   }) async {
-    return await pb.collection(ApiConstants.groupMembersCollection).getList(
+    return await pb.collection(PocketBaseService.groupMembersCollection).getList(
           page: page,
           perPage: perPage,
           filter: 'user_id = "$currentUserId"',
@@ -404,7 +418,7 @@ class PocketBaseService {
 
   Future<RecordModel> joinGroup(String groupId) async {
     final membership =
-        await pb.collection(ApiConstants.groupMembersCollection).create(
+        await pb.collection(PocketBaseService.groupMembersCollection).create(
       body: {
         'group_id': groupId,
         'user_id': currentUserId,
@@ -415,8 +429,8 @@ class PocketBaseService {
 
     // Increment member count
     final group =
-        await pb.collection(ApiConstants.groupsCollection).getOne(groupId);
-    await pb.collection(ApiConstants.groupsCollection).update(
+        await pb.collection(PocketBaseService.groupsCollection).getOne(groupId);
+    await pb.collection(PocketBaseService.groupsCollection).update(
       groupId,
       body: {'member_count': group.getIntValue('member_count') + 1},
     );
@@ -428,14 +442,14 @@ class PocketBaseService {
     final membership = await getUserGroupMembership(groupId);
     if (membership != null) {
       await pb
-          .collection(ApiConstants.groupMembersCollection)
+          .collection(PocketBaseService.groupMembersCollection)
           .delete(membership.id);
 
       // Decrement member count
       final group =
-          await pb.collection(ApiConstants.groupsCollection).getOne(groupId);
+          await pb.collection(PocketBaseService.groupsCollection).getOne(groupId);
       final newCount = (group.getIntValue('member_count') - 1).clamp(0, 999999);
-      await pb.collection(ApiConstants.groupsCollection).update(
+      await pb.collection(PocketBaseService.groupsCollection).update(
         groupId,
         body: {'member_count': newCount},
       );
@@ -448,7 +462,7 @@ class PocketBaseService {
     int page = 1,
     int perPage = 20,
   }) async {
-    return await pb.collection(ApiConstants.groupPostsCollection).getList(
+    return await pb.collection(PocketBaseService.groupPostsCollection).getList(
           page: page,
           perPage: perPage,
           filter: 'group_id = "$groupId"',
@@ -461,7 +475,7 @@ class PocketBaseService {
     required String groupId,
     required String content,
   }) async {
-    return await pb.collection(ApiConstants.groupPostsCollection).create(
+    return await pb.collection(PocketBaseService.groupPostsCollection).create(
       body: {
         'group_id': groupId,
         'user_id': currentUserId,
@@ -473,6 +487,6 @@ class PocketBaseService {
   }
 
   Future<void> deleteGroupPost(String postId) async {
-    await pb.collection(ApiConstants.groupPostsCollection).delete(postId);
+    await pb.collection(PocketBaseService.groupPostsCollection).delete(postId);
   }
 }

@@ -26,12 +26,14 @@ A user-owned, democratically-governed community platform for trans and nonbinary
 ```
 lib/
 ├── main.dart                 # App entry point
+├── services/                 # App-level services
+│   └── phone_auth_service.dart  # Phone verification
 ├── core/                     # Core functionality
-│   ├── constants/           # App constants
 │   ├── models/              # Shared models
 │   ├── router/              # Navigation/routing
-│   ├── services/            # API & storage services
-│   └── theme/               # App theming
+│   ├── services/            # Core services (PocketBase, Storage)
+│   ├── theme/               # App theming
+│   └── utils/               # Utility functions & guards
 └── features/                # Feature modules
     ├── auth/               # Authentication
     ├── home/               # Home screen
