@@ -57,42 +57,20 @@ if [ ! -f "/pb_data/data.db" ]; then
         TOKEN=$(echo "$AUTH_RESPONSE" | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
         
         if [ -n "$TOKEN" ]; then
-            # Import collections in batches to handle dependencies
-            # Batch 1: Base collections without relations to other collections
-            echo '{"collections":' > /tmp/batch1.json
-            cat /app/pb_schema.json | grep -A 1000 '"name": "users"' | grep -B 1 '"name": "personals"' | head -n -1 >> /tmp/batch1.json
-            echo ',"deleteMissing":false}' >> /tmp/batch1.json
-            
+            # Try importing all collections in the correct order
             HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
                 -H "Authorization: $TOKEN" \
                 -H "Content-Type: application/json" \
-                -d @/tmp/batch1.json)
+                -d "{\"collections\":$(cat /app/pb_schema.json),\"deleteMissing\":false}")
             
             if [ "$HTTP_CODE" = "204" ]; then
-                echo "✅ Batch 1 imported (users)"
-                
-                # Batch 2: All remaining collections (relations should now resolve)
-                echo "{\"collections\":$(cat /app/pb_schema.json),\"deleteMissing\":false}" > /tmp/batch2.json
-                
-                HTTP_CODE=$(curl -s -o /tmp/import_response.json -w "%{http_code}" -X PUT http://localhost:8080/api/collections/import \
-                    -H "Authorization: $TOKEN" \
-                    -H "Content-Type: application/json" \
-                    -d @/tmp/batch2.json)
-                
-                if [ "$HTTP_CODE" = "204" ]; then
-                    echo "✅ All collections imported successfully"
-                    rm -f /tmp/batch*.json /tmp/import_response.json
-                else
-                    echo "⚠️  Batch 2 import failed (HTTP $HTTP_CODE)"
-                    cat /tmp/import_response.json
-                    cp /app/pb_schema.json /pb_data/pb_schema.json
-                    rm -f /tmp/batch*.json /tmp/import_response.json
-                fi
+                echo "✅ Schema imported successfully"
+                rm -f /tmp/import_response.json
             else
                 echo "⚠️  Schema import failed (HTTP $HTTP_CODE), copying to /pb_data for manual import"
                 cat /tmp/import_response.json
                 cp /app/pb_schema.json /pb_data/pb_schema.json
-                rm -f /tmp/batch*.json /tmp/import_response.json
+                rm -f /tmp/import_response.json
             fi
         else
             echo "⚠️  Could not authenticate for schema import"
