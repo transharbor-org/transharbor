@@ -3,27 +3,28 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i20;
+import 'dart:async' as _i14;
 
-import 'package:http/http.dart' as _i11;
+import 'package:http/http.dart' as _i12;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i19;
+import 'package:mockito/src/dummies.dart' as _i22;
 import 'package:pocketbase/src/auth_store.dart' as _i2;
-import 'package:pocketbase/src/client.dart' as _i13;
-import 'package:pocketbase/src/dtos/auth_methods_list.dart' as _i15;
-import 'package:pocketbase/src/dtos/external_auth_model.dart' as _i21;
-import 'package:pocketbase/src/dtos/jsonable.dart' as _i17;
-import 'package:pocketbase/src/dtos/record_auth.dart' as _i16;
-import 'package:pocketbase/src/dtos/record_model.dart' as _i14;
-import 'package:pocketbase/src/dtos/result_list.dart' as _i18;
-import 'package:pocketbase/src/services/admin_service.dart' as _i3;
+import 'package:pocketbase/src/client.dart' as _i15;
+import 'package:pocketbase/src/dtos/auth_methods_list.dart' as _i17;
+import 'package:pocketbase/src/dtos/jsonable.dart' as _i20;
+import 'package:pocketbase/src/dtos/otp_response.dart' as _i19;
+import 'package:pocketbase/src/dtos/record_auth.dart' as _i18;
+import 'package:pocketbase/src/dtos/record_model.dart' as _i16;
+import 'package:pocketbase/src/dtos/result_list.dart' as _i21;
 import 'package:pocketbase/src/services/backup_service.dart' as _i10;
+import 'package:pocketbase/src/services/batch_service.dart' as _i13;
 import 'package:pocketbase/src/services/collection_service.dart' as _i4;
+import 'package:pocketbase/src/services/cron_service.dart' as _i11;
 import 'package:pocketbase/src/services/file_service.dart' as _i5;
 import 'package:pocketbase/src/services/health_service.dart' as _i9;
 import 'package:pocketbase/src/services/log_service.dart' as _i8;
 import 'package:pocketbase/src/services/realtime_service.dart' as _i6;
-import 'package:pocketbase/src/services/record_service.dart' as _i12;
+import 'package:pocketbase/src/services/record_service.dart' as _i3;
 import 'package:pocketbase/src/services/settings_service.dart' as _i7;
 
 // ignore_for_file: type=lint
@@ -51,8 +52,8 @@ class _FakeAuthStore_0 extends _i1.SmartFake implements _i2.AuthStore {
         );
 }
 
-class _FakeAdminService_1 extends _i1.SmartFake implements _i3.AdminService {
-  _FakeAdminService_1(
+class _FakeRecordService_1 extends _i1.SmartFake implements _i3.RecordService {
+  _FakeRecordService_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -134,8 +135,8 @@ class _FakeBackupService_8 extends _i1.SmartFake implements _i10.BackupService {
         );
 }
 
-class _FakeClient_9 extends _i1.SmartFake implements _i11.Client {
-  _FakeClient_9(
+class _FakeCronService_9 extends _i1.SmartFake implements _i11.CronService {
+  _FakeCronService_9(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -144,9 +145,8 @@ class _FakeClient_9 extends _i1.SmartFake implements _i11.Client {
         );
 }
 
-class _FakeRecordService_10 extends _i1.SmartFake
-    implements _i12.RecordService {
-  _FakeRecordService_10(
+class _FakeClient_10 extends _i1.SmartFake implements _i12.Client {
+  _FakeClient_10(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -165,8 +165,8 @@ class _FakeUri_11 extends _i1.SmartFake implements Uri {
         );
 }
 
-class _FakePocketBase_12 extends _i1.SmartFake implements _i13.PocketBase {
-  _FakePocketBase_12(
+class _FakeBatchService_12 extends _i1.SmartFake implements _i13.BatchService {
+  _FakeBatchService_12(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -175,8 +175,8 @@ class _FakePocketBase_12 extends _i1.SmartFake implements _i13.PocketBase {
         );
 }
 
-class _FakeRecordModel_13 extends _i1.SmartFake implements _i14.RecordModel {
-  _FakeRecordModel_13(
+class _FakeFuture_13<T1> extends _i1.SmartFake implements _i14.Future<T1> {
+  _FakeFuture_13(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -185,9 +185,8 @@ class _FakeRecordModel_13 extends _i1.SmartFake implements _i14.RecordModel {
         );
 }
 
-class _FakeAuthMethodsList_14 extends _i1.SmartFake
-    implements _i15.AuthMethodsList {
-  _FakeAuthMethodsList_14(
+class _FakePocketBase_14 extends _i1.SmartFake implements _i15.PocketBase {
+  _FakePocketBase_14(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -196,8 +195,8 @@ class _FakeAuthMethodsList_14 extends _i1.SmartFake
         );
 }
 
-class _FakeRecordAuth_15 extends _i1.SmartFake implements _i16.RecordAuth {
-  _FakeRecordAuth_15(
+class _FakeRecordModel_15 extends _i1.SmartFake implements _i16.RecordModel {
+  _FakeRecordModel_15(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -206,9 +205,40 @@ class _FakeRecordAuth_15 extends _i1.SmartFake implements _i16.RecordAuth {
         );
 }
 
-class _FakeResultList_16<M extends _i17.Jsonable> extends _i1.SmartFake
-    implements _i18.ResultList<M> {
-  _FakeResultList_16(
+class _FakeAuthMethodsList_16 extends _i1.SmartFake
+    implements _i17.AuthMethodsList {
+  _FakeAuthMethodsList_16(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeRecordAuth_17 extends _i1.SmartFake implements _i18.RecordAuth {
+  _FakeRecordAuth_17(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeOTPResponse_18 extends _i1.SmartFake implements _i19.OTPResponse {
+  _FakeOTPResponse_18(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeResultList_19<M extends _i20.Jsonable> extends _i1.SmartFake
+    implements _i21.ResultList<M> {
+  _FakeResultList_19(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -220,7 +250,7 @@ class _FakeResultList_16<M extends _i17.Jsonable> extends _i1.SmartFake
 /// A class which mocks [PocketBase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
+class MockPocketBase extends _i1.Mock implements _i15.PocketBase {
   MockPocketBase() {
     _i1.throwOnMissingStub(this);
   }
@@ -228,16 +258,25 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
   @override
   String get baseUrl => (super.noSuchMethod(
         Invocation.getter(#baseUrl),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.getter(#baseUrl),
         ),
       ) as String);
 
   @override
+  String get baseURL => (super.noSuchMethod(
+        Invocation.getter(#baseURL),
+        returnValue: _i22.dummyValue<String>(
+          this,
+          Invocation.getter(#baseURL),
+        ),
+      ) as String);
+
+  @override
   String get lang => (super.noSuchMethod(
         Invocation.getter(#lang),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.getter(#lang),
         ),
@@ -253,13 +292,13 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
       ) as _i2.AuthStore);
 
   @override
-  _i3.AdminService get admins => (super.noSuchMethod(
+  _i3.RecordService get admins => (super.noSuchMethod(
         Invocation.getter(#admins),
-        returnValue: _FakeAdminService_1(
+        returnValue: _FakeRecordService_1(
           this,
           Invocation.getter(#admins),
         ),
-      ) as _i3.AdminService);
+      ) as _i3.RecordService);
 
   @override
   _i4.CollectionService get collections => (super.noSuchMethod(
@@ -325,18 +364,36 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
       ) as _i10.BackupService);
 
   @override
-  _i11.Client Function() get httpClientFactory => (super.noSuchMethod(
+  _i11.CronService get crons => (super.noSuchMethod(
+        Invocation.getter(#crons),
+        returnValue: _FakeCronService_9(
+          this,
+          Invocation.getter(#crons),
+        ),
+      ) as _i11.CronService);
+
+  @override
+  _i12.Client Function() get httpClientFactory => (super.noSuchMethod(
         Invocation.getter(#httpClientFactory),
-        returnValue: () => _FakeClient_9(
+        returnValue: () => _FakeClient_10(
           this,
           Invocation.getter(#httpClientFactory),
         ),
-      ) as _i11.Client Function());
+      ) as _i12.Client Function());
 
   @override
-  set baseUrl(String? value) => super.noSuchMethod(
+  set baseUrl(String? v) => super.noSuchMethod(
         Invocation.setter(
           #baseUrl,
+          v,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set baseURL(String? value) => super.noSuchMethod(
+        Invocation.setter(
+          #baseURL,
           value,
         ),
         returnValueForMissingStub: null,
@@ -355,15 +412,6 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
   set authStore(_i2.AuthStore? value) => super.noSuchMethod(
         Invocation.setter(
           #authStore,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  set admins(_i3.AdminService? value) => super.noSuchMethod(
-        Invocation.setter(
-          #admins,
           value,
         ),
         returnValueForMissingStub: null,
@@ -433,7 +481,16 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
       );
 
   @override
-  set httpClientFactory(_i11.Client Function()? value) => super.noSuchMethod(
+  set crons(_i11.CronService? value) => super.noSuchMethod(
+        Invocation.setter(
+          #crons,
+          value,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set httpClientFactory(_i12.Client Function()? value) => super.noSuchMethod(
         Invocation.setter(
           #httpClientFactory,
           value,
@@ -442,20 +499,29 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
       );
 
   @override
-  _i12.RecordService collection(String? collectionIdOrName) =>
+  _i3.RecordService collection(String? collectionIdOrName) =>
       (super.noSuchMethod(
         Invocation.method(
           #collection,
           [collectionIdOrName],
         ),
-        returnValue: _FakeRecordService_10(
+        returnValue: _FakeRecordService_1(
           this,
           Invocation.method(
             #collection,
             [collectionIdOrName],
           ),
         ),
-      ) as _i12.RecordService);
+      ) as _i3.RecordService);
+
+  @override
+  void close() => super.noSuchMethod(
+        Invocation.method(
+          #close,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   String filter(
@@ -470,7 +536,7 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
             query,
           ],
         ),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.method(
             #filter,
@@ -484,7 +550,7 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
 
   @override
   Uri getFileUrl(
-    _i14.RecordModel? record,
+    _i16.RecordModel? record,
     String? filename, {
     String? thumb,
     String? token,
@@ -546,13 +612,53 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
       ) as Uri);
 
   @override
-  _i20.Future<dynamic> send(
+  Uri buildURL(
+    String? path, [
+    Map<String, dynamic>? queryParameters = const {},
+  ]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #buildURL,
+          [
+            path,
+            queryParameters,
+          ],
+        ),
+        returnValue: _FakeUri_11(
+          this,
+          Invocation.method(
+            #buildURL,
+            [
+              path,
+              queryParameters,
+            ],
+          ),
+        ),
+      ) as Uri);
+
+  @override
+  _i13.BatchService createBatch() => (super.noSuchMethod(
+        Invocation.method(
+          #createBatch,
+          [],
+        ),
+        returnValue: _FakeBatchService_12(
+          this,
+          Invocation.method(
+            #createBatch,
+            [],
+          ),
+        ),
+      ) as _i13.BatchService);
+
+  @override
+  _i14.Future<T> send<T extends dynamic>(
     String? path, {
     String? method = 'GET',
     Map<String, String>? headers = const {},
     Map<String, dynamic>? query = const {},
     Map<String, dynamic>? body = const {},
-    List<_i11.MultipartFile>? files = const [],
+    List<_i12.MultipartFile>? files = const [],
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -566,14 +672,44 @@ class MockPocketBase extends _i1.Mock implements _i13.PocketBase {
             #files: files,
           },
         ),
-        returnValue: _i20.Future<dynamic>.value(),
-      ) as _i20.Future<dynamic>);
+        returnValue: _i22.ifNotNull(
+              _i22.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #send,
+                  [path],
+                  {
+                    #method: method,
+                    #headers: headers,
+                    #query: query,
+                    #body: body,
+                    #files: files,
+                  },
+                ),
+              ),
+              (T v) => _i14.Future<T>.value(v),
+            ) ??
+            _FakeFuture_13<T>(
+              this,
+              Invocation.method(
+                #send,
+                [path],
+                {
+                  #method: method,
+                  #headers: headers,
+                  #query: query,
+                  #body: body,
+                  #files: files,
+                },
+              ),
+            ),
+      ) as _i14.Future<T>);
 }
 
 /// A class which mocks [RecordService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRecordService extends _i1.Mock implements _i12.RecordService {
+class MockRecordService extends _i1.Mock implements _i3.RecordService {
   MockRecordService() {
     _i1.throwOnMissingStub(this);
   }
@@ -581,7 +717,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
   @override
   String get baseCollectionPath => (super.noSuchMethod(
         Invocation.getter(#baseCollectionPath),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.getter(#baseCollectionPath),
         ),
@@ -590,41 +726,41 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
   @override
   String get baseCrudPath => (super.noSuchMethod(
         Invocation.getter(#baseCrudPath),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.getter(#baseCrudPath),
         ),
       ) as String);
 
   @override
-  _i13.PocketBase get client => (super.noSuchMethod(
+  _i15.PocketBase get client => (super.noSuchMethod(
         Invocation.getter(#client),
-        returnValue: _FakePocketBase_12(
+        returnValue: _FakePocketBase_14(
           this,
           Invocation.getter(#client),
         ),
-      ) as _i13.PocketBase);
+      ) as _i15.PocketBase);
 
   @override
-  _i14.RecordModel itemFactoryFunc(Map<String, dynamic>? json) =>
+  _i16.RecordModel itemFactoryFunc(Map<String, dynamic>? json) =>
       (super.noSuchMethod(
         Invocation.method(
           #itemFactoryFunc,
           [json],
         ),
-        returnValue: _FakeRecordModel_13(
+        returnValue: _FakeRecordModel_15(
           this,
           Invocation.method(
             #itemFactoryFunc,
             [json],
           ),
         ),
-      ) as _i14.RecordModel);
+      ) as _i16.RecordModel);
 
   @override
-  _i20.Future<_i6.UnsubscribeFunc> subscribe(
+  _i14.Future<_i6.UnsubscribeFunc> subscribe(
     String? topic,
-    _i12.RecordSubscriptionFunc? callback, {
+    _i3.RecordSubscriptionFunc? callback, {
     String? expand,
     String? filter,
     String? fields,
@@ -646,26 +782,26 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<_i6.UnsubscribeFunc>.value(
-            () => _i20.Future<void>.value()),
-      ) as _i20.Future<_i6.UnsubscribeFunc>);
+        returnValue: _i14.Future<_i6.UnsubscribeFunc>.value(
+            () => _i14.Future<void>.value()),
+      ) as _i14.Future<_i6.UnsubscribeFunc>);
 
   @override
-  _i20.Future<void> unsubscribe([String? topic = '']) => (super.noSuchMethod(
+  _i14.Future<void> unsubscribe([String? topic = '']) => (super.noSuchMethod(
         Invocation.method(
           #unsubscribe,
           [topic],
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<_i14.RecordModel> update(
+  _i14.Future<_i16.RecordModel> update(
     String? id, {
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
-    List<_i11.MultipartFile>? files = const [],
+    List<_i12.MultipartFile>? files = const [],
     Map<String, String>? headers = const {},
     String? expand,
     String? fields,
@@ -683,7 +819,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #fields: fields,
           },
         ),
-        returnValue: _i20.Future<_i14.RecordModel>.value(_FakeRecordModel_13(
+        returnValue: _i14.Future<_i16.RecordModel>.value(_FakeRecordModel_15(
           this,
           Invocation.method(
             #update,
@@ -698,10 +834,10 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i14.RecordModel>);
+      ) as _i14.Future<_i16.RecordModel>);
 
   @override
-  _i20.Future<void> delete(
+  _i14.Future<void> delete(
     String? id, {
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
@@ -717,12 +853,13 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<_i15.AuthMethodsList> listAuthMethods({
+  _i14.Future<_i17.AuthMethodsList> listAuthMethods({
+    String? fields,
     Map<String, dynamic>? query = const {},
     Map<String, String>? headers = const {},
   }) =>
@@ -731,26 +868,28 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
           #listAuthMethods,
           [],
           {
+            #fields: fields,
             #query: query,
             #headers: headers,
           },
         ),
         returnValue:
-            _i20.Future<_i15.AuthMethodsList>.value(_FakeAuthMethodsList_14(
+            _i14.Future<_i17.AuthMethodsList>.value(_FakeAuthMethodsList_16(
           this,
           Invocation.method(
             #listAuthMethods,
             [],
             {
+              #fields: fields,
               #query: query,
               #headers: headers,
             },
           ),
         )),
-      ) as _i20.Future<_i15.AuthMethodsList>);
+      ) as _i14.Future<_i17.AuthMethodsList>);
 
   @override
-  _i20.Future<_i16.RecordAuth> authWithPassword(
+  _i14.Future<_i18.RecordAuth> authWithPassword(
     String? usernameOrEmail,
     String? password, {
     String? expand,
@@ -774,7 +913,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<_i16.RecordAuth>.value(_FakeRecordAuth_15(
+        returnValue: _i14.Future<_i18.RecordAuth>.value(_FakeRecordAuth_17(
           this,
           Invocation.method(
             #authWithPassword,
@@ -791,14 +930,14 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i16.RecordAuth>);
+      ) as _i14.Future<_i18.RecordAuth>);
 
   @override
-  _i20.Future<_i16.RecordAuth> authWithOAuth2Code(
+  _i14.Future<_i18.RecordAuth> authWithOAuth2Code(
     String? provider,
     String? code,
     String? codeVerifier,
-    String? redirectUrl, {
+    String? redirectURL, {
     Map<String, dynamic>? createData = const {},
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
@@ -813,7 +952,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             provider,
             code,
             codeVerifier,
-            redirectUrl,
+            redirectURL,
           ],
           {
             #createData: createData,
@@ -824,7 +963,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #fields: fields,
           },
         ),
-        returnValue: _i20.Future<_i16.RecordAuth>.value(_FakeRecordAuth_15(
+        returnValue: _i14.Future<_i18.RecordAuth>.value(_FakeRecordAuth_17(
           this,
           Invocation.method(
             #authWithOAuth2Code,
@@ -832,7 +971,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
               provider,
               code,
               codeVerifier,
-              redirectUrl,
+              redirectURL,
             ],
             {
               #createData: createData,
@@ -844,14 +983,17 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i16.RecordAuth>);
+      ) as _i14.Future<_i18.RecordAuth>);
 
   @override
-  _i20.Future<_i16.RecordAuth> authWithOAuth2(
+  _i14.Future<_i18.RecordAuth> authWithOAuth2(
     String? providerName,
-    _i12.OAuth2UrlCallbackFunc? urlCallback, {
+    _i3.OAuth2URLCallbackFunc? urlCallback, {
     List<String>? scopes = const [],
     Map<String, dynamic>? createData = const {},
+    Map<String, dynamic>? body = const {},
+    Map<String, dynamic>? query = const {},
+    Map<String, String>? headers = const {},
     String? expand,
     String? fields,
   }) =>
@@ -865,11 +1007,14 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
           {
             #scopes: scopes,
             #createData: createData,
+            #body: body,
+            #query: query,
+            #headers: headers,
             #expand: expand,
             #fields: fields,
           },
         ),
-        returnValue: _i20.Future<_i16.RecordAuth>.value(_FakeRecordAuth_15(
+        returnValue: _i14.Future<_i18.RecordAuth>.value(_FakeRecordAuth_17(
           this,
           Invocation.method(
             #authWithOAuth2,
@@ -880,15 +1025,18 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             {
               #scopes: scopes,
               #createData: createData,
+              #body: body,
+              #query: query,
+              #headers: headers,
               #expand: expand,
               #fields: fields,
             },
           ),
         )),
-      ) as _i20.Future<_i16.RecordAuth>);
+      ) as _i14.Future<_i18.RecordAuth>);
 
   @override
-  _i20.Future<_i16.RecordAuth> authRefresh({
+  _i14.Future<_i18.RecordAuth> authRefresh({
     String? expand,
     String? fields,
     Map<String, dynamic>? body = const {},
@@ -907,7 +1055,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<_i16.RecordAuth>.value(_FakeRecordAuth_15(
+        returnValue: _i14.Future<_i18.RecordAuth>.value(_FakeRecordAuth_17(
           this,
           Invocation.method(
             #authRefresh,
@@ -921,10 +1069,10 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i16.RecordAuth>);
+      ) as _i14.Future<_i18.RecordAuth>);
 
   @override
-  _i20.Future<void> requestPasswordReset(
+  _i14.Future<void> requestPasswordReset(
     String? email, {
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
@@ -940,12 +1088,12 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<void> confirmPasswordReset(
+  _i14.Future<void> confirmPasswordReset(
     String? passwordResetToken,
     String? password,
     String? passwordConfirm, {
@@ -967,12 +1115,12 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<void> requestVerification(
+  _i14.Future<void> requestVerification(
     String? email, {
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
@@ -988,12 +1136,12 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<void> confirmVerification(
+  _i14.Future<void> confirmVerification(
     String? verificationToken, {
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
@@ -1009,12 +1157,12 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<void> requestEmailChange(
+  _i14.Future<void> requestEmailChange(
     String? newEmail, {
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
@@ -1030,12 +1178,12 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<void> confirmEmailChange(
+  _i14.Future<void> confirmEmailChange(
     String? emailChangeToken,
     String? userPassword, {
     Map<String, dynamic>? body = const {},
@@ -1055,57 +1203,132 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<void>.value(),
+        returnValueForMissingStub: _i14.Future<void>.value(),
+      ) as _i14.Future<void>);
 
   @override
-  _i20.Future<List<_i21.ExternalAuthModel>> listExternalAuths(
-    String? recordId, {
-    Map<String, dynamic>? query = const {},
-    Map<String, String>? headers = const {},
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #listExternalAuths,
-          [recordId],
-          {
-            #query: query,
-            #headers: headers,
-          },
-        ),
-        returnValue: _i20.Future<List<_i21.ExternalAuthModel>>.value(
-            <_i21.ExternalAuthModel>[]),
-      ) as _i20.Future<List<_i21.ExternalAuthModel>>);
-
-  @override
-  _i20.Future<void> unlinkExternalAuth(
-    String? recordId,
-    String? provider, {
+  _i14.Future<_i19.OTPResponse> requestOTP(
+    String? email, {
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
     Map<String, String>? headers = const {},
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #unlinkExternalAuth,
-          [
-            recordId,
-            provider,
-          ],
+          #requestOTP,
+          [email],
           {
             #body: body,
             #query: query,
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
+        returnValue: _i14.Future<_i19.OTPResponse>.value(_FakeOTPResponse_18(
+          this,
+          Invocation.method(
+            #requestOTP,
+            [email],
+            {
+              #body: body,
+              #query: query,
+              #headers: headers,
+            },
+          ),
+        )),
+      ) as _i14.Future<_i19.OTPResponse>);
 
   @override
-  _i20.Future<List<_i14.RecordModel>> getFullList({
-    int? batch = 500,
+  _i14.Future<_i18.RecordAuth> authWithOTP(
+    String? otpId,
+    String? password, {
+    String? expand,
+    String? fields,
+    Map<String, dynamic>? body = const {},
+    Map<String, dynamic>? query = const {},
+    Map<String, String>? headers = const {},
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #authWithOTP,
+          [
+            otpId,
+            password,
+          ],
+          {
+            #expand: expand,
+            #fields: fields,
+            #body: body,
+            #query: query,
+            #headers: headers,
+          },
+        ),
+        returnValue: _i14.Future<_i18.RecordAuth>.value(_FakeRecordAuth_17(
+          this,
+          Invocation.method(
+            #authWithOTP,
+            [
+              otpId,
+              password,
+            ],
+            {
+              #expand: expand,
+              #fields: fields,
+              #body: body,
+              #query: query,
+              #headers: headers,
+            },
+          ),
+        )),
+      ) as _i14.Future<_i18.RecordAuth>);
+
+  @override
+  _i14.Future<_i15.PocketBase> impersonate(
+    String? recordId,
+    num? duration, {
+    String? expand,
+    String? fields,
+    Map<String, dynamic>? body = const {},
+    Map<String, dynamic>? query = const {},
+    Map<String, String>? headers = const {},
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #impersonate,
+          [
+            recordId,
+            duration,
+          ],
+          {
+            #expand: expand,
+            #fields: fields,
+            #body: body,
+            #query: query,
+            #headers: headers,
+          },
+        ),
+        returnValue: _i14.Future<_i15.PocketBase>.value(_FakePocketBase_14(
+          this,
+          Invocation.method(
+            #impersonate,
+            [
+              recordId,
+              duration,
+            ],
+            {
+              #expand: expand,
+              #fields: fields,
+              #body: body,
+              #query: query,
+              #headers: headers,
+            },
+          ),
+        )),
+      ) as _i14.Future<_i15.PocketBase>);
+
+  @override
+  _i14.Future<List<_i16.RecordModel>> getFullList({
+    int? batch = 1000,
     String? expand,
     String? filter,
     String? sort,
@@ -1128,11 +1351,11 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
           },
         ),
         returnValue:
-            _i20.Future<List<_i14.RecordModel>>.value(<_i14.RecordModel>[]),
-      ) as _i20.Future<List<_i14.RecordModel>>);
+            _i14.Future<List<_i16.RecordModel>>.value(<_i16.RecordModel>[]),
+      ) as _i14.Future<List<_i16.RecordModel>>);
 
   @override
-  _i20.Future<_i18.ResultList<_i14.RecordModel>> getList({
+  _i14.Future<_i21.ResultList<_i16.RecordModel>> getList({
     int? page = 1,
     int? perPage = 30,
     bool? skipTotal = false,
@@ -1159,8 +1382,8 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<_i18.ResultList<_i14.RecordModel>>.value(
-            _FakeResultList_16<_i14.RecordModel>(
+        returnValue: _i14.Future<_i21.ResultList<_i16.RecordModel>>.value(
+            _FakeResultList_19<_i16.RecordModel>(
           this,
           Invocation.method(
             #getList,
@@ -1178,10 +1401,10 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i18.ResultList<_i14.RecordModel>>);
+      ) as _i14.Future<_i21.ResultList<_i16.RecordModel>>);
 
   @override
-  _i20.Future<_i14.RecordModel> getOne(
+  _i14.Future<_i16.RecordModel> getOne(
     String? id, {
     String? expand,
     String? fields,
@@ -1199,7 +1422,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<_i14.RecordModel>.value(_FakeRecordModel_13(
+        returnValue: _i14.Future<_i16.RecordModel>.value(_FakeRecordModel_15(
           this,
           Invocation.method(
             #getOne,
@@ -1212,10 +1435,10 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i14.RecordModel>);
+      ) as _i14.Future<_i16.RecordModel>);
 
   @override
-  _i20.Future<_i14.RecordModel> getFirstListItem(
+  _i14.Future<_i16.RecordModel> getFirstListItem(
     String? filter, {
     String? expand,
     String? fields,
@@ -1233,7 +1456,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #headers: headers,
           },
         ),
-        returnValue: _i20.Future<_i14.RecordModel>.value(_FakeRecordModel_13(
+        returnValue: _i14.Future<_i16.RecordModel>.value(_FakeRecordModel_15(
           this,
           Invocation.method(
             #getFirstListItem,
@@ -1246,13 +1469,13 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i14.RecordModel>);
+      ) as _i14.Future<_i16.RecordModel>);
 
   @override
-  _i20.Future<_i14.RecordModel> create({
+  _i14.Future<_i16.RecordModel> create({
     Map<String, dynamic>? body = const {},
     Map<String, dynamic>? query = const {},
-    List<_i11.MultipartFile>? files = const [],
+    List<_i12.MultipartFile>? files = const [],
     Map<String, String>? headers = const {},
     String? expand,
     String? fields,
@@ -1270,7 +1493,7 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             #fields: fields,
           },
         ),
-        returnValue: _i20.Future<_i14.RecordModel>.value(_FakeRecordModel_13(
+        returnValue: _i14.Future<_i16.RecordModel>.value(_FakeRecordModel_15(
           this,
           Invocation.method(
             #create,
@@ -1285,13 +1508,13 @@ class MockRecordService extends _i1.Mock implements _i12.RecordService {
             },
           ),
         )),
-      ) as _i20.Future<_i14.RecordModel>);
+      ) as _i14.Future<_i16.RecordModel>);
 }
 
 /// A class which mocks [RecordModel].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
+class MockRecordModel extends _i1.Mock implements _i16.RecordModel {
   MockRecordModel() {
     _i1.throwOnMissingStub(this);
   }
@@ -1299,34 +1522,16 @@ class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
   @override
   String get id => (super.noSuchMethod(
         Invocation.getter(#id),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.getter(#id),
         ),
       ) as String);
 
   @override
-  String get created => (super.noSuchMethod(
-        Invocation.getter(#created),
-        returnValue: _i19.dummyValue<String>(
-          this,
-          Invocation.getter(#created),
-        ),
-      ) as String);
-
-  @override
-  String get updated => (super.noSuchMethod(
-        Invocation.getter(#updated),
-        returnValue: _i19.dummyValue<String>(
-          this,
-          Invocation.getter(#updated),
-        ),
-      ) as String);
-
-  @override
   String get collectionId => (super.noSuchMethod(
         Invocation.getter(#collectionId),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.getter(#collectionId),
         ),
@@ -1335,17 +1540,29 @@ class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
   @override
   String get collectionName => (super.noSuchMethod(
         Invocation.getter(#collectionName),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.getter(#collectionName),
         ),
       ) as String);
 
   @override
-  Map<String, List<_i14.RecordModel>> get expand => (super.noSuchMethod(
-        Invocation.getter(#expand),
-        returnValue: <String, List<_i14.RecordModel>>{},
-      ) as Map<String, List<_i14.RecordModel>>);
+  String get created => (super.noSuchMethod(
+        Invocation.getter(#created),
+        returnValue: _i22.dummyValue<String>(
+          this,
+          Invocation.getter(#created),
+        ),
+      ) as String);
+
+  @override
+  String get updated => (super.noSuchMethod(
+        Invocation.getter(#updated),
+        returnValue: _i22.dummyValue<String>(
+          this,
+          Invocation.getter(#updated),
+        ),
+      ) as String);
 
   @override
   Map<String, dynamic> get data => (super.noSuchMethod(
@@ -1354,55 +1571,16 @@ class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
       ) as Map<String, dynamic>);
 
   @override
-  set id(String? value) => super.noSuchMethod(
+  Map<String, List<_i16.RecordModel>> get expand => (super.noSuchMethod(
+        Invocation.getter(#expand),
+        returnValue: <String, List<_i16.RecordModel>>{},
+      ) as Map<String, List<_i16.RecordModel>>);
+
+  @override
+  set id(String? val) => super.noSuchMethod(
         Invocation.setter(
           #id,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  set created(String? value) => super.noSuchMethod(
-        Invocation.setter(
-          #created,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  set updated(String? value) => super.noSuchMethod(
-        Invocation.setter(
-          #updated,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  set collectionId(String? value) => super.noSuchMethod(
-        Invocation.setter(
-          #collectionId,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  set collectionName(String? value) => super.noSuchMethod(
-        Invocation.setter(
-          #collectionName,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  set expand(Map<String, List<_i14.RecordModel>>? value) => super.noSuchMethod(
-        Invocation.setter(
-          #expand,
-          value,
+          val,
         ),
         returnValueForMissingStub: null,
       );
@@ -1412,6 +1590,65 @@ class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
         Invocation.setter(
           #data,
           value,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set expand(Map<String, List<_i16.RecordModel>>? value) => super.noSuchMethod(
+        Invocation.setter(
+          #expand,
+          value,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+
+  @override
+  T get<T>(
+    String? fieldNameOrPath, [
+    T? defaultValue,
+  ]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #get,
+          [
+            fieldNameOrPath,
+            defaultValue,
+          ],
+        ),
+        returnValue: _i22.dummyValue<T>(
+          this,
+          Invocation.method(
+            #get,
+            [
+              fieldNameOrPath,
+              defaultValue,
+            ],
+          ),
+        ),
+      ) as T);
+
+  @override
+  void set(
+    String? fieldName,
+    dynamic value,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #set,
+          [
+            fieldName,
+            value,
+          ],
         ),
         returnValueForMissingStub: null,
       );
@@ -1429,7 +1666,7 @@ class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
             defaultValue,
           ],
         ),
-        returnValue: _i19.dummyValue<T>(
+        returnValue: _i22.dummyValue<T>(
           this,
           Invocation.method(
             #getDataValue,
@@ -1454,7 +1691,7 @@ class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
             defaultValue,
           ],
         ),
-        returnValue: _i19.dummyValue<String>(
+        returnValue: _i22.dummyValue<String>(
           this,
           Invocation.method(
             #getStringValue,
@@ -1529,13 +1766,4 @@ class MockRecordModel extends _i1.Mock implements _i14.RecordModel {
         ),
         returnValue: 0.0,
       ) as double);
-
-  @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-      ) as Map<String, dynamic>);
 }
