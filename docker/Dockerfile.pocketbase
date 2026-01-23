@@ -23,4 +23,4 @@ USER nonroot:nonroot
 EXPOSE 8080
 
 ENTRYPOINT ["/app/pocketbase"]
-CMD ["serve", "--http=0.0.0.0:8080"]
+CMD ["serve", "--http=0.0.0.0:8080", "--dir=/pb_data"]
