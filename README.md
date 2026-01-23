@@ -6,6 +6,7 @@ A user-owned, democratically-governed community platform for trans and nonbinary
 
 ### Features
 
+- **Phone Verification** - Secure sign-up with SMS OTP to prevent Sybil attacks
 - **Groups** - Join interest-based communities
 - **Personals** - Text posts to connect with others
 - **Messaging** - Private conversations
