@@ -11,14 +11,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": true,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 50,
         "min": 3,
         "pattern": "^[a-zA-Z0-9_]+$",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": true
       },
       {
         "id": "name",
@@ -27,14 +26,13 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 100,
-        "min": null,
+        "min": 0,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "bio",
@@ -43,14 +41,13 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 500,
-        "min": null,
+        "min": 0,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "avatar",
@@ -59,22 +56,21 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "maxSize": 5242880,
-          "mimeTypes": [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/webp"
-          ],
-          "thumbs": [
-            "100x100",
-            "300x300"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "maxSize": 5242880,
+        "mimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp"
+        ],
+        "protected": false,
+        "thumbs": [
+          "100x100",
+          "300x300"
+        ],
+        "unique": false
       },
       {
         "id": "role",
@@ -83,16 +79,14 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "user",
-            "moderator",
-            "admin"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "user",
+          "moderator",
+          "admin"
+        ],
+        "unique": false
       },
       {
         "id": "membership_type",
@@ -101,15 +95,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "non_voting",
-            "voting_member"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "non_voting",
+          "voting_member"
+        ],
+        "unique": false
       }
     ],
     "indexes": [
@@ -146,17 +138,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": true,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "content",
@@ -165,14 +155,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 5000,
         "min": 1,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "images",
@@ -181,22 +170,21 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 4,
-          "maxSize": 5242880,
-          "mimeTypes": [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/webp"
-          ],
-          "thumbs": [
-            "200x200",
-            "500x500"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 4,
+        "maxSize": 5242880,
+        "mimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp"
+        ],
+        "protected": false,
+        "thumbs": [
+          "200x200",
+          "500x500"
+        ],
+        "unique": false
       },
       {
         "id": "likes",
@@ -205,12 +193,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       },
       {
         "id": "comments",
@@ -219,12 +206,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       }
     ],
     "indexes": [
@@ -248,17 +234,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": 2,
-          "maxSelect": 10,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 10,
+        "minSelect": 2,
+        "unique": false
       },
       {
         "id": "lastMessage",
@@ -267,14 +251,13 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 500,
-        "min": null,
+        "min": 0,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "lastMessageTime",
@@ -283,12 +266,10 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "min": "",
-          "max": ""
-        },
-        "hidden": false
+        "hidden": false,
+        "max": "",
+        "min": "",
+        "unique": false
       },
       {
         "id": "unreadCount",
@@ -297,12 +278,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       }
     ],
     "indexes": [
@@ -326,15 +306,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "conversations",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": []
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": true,
+        "collectionId": "conversations",
+        "displayFields": [],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "sender",
@@ -343,17 +321,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "content",
@@ -362,14 +338,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 2000,
         "min": 1,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "read",
@@ -378,9 +353,8 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
-        "hidden": false
+        "hidden": false,
+        "unique": false
       }
     ],
     "indexes": [
@@ -405,14 +379,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 200,
         "min": 5,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "description",
@@ -421,14 +394,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 5000,
         "min": 20,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "author",
@@ -437,17 +409,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "status",
@@ -456,18 +426,16 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "pending",
-            "active",
-            "passed",
-            "failed",
-            "cancelled"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "pending",
+          "active",
+          "passed",
+          "failed",
+          "cancelled"
+        ],
+        "unique": false
       },
       {
         "id": "votesFor",
@@ -476,12 +444,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       },
       {
         "id": "votesAgainst",
@@ -490,12 +457,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       },
       {
         "id": "votesAbstain",
@@ -504,12 +470,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       },
       {
         "id": "startDate",
@@ -518,12 +483,10 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "min": "",
-          "max": ""
-        },
-        "hidden": false
+        "hidden": false,
+        "max": "",
+        "min": "",
+        "unique": false
       },
       {
         "id": "endDate",
@@ -532,12 +495,10 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "min": "",
-          "max": ""
-        },
-        "hidden": false
+        "hidden": false,
+        "max": "",
+        "min": "",
+        "unique": false
       }
     ],
     "indexes": [
@@ -563,17 +524,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "proposals",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "title"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": true,
+        "collectionId": "proposals",
+        "displayFields": [
+          "title"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "user",
@@ -582,17 +541,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": true,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "vote",
@@ -601,16 +558,14 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "for",
-            "against",
-            "abstain"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "for",
+          "against",
+          "abstain"
+        ],
+        "unique": false
       }
     ],
     "indexes": [
@@ -636,14 +591,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 100,
         "min": 3,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "description",
@@ -652,14 +606,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 1000,
         "min": 10,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "category",
@@ -668,19 +621,17 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "social",
-            "support",
-            "hobbies",
-            "activism",
-            "professional",
-            "other"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "social",
+          "support",
+          "hobbies",
+          "activism",
+          "professional",
+          "other"
+        ],
+        "unique": false
       },
       {
         "id": "creator",
@@ -689,17 +640,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "members",
@@ -708,12 +657,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       },
       {
         "id": "isPrivate",
@@ -722,9 +670,8 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
-        "hidden": false
+        "hidden": false,
+        "unique": false
       },
       {
         "id": "avatar",
@@ -733,22 +680,21 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "maxSize": 5242880,
-          "mimeTypes": [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/webp"
-          ],
-          "thumbs": [
-            "100x100",
-            "300x300"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "maxSize": 5242880,
+        "mimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp"
+        ],
+        "protected": false,
+        "thumbs": [
+          "100x100",
+          "300x300"
+        ],
+        "unique": false
       }
     ],
     "indexes": [
@@ -773,17 +719,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "groups",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "name"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": true,
+        "collectionId": "groups",
+        "displayFields": [
+          "name"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "user",
@@ -792,17 +736,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": true,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "role",
@@ -811,15 +753,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "member",
-            "admin"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "member",
+          "admin"
+        ],
+        "unique": false
       }
     ],
     "indexes": [
@@ -845,17 +785,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "groups",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "name"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": true,
+        "collectionId": "groups",
+        "displayFields": [
+          "name"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "author",
@@ -864,17 +802,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "content",
@@ -883,14 +819,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 5000,
         "min": 1,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "likes",
@@ -899,12 +834,11 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "max": null,
         "min": 0,
-        "onlyInt": false
+        "onlyInt": false,
+        "unique": false
       }
     ],
     "indexes": [
@@ -929,17 +863,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "reportedItem",
@@ -948,14 +880,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 255,
         "min": 1,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "type",
@@ -964,17 +895,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "post",
-            "user",
-            "groupPost",
-            "message"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "post",
+          "user",
+          "groupPost",
+          "message"
+        ],
+        "unique": false
       },
       {
         "id": "reason",
@@ -983,14 +912,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 255,
         "min": 1,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "description",
@@ -999,14 +927,13 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 1000,
         "min": 1,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       },
       {
         "id": "status",
@@ -1015,17 +942,15 @@
         "system": false,
         "required": true,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "pending",
-            "underReview",
-            "resolved",
-            "dismissed"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "maxSelect": 1,
+        "values": [
+          "pending",
+          "underReview",
+          "resolved",
+          "dismissed"
+        ],
+        "unique": false
       },
       {
         "id": "moderator",
@@ -1034,17 +959,15 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "username"
-          ]
-        },
-        "hidden": false
+        "hidden": false,
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "displayFields": [
+          "username"
+        ],
+        "maxSelect": 1,
+        "minSelect": null,
+        "unique": false
       },
       {
         "id": "moderatorNotes",
@@ -1053,14 +976,13 @@
         "system": false,
         "required": false,
         "presentable": false,
-        "unique": false,
-        "options": {},
         "hidden": false,
         "autogeneratePattern": "",
         "max": 1000,
-        "min": null,
+        "min": 0,
         "pattern": "",
-        "primaryKey": false
+        "primaryKey": false,
+        "unique": false
       }
     ],
     "indexes": [
