@@ -45,10 +45,6 @@ void main() {
     });
 
     test('creates personal from PocketBase record', () {
-      final record = MockRecordModel(
-        id: 'personal123',
-
-    test('creates personal from PocketBase record', () {
       // Skip this test - would require mocking PocketBase RecordModel
     }, skip: true);
 

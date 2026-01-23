@@ -3,10 +3,13 @@ import '../../../core/services/pocketbase_service.dart';
 import '../models/personal.dart';
 
 class PersonalsProvider extends ChangeNotifier {
-  final _pb = PocketBaseService();
+  final PocketBaseService _pb;
   List<Personal> _personals = [];
   bool _isLoading = false;
   String? _errorMessage;
+
+  PersonalsProvider({PocketBaseService? pocketBaseService})
+      : _pb = pocketBaseService ?? PocketBaseService();
   
   List<Personal> get personals => _personals;
   bool get isLoading => _isLoading;

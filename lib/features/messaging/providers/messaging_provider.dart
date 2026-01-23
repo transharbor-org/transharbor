@@ -3,11 +3,14 @@ import '../../../core/services/pocketbase_service.dart';
 import '../models/message.dart';
 
 class MessagingProvider extends ChangeNotifier {
-  final _pb = PocketBaseService();
+  final PocketBaseService _pb;
   List<Conversation> _conversations = [];
   Map<String, List<Message>> _messages = {};
   bool _isLoading = false;
   String? _errorMessage;
+
+  MessagingProvider({PocketBaseService? pocketBaseService})
+      : _pb = pocketBaseService ?? PocketBaseService();
   
   List<Conversation> get conversations => _conversations;
   bool get isLoading => _isLoading;

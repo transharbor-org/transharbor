@@ -3,10 +3,13 @@ import '../../../core/services/pocketbase_service.dart';
 import '../models/proposal.dart';
 
 class GovernanceProvider extends ChangeNotifier {
-  final _pb = PocketBaseService();
+  final PocketBaseService _pb;
   List<Proposal> _proposals = [];
   bool _isLoading = false;
   String? _errorMessage;
+
+  GovernanceProvider({PocketBaseService? pocketBaseService})
+      : _pb = pocketBaseService ?? PocketBaseService();
   
   List<Proposal> get proposals => _proposals;
   bool get isLoading => _isLoading;

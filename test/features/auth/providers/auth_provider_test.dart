@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:transharbor/features/auth/providers/auth_provider.dart';
 import 'package:transharbor/core/models/user.dart';
 import 'package:transharbor/core/models/user_role.dart';
@@ -8,12 +7,14 @@ import 'package:transharbor/core/services/pocketbase_service.dart';
 import '../../../helpers/mock_services.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  
   late AuthProvider authProvider;
-  late MockPocketBaseService mockPocketBaseService;
+  late PocketBaseService fakePocketBaseService;
 
   setUp(() {
-    mockPocketBaseService = MockPocketBaseService();
-    authProvider = AuthProvider();
+    fakePocketBaseService = FakePocketBaseService();
+    authProvider = AuthProvider(pocketBaseService: fakePocketBaseService);
   });
 
   group('AuthProvider', () {

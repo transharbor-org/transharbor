@@ -4,10 +4,13 @@ import '../../../core/models/user_role.dart';
 import '../../../core/services/pocketbase_service.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final _pb = PocketBaseService();
+  final PocketBaseService _pb;
   User? _currentUser;
   bool _isLoading = false;
   String? _errorMessage;
+
+  AuthProvider({PocketBaseService? pocketBaseService})
+      : _pb = pocketBaseService ?? PocketBaseService();
   
   User? get currentUser => _currentUser;
   bool get isAuthenticated => _pb.isAuthenticated;

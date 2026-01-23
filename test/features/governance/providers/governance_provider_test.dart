@@ -1,12 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transharbor/features/governance/providers/governance_provider.dart';
 import 'package:transharbor/features/governance/models/proposal.dart';
+import 'package:transharbor/core/services/pocketbase_service.dart';
+import '../../../helpers/mock_services.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  
   late GovernanceProvider governanceProvider;
+  late PocketBaseService fakePocketBaseService;
 
   setUp(() {
-    governanceProvider = GovernanceProvider();
+    fakePocketBaseService = FakePocketBaseService();
+    governanceProvider = GovernanceProvider(pocketBaseService: fakePocketBaseService);
   });
 
   group('GovernanceProvider', () {
