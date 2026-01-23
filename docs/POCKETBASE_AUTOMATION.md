@@ -18,7 +18,7 @@ cd pocketbase && ./pocketbase serve
 # Follow the prompts to create your admin account
 
 # 4. Automatically create all collections
-node scripts/create_pocketbase_schema.js
+node pocketbase/create_pocketbase_schema.js
 ```
 
 ### Option 2: Manual Schema Import
@@ -46,14 +46,14 @@ export POCKETBASE_ADMIN_EMAIL="admin@example.com"
 export POCKETBASE_ADMIN_PASSWORD="yourpassword"
 
 # Run automated schema creation
-node scripts/create_pocketbase_schema.js
+node pocketbase/create_pocketbase_schema.js
 ```
 
 ## Files Included
 
 - **`setup_pocketbase.sh`** - Downloads and installs PocketBase
 - **`pb_schema.json`** - Complete database schema for all collections
-- **`scripts/create_pocketbase_schema.js`** - Node.js script to create collections via API
+- **`pocketbase/create_pocketbase_schema.js`** - Node.js script to create collections via API
 
 ## What Gets Created
 
