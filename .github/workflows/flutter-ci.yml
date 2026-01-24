@@ -61,7 +61,6 @@ jobs:
       - name: Build Web
         run: |
           flutter build web --release \
-            --web-renderer canvaskit \
             --dart-define=POCKETBASE_URL=/ \
             --dart-define=dart.vm.product=true \
             --tree-shake-icons \
