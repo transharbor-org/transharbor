@@ -238,7 +238,7 @@ class PocketBaseService {
           perPage: perPage,
           filter: filter,
           sort: '-created',
-          expand: 'author_id',
+          expand: 'author',
         );
   }
 
@@ -251,12 +251,12 @@ class PocketBaseService {
       body: {
         'title': title,
         'description': description,
-        'author_id': currentUserId,
-        'voting_ends_at': votingEndsAt.toIso8601String(),
+        'author': currentUserId,
+        'endDate': votingEndsAt.toIso8601String(),
         'status': 'active',
-        'votes_for': 0,
-        'votes_against': 0,
-        'votes_abstain': 0,
+        'votesFor': 0,
+        'votesAgainst': 0,
+        'votesAbstain': 0,
       },
     );
   }

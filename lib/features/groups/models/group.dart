@@ -107,13 +107,13 @@ class GroupMember {
   factory GroupMember.fromPocketBase(RecordModel record) {
     return GroupMember(
       id: record.id,
-      groupId: record.getStringValue('group_id'),
-      userId: record.getStringValue('user_id'),
+      groupId: record.getStringValue('group'),
+      userId: record.getStringValue('user'),
       role: GroupRole.values.firstWhere(
         (e) => e.name == record.getStringValue('role'),
         orElse: () => GroupRole.member,
       ),
-      joinedAt: DateTime.parse(record.getStringValue('joined_at')),
+      joinedAt: DateTime.parse(record.created),
     );
   }
 
@@ -162,11 +162,11 @@ class GroupPost {
   factory GroupPost.fromPocketBase(RecordModel record) {
     return GroupPost(
       id: record.id,
-      groupId: record.getStringValue('group_id'),
-      userId: record.getStringValue('user_id'),
+      groupId: record.getStringValue('group'),
+      userId: record.getStringValue('author'),
       content: record.getStringValue('content'),
-      likesCount: record.getIntValue('likes_count'),
-      commentsCount: record.getIntValue('comments_count'),
+      likesCount: record.getIntValue('likes'),
+      commentsCount: 0,
       createdAt: DateTime.parse(record.created),
     );
   }

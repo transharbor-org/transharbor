@@ -59,9 +59,9 @@ class GroupsProvider extends ChangeNotifier {
     try {
       final result = await _pb.getUserGroups();
       _myGroups = result.items
-          .where((record) => record.expand?['group_id'] != null)
+          .where((record) => record.expand?['group'] != null)
           .map((record) {
-        final groupData = record.expand!['group_id']!.first;
+        final groupData = record.expand!['group']!.first;
         return Group.fromPocketBase(groupData);
       }).toList();
       notifyListeners();

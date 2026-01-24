@@ -36,12 +36,12 @@ class Personal {
   factory Personal.fromPocketBase(RecordModel record) {
     return Personal(
       id: record.id,
-      userId: record.getStringValue('user_id'),
+      userId: record.getStringValue('user'),
       content: record.getStringValue('content'),
       createdAt: DateTime.parse(record.created),
       updatedAt: DateTime.parse(record.updated),
-      likesCount: record.getIntValue('likes_count'),
-      commentsCount: record.getIntValue('comments_count'),
+      likesCount: record.getIntValue('likes'),
+      commentsCount: record.getIntValue('comments'),
     );
   }
 

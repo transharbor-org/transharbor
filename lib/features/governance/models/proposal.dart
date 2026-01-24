@@ -48,16 +48,16 @@ class Proposal {
       id: record.id,
       title: record.getStringValue('title'),
       description: record.getStringValue('description'),
-      authorId: record.getStringValue('author_id'),
+      authorId: record.getStringValue('author'),
       createdAt: DateTime.parse(record.created),
-      votingEndsAt: DateTime.parse(record.getStringValue('voting_ends_at')),
+      votingEndsAt: DateTime.parse(record.getStringValue('endDate')),
       status: ProposalStatus.values.firstWhere(
         (e) => e.name == record.getStringValue('status'),
         orElse: () => ProposalStatus.active,
       ),
-      votesFor: record.getIntValue('votes_for'),
-      votesAgainst: record.getIntValue('votes_against'),
-      votesAbstain: record.getIntValue('votes_abstain'),
+      votesFor: record.getIntValue('votesFor'),
+      votesAgainst: record.getIntValue('votesAgainst'),
+      votesAbstain: record.getIntValue('votesAbstain'),
     );
   }
 
