@@ -54,10 +54,10 @@ kubectl patch configmap argocd-cmd-params-cm -n argocd --type merge -p='{
   }
 }'
 
-# Increase sync timeout for Flutter builds (large assets)
+# Set reconciliation interval to 1 minute for faster sync
 kubectl patch configmap argocd-cm -n argocd --type merge -p='{
   "data": {
-    "timeout.reconciliation": "180s"
+    "timeout.reconciliation": "60s"
   }
 }'
 
