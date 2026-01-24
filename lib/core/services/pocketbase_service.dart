@@ -195,7 +195,7 @@ class PocketBaseService {
         .getList(
           page: page,
           perPage: perPage,
-          filter: 'participant_ids ~ "$currentUserId"',
+          filter: 'participants ~ "$currentUserId"',
           sort: '-updated',
         );
   }
