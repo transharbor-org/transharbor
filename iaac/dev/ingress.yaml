@@ -6,6 +6,7 @@ metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+    traefik.ingress.kubernetes.io/service.serversscheme: http
 spec:
   tls:
   - hosts:
@@ -22,7 +23,7 @@ spec:
           service:
             name: pocketbase-dev
             port:
-              name: http
+              number: 8080
       # PocketBase Admin UI
       - path: /_
         pathType: Prefix
@@ -30,7 +31,7 @@ spec:
           service:
             name: pocketbase-dev
             port:
-              name: http
+              number: 8080
       # Flutter web app - catch-all
       - path: /
         pathType: Prefix
