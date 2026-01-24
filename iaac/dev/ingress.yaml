@@ -16,23 +16,7 @@ spec:
   - host: dev.transharbor.org
     http:
       paths:
-      # PocketBase API - must come first for priority
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: pocketbase-dev
-            port:
-              number: 8080
-      # PocketBase Admin UI
-      - path: /_
-        pathType: Prefix
-        backend:
-          service:
-            name: pocketbase-dev
-            port:
-              number: 8080
-      # Flutter web app - catch-all
+      # Flutter web app - all paths go to nginx which will proxy /api internally
       - path: /
         pathType: Prefix
         backend:
