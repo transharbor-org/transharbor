@@ -94,6 +94,9 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
       
       - name: Download web build artifact
         uses: actions/download-artifact@v4
@@ -157,13 +160,23 @@ jobs:
           cache-to: type=gha,mode=max
       
       - name: Update dev deployment annotation
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Update the image-version annotation to trigger ArgoCD rolling deployment
           SHORT_SHA="${GITHUB_SHA:0:7}"
           sed -i "s/image-version: \".*\"/image-version: \"main-${SHORT_SHA}\"/" iaac/dev/web.yaml
           
+          # Check if there are changes
+          if git diff --quiet iaac/dev/web.yaml; then
+            echo "No changes to deployment file"
+            exit 0
+          fi
+          
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add iaac/dev/web.yaml
           git commit -m "Deploy: Update dev image to main-${SHORT_SHA} [skip ci]" || echo "No changes to commit"
-          git push
+          
+          # Try to push, but don't fail the workflow if it's blocked by branch protection
+          git push origin main || echo "Push blocked by branch protection - deployment update skipped"
