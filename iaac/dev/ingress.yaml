@@ -22,7 +22,7 @@ spec:
           service:
             name: pocketbase-dev
             port:
-              number: 8080
+              name: http
       # PocketBase Admin UI
       - path: /_
         pathType: Prefix
@@ -30,7 +30,7 @@ spec:
           service:
             name: pocketbase-dev
             port:
-              number: 8080
+              name: http
       # Flutter web app - catch-all
       - path: /
         pathType: Prefix
