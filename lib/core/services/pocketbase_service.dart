@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:http/http.dart' as http;
 import 'storage_service.dart';
@@ -37,14 +38,24 @@ class PocketBaseService {
   Future<void> _initializeAuth() async {
     // Restore auth from storage
     final token = await StorageService.getAuthToken();
-    if (token != null) {
-      pb.authStore.save(token, null);
+    final modelJson = await StorageService.getUserModel();
+    
+    if (token != null && modelJson != null) {
+      try {
+        final modelData = jsonDecode(modelJson);
+        final model = RecordModel.fromJson(modelData);
+        pb.authStore.save(token, model);
+      } catch (e) {
+        // If restoration fails, clear storage
+        await StorageService.clearAll();
+      }
     }
 
     // Listen to auth changes
     pb.authStore.onChange.listen((e) {
-      if (e.token.isNotEmpty) {
+      if (e.token.isNotEmpty && e.model != null) {
         StorageService.saveAuthToken(e.token);
+        StorageService.saveUserModel(jsonEncode(e.model.toJson()));
       } else {
         StorageService.clearAll();
       }
@@ -76,6 +87,8 @@ class PocketBaseService {
         'password': password,
         'passwordConfirm': passwordConfirm,
         'emailVisibility': false,
+        'role': 'user',
+        'membership_type': 'non_voting',
       };
 
       if (username != null) body['username'] = username;

@@ -35,6 +35,17 @@ class StorageService {
     return await _storage.read(key: _keyUserId);
   }
 
+  // User Model (stored as JSON string)
+  static const String _keyUserModel = 'user_model';
+  
+  static Future<void> saveUserModel(String modelJson) async {
+    await _storage.write(key: _keyUserModel, value: modelJson);
+  }
+
+  static Future<String?> getUserModel() async {
+    return await _storage.read(key: _keyUserModel);
+  }
+
   // Clear All
   static Future<void> clearAll() async {
     await _storage.deleteAll();

@@ -77,7 +77,7 @@
         "name": "role",
         "type": "select",
         "system": false,
-        "required": true,
+        "required": false,
         "presentable": false,
         "hidden": false,
         "maxSelect": 1,
@@ -86,6 +86,7 @@
           "moderator",
           "admin"
         ],
+        "default": "user",
         "unique": false
       },
       {
@@ -93,7 +94,7 @@
         "name": "membership_type",
         "type": "select",
         "system": false,
-        "required": true,
+        "required": false,
         "presentable": false,
         "hidden": false,
         "maxSelect": 1,
@@ -101,6 +102,7 @@
           "non_voting",
           "voting_member"
         ],
+        "default": "non_voting",
         "unique": false
       }
     ],
