@@ -166,17 +166,17 @@ class PocketBaseService {
           perPage: perPage,
           filter: filter,
           sort: '-created',
-          expand: 'user_id',
+          expand: 'user',
         );
   }
 
   Future<RecordModel> createPersonal(String content) async {
     return await pb.collection(PocketBaseService.personalsCollection).create(
       body: {
-        'user_id': currentUserId,
+        'user': currentUserId,
         'content': content,
-        'likes_count': 0,
-        'comments_count': 0,
+        'likes': 0,
+        'comments': 0,
       },
     );
   }
@@ -266,11 +266,10 @@ class PocketBaseService {
     required String choice, // 'for', 'against', 'abstain'
   }) async {
     // Check if user already voted
-    final existingVotes = await pb
-        .collection(PocketBaseService.votesCollection)
-        .getList(
-          filter: 'proposal_id = "$proposalId" && user_id = "$currentUserId"',
-        );
+    final existingVotes =
+        await pb.collection(PocketBaseService.votesCollection).getList(
+              filter: 'proposal = "$proposalId" && user = "$currentUserId"',
+            );
 
     if (existingVotes.items.isNotEmpty) {
       throw Exception('Already voted on this proposal');
@@ -279,9 +278,9 @@ class PocketBaseService {
     // Create vote record
     final vote = await pb.collection(PocketBaseService.votesCollection).create(
       body: {
-        'proposal_id': proposalId,
-        'user_id': currentUserId,
-        'choice': choice,
+        'proposal': proposalId,
+        'user': currentUserId,
+        'vote': choice,
       },
     );
 
@@ -377,10 +376,9 @@ class PocketBaseService {
     // Auto-join creator as admin
     await pb.collection(PocketBaseService.groupMembersCollection).create(
       body: {
-        'group_id': record.id,
-        'user_id': currentUserId,
+        'group': record.id,
+        'user': currentUserId,
         'role': 'admin',
-        'joined_at': DateTime.now().toIso8601String(),
       },
     );
 
@@ -408,8 +406,8 @@ class PocketBaseService {
         .getList(
           page: page,
           perPage: perPage,
-          filter: 'group_id = "$groupId"',
-          expand: 'user_id',
+          filter: 'group = "$groupId"',
+          expand: 'user',
         );
   }
 
@@ -417,7 +415,7 @@ class PocketBaseService {
     try {
       final result =
           await pb.collection(PocketBaseService.groupMembersCollection).getList(
-                filter: 'group_id = "$groupId" && user_id = "$currentUserId"',
+                filter: 'group = "$groupId" && user = "$currentUserId"',
               );
       return result.items.isNotEmpty ? result.items.first : null;
     } catch (e) {
@@ -434,8 +432,8 @@ class PocketBaseService {
         .getList(
           page: page,
           perPage: perPage,
-          filter: 'user_id = "$currentUserId"',
-          expand: 'group_id',
+          filter: 'user = "$currentUserId"',
+          expand: 'group',
           sort: '-created',
         );
   }
@@ -444,10 +442,9 @@ class PocketBaseService {
     final membership =
         await pb.collection(PocketBaseService.groupMembersCollection).create(
       body: {
-        'group_id': groupId,
-        'user_id': currentUserId,
+        'group': groupId,
+        'user': currentUserId,
         'role': 'member',
-        'joined_at': DateTime.now().toIso8601String(),
       },
     );
 
@@ -490,9 +487,9 @@ class PocketBaseService {
     return await pb.collection(PocketBaseService.groupPostsCollection).getList(
           page: page,
           perPage: perPage,
-          filter: 'group_id = "$groupId"',
+          filter: 'group = "$groupId"',
           sort: '-created',
-          expand: 'user_id',
+          expand: 'author',
         );
   }
 
@@ -502,11 +499,10 @@ class PocketBaseService {
   }) async {
     return await pb.collection(PocketBaseService.groupPostsCollection).create(
       body: {
-        'group_id': groupId,
-        'user_id': currentUserId,
+        'group': groupId,
+        'author': currentUserId,
         'content': content,
-        'likes_count': 0,
-        'comments_count': 0,
+        'likes': 0,
       },
     );
   }
