@@ -39,7 +39,7 @@ class PocketBaseService {
     // Restore auth from storage
     final token = await StorageService.getAuthToken();
     final modelJson = await StorageService.getUserModel();
-    
+
     if (token != null && modelJson != null) {
       try {
         final modelData = jsonDecode(modelJson);

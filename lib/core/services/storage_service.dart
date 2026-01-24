@@ -37,7 +37,7 @@ class StorageService {
 
   // User Model (stored as JSON string)
   static const String _keyUserModel = 'user_model';
-  
+
   static Future<void> saveUserModel(String modelJson) async {
     await _storage.write(key: _keyUserModel, value: modelJson);
   }
