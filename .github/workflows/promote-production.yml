@@ -16,6 +16,8 @@ jobs:
   promote-production:
     name: Promote to Production
     runs-on: ubuntu-latest
+    # Only org members can promote to production
+    if: github.actor_id == github.repository_owner_id || contains(fromJSON('["awilmoth"]'), github.actor)
     
     steps:
       - name: Validate confirmation
