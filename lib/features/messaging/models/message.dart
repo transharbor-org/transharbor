@@ -81,8 +81,9 @@ class Conversation {
   factory Conversation.fromPocketBase(RecordModel record) {
     // PocketBase stores participants as relation array
     final participantIds = (record.data['participants'] as List?)
-        ?.map((e) => e.toString())
-        .toList() ?? <String>[];
+            ?.map((e) => e.toString())
+            .toList() ??
+        <String>[];
 
     return Conversation(
       id: record.id,
