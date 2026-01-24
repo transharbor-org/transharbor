@@ -12,8 +12,6 @@ jobs:
   promote-stage:
     name: Promote to Stage
     runs-on: ubuntu-latest
-    # Only org members can promote to stage
-    if: github.actor_id == github.repository_owner_id || contains(fromJSON('["awilmoth"]'), github.actor)
     
     steps:
       - uses: actions/checkout@v4

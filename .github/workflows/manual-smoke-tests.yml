@@ -24,8 +24,6 @@ jobs:
   smoke-tests:
     name: Smoke Tests - ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    # Only org members can run manual smoke tests
-    if: github.actor_id == github.repository_owner_id || contains(fromJSON('["awilmoth"]'), github.actor)
     
     steps:
       - uses: actions/checkout@v4
