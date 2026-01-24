@@ -68,8 +68,8 @@ class User {
       username: record.getStringValue('username').isNotEmpty
           ? record.getStringValue('username')
           : null,
-      displayName: record.getStringValue('displayName').isNotEmpty
-          ? record.getStringValue('displayName')
+      displayName: record.getStringValue('name').isNotEmpty
+          ? record.getStringValue('name')
           : null,
       bio: record.getStringValue('bio').isNotEmpty
           ? record.getStringValue('bio')
