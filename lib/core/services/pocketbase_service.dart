@@ -289,20 +289,20 @@ class PocketBaseService {
         .collection(PocketBaseService.proposalsCollection)
         .getOne(proposalId);
     final votes = {
-      'votes_for': proposal.getIntValue('votes_for'),
-      'votes_against': proposal.getIntValue('votes_against'),
-      'votes_abstain': proposal.getIntValue('votes_abstain'),
+      'votesFor': proposal.getIntValue('votesFor'),
+      'votesAgainst': proposal.getIntValue('votesAgainst'),
+      'votesAbstain': proposal.getIntValue('votesAbstain'),
     };
 
     switch (choice) {
       case 'for':
-        votes['votes_for'] = votes['votes_for']! + 1;
+        votes['votesFor'] = votes['votesFor']! + 1;
         break;
       case 'against':
-        votes['votes_against'] = votes['votes_against']! + 1;
+        votes['votesAgainst'] = votes['votesAgainst']! + 1;
         break;
       case 'abstain':
-        votes['votes_abstain'] = votes['votes_abstain']! + 1;
+        votes['votesAbstain'] = votes['votesAbstain']! + 1;
         break;
     }
 
@@ -366,10 +366,9 @@ class PocketBaseService {
       body: {
         'name': name,
         'description': description,
-        'creator_id': currentUserId,
+        'creator': currentUserId,
         'category': category,
-        'is_private': isPrivate,
-        'member_count': 1,
+        'isPrivate': isPrivate,
       },
     );
 
@@ -448,14 +447,6 @@ class PocketBaseService {
       },
     );
 
-    // Increment member count
-    final group =
-        await pb.collection(PocketBaseService.groupsCollection).getOne(groupId);
-    await pb.collection(PocketBaseService.groupsCollection).update(
-      groupId,
-      body: {'member_count': group.getIntValue('member_count') + 1},
-    );
-
     return membership;
   }
 
@@ -465,16 +456,6 @@ class PocketBaseService {
       await pb
           .collection(PocketBaseService.groupMembersCollection)
           .delete(membership.id);
-
-      // Decrement member count
-      final group = await pb
-          .collection(PocketBaseService.groupsCollection)
-          .getOne(groupId);
-      final newCount = (group.getIntValue('member_count') - 1).clamp(0, 999999);
-      await pb.collection(PocketBaseService.groupsCollection).update(
-        groupId,
-        body: {'member_count': newCount},
-      );
     }
   }
 

@@ -31,11 +31,11 @@ class Message {
   factory Message.fromPocketBase(RecordModel record) {
     return Message(
       id: record.id,
-      conversationId: record.getStringValue('conversation_id'),
-      senderId: record.getStringValue('sender_id'),
+      conversationId: record.getStringValue('conversation'),
+      senderId: record.getStringValue('sender'),
       content: record.getStringValue('content'),
       createdAt: DateTime.parse(record.created),
-      isRead: record.getBoolValue('is_read'),
+      isRead: record.getBoolValue('read'),
     );
   }
 
@@ -79,16 +79,15 @@ class Conversation {
   }
 
   factory Conversation.fromPocketBase(RecordModel record) {
-    // PocketBase stores arrays as JSON arrays
-    final participantIds = (record.data['participant_ids'] as List)
-        .map((e) => e.toString())
-        .toList();
+    // PocketBase stores participants as relation array
+    final participantIds =
+        (record.data['participants'] as List).map((e) => e.toString()).toList();
 
     return Conversation(
       id: record.id,
       participantIds: participantIds,
       lastMessage: null, // Can be populated separately
-      unreadCount: record.getIntValue('unread_count'),
+      unreadCount: record.getIntValue('unreadCount'),
       createdAt: DateTime.parse(record.created),
     );
   }

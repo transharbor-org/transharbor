@@ -42,12 +42,12 @@ class Group {
       id: record.id,
       name: record.getStringValue('name'),
       description: record.getStringValue('description'),
-      creatorId: record.getStringValue('creator_id'),
+      creatorId: record.getStringValue('creator'),
       category: record.getStringValue('category').isNotEmpty
           ? record.getStringValue('category')
           : null,
-      isPrivate: record.getBoolValue('is_private'),
-      memberCount: record.getIntValue('member_count'),
+      isPrivate: record.getBoolValue('isPrivate'),
+      memberCount: (record.data['members'] as List?)?.length ?? 0,
       bannerUrl: record.getStringValue('banner_url').isNotEmpty
           ? record.getStringValue('banner_url')
           : null,
