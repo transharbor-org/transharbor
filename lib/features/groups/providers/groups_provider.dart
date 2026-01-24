@@ -61,8 +61,10 @@ class GroupsProvider extends ChangeNotifier {
       _myGroups = result.items
           .where((record) => record.expand?['group'] != null)
           .map((record) {
-            final groupExpandData = record.expand!['group'];
-            if (groupExpandData is List && groupExpandData.isNotEmpty) {
+            final groupExpandData = record.expand?['group'];
+            if (groupExpandData != null &&
+                groupExpandData is List &&
+                groupExpandData.isNotEmpty) {
               final groupData = groupExpandData.first;
               return Group.fromPocketBase(groupData);
             }
