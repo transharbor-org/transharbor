@@ -22,14 +22,14 @@ class Personal {
   factory Personal.fromJson(Map<String, dynamic> json) {
     return Personal(
       id: json['id'] as String,
-      userId: json['user_id'] as String,
+      userId: json['user'] as String,
       content: json['content'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'] as String)
+      createdAt: DateTime.parse(json['created'] as String),
+      updatedAt: json['updated'] != null
+          ? DateTime.parse(json['updated'] as String)
           : null,
-      likesCount: json['likes_count'] as int? ?? 0,
-      commentsCount: json['comments_count'] as int? ?? 0,
+      likesCount: json['likes'] as int? ?? 0,
+      commentsCount: json['comments'] as int? ?? 0,
     );
   }
 
@@ -48,12 +48,12 @@ class Personal {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'user_id': userId,
+      'user': userId,
       'content': content,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
-      'likes_count': likesCount,
-      'comments_count': commentsCount,
+      'created': createdAt.toIso8601String(),
+      'updated': updatedAt?.toIso8601String(),
+      'likes': likesCount,
+      'comments': commentsCount,
     };
   }
 }

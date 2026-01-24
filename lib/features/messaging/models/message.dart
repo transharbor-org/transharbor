@@ -20,11 +20,11 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
       id: json['id'] as String,
-      conversationId: json['conversation_id'] as String,
-      senderId: json['sender_id'] as String,
+      conversationId: json['conversation'] as String,
+      senderId: json['sender'] as String,
       content: json['content'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      isRead: json['is_read'] as bool? ?? false,
+      createdAt: DateTime.parse(json['created'] as String),
+      isRead: json['read'] as bool? ?? false,
     );
   }
 
@@ -42,11 +42,11 @@ class Message {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'conversation_id': conversationId,
-      'sender_id': senderId,
+      'conversation': conversationId,
+      'sender': senderId,
       'content': content,
-      'created_at': createdAt.toIso8601String(),
-      'is_read': isRead,
+      'created': createdAt.toIso8601String(),
+      'read': isRead,
     };
   }
 }
@@ -69,19 +69,20 @@ class Conversation {
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       id: json['id'] as String,
-      participantIds: List<String>.from(json['participant_ids'] as List),
-      lastMessage: json['last_message'] != null
-          ? Message.fromJson(json['last_message'] as Map<String, dynamic>)
+      participantIds: List<String>.from(json['participants'] as List),
+      lastMessage: json['lastMessage'] != null
+          ? Message.fromJson(json['lastMessage'] as Map<String, dynamic>)
           : null,
-      unreadCount: json['unread_count'] as int? ?? 0,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      unreadCount: json['unreadCount'] as int? ?? 0,
+      createdAt: DateTime.parse(json['created'] as String),
     );
   }
 
   factory Conversation.fromPocketBase(RecordModel record) {
     // PocketBase stores participants as relation array
-    final participantIds =
-        (record.data['participants'] as List).map((e) => e.toString()).toList();
+    final participantIds = (record.data['participants'] as List?)
+        ?.map((e) => e.toString())
+        .toList() ?? <String>[];
 
     return Conversation(
       id: record.id,
@@ -95,10 +96,10 @@ class Conversation {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'participant_ids': participantIds,
-      'last_message': lastMessage?.toJson(),
-      'unread_count': unreadCount,
-      'created_at': createdAt.toIso8601String(),
+      'participants': participantIds,
+      'lastMessage': lastMessage?.toJson(),
+      'unreadCount': unreadCount,
+      'created': createdAt.toIso8601String(),
     };
   }
 }

@@ -14,7 +14,7 @@ void main() {
         'bio': 'Test bio',
         'avatar': 'avatar.jpg',
         'role': 'user',
-        'membership_type': 'non_voting',
+        'membershipType': 'non_voting',
         'created_at': '2024-01-01T00:00:00.000Z',
         'is_active': true,
       };

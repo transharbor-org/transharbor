@@ -67,7 +67,7 @@ def main():
     update_collection_rules("proposals", {
         "listRule": "@request.auth.id != ''",
         "viewRule": "@request.auth.id != ''",
-        "createRule": "@request.auth.id != '' && @request.auth.membership_type = 'voting_member'",
+        "createRule": "@request.auth.id != '' && @request.auth.membershipType = 'voting_member'",
         "updateRule": "@request.auth.id = author || @request.auth.role = 'admin'",
         "deleteRule": "@request.auth.role = 'admin'"
     }, admin_token)
@@ -76,7 +76,7 @@ def main():
     update_collection_rules("votes", {
         "listRule": "@request.auth.id != ''",
         "viewRule": "@request.auth.id != ''",
-        "createRule": "@request.auth.id != '' && @request.auth.membership_type = 'voting_member' && user = @request.auth.id",
+        "createRule": "@request.auth.id != '' && @request.auth.membershipType = 'voting_member' && user = @request.auth.id",
         "updateRule": "",
         "deleteRule": ""
     }, admin_token)

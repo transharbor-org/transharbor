@@ -88,7 +88,7 @@ class PocketBaseService {
         'passwordConfirm': passwordConfirm,
         'emailVisibility': false,
         'role': 'user',
-        'membership_type': 'non_voting',
+        'membershipType': 'non_voting',
       };
 
       if (username != null) body['username'] = username;
@@ -208,7 +208,7 @@ class PocketBaseService {
     return await pb.collection(PocketBaseService.messagesCollection).getList(
           page: page,
           perPage: perPage,
-          filter: 'conversation_id = "$conversationId"',
+          filter: 'conversation = "$conversationId"',
           sort: 'created',
         );
   }
@@ -219,10 +219,10 @@ class PocketBaseService {
   }) async {
     return await pb.collection(PocketBaseService.messagesCollection).create(
       body: {
-        'conversation_id': conversationId,
-        'sender_id': currentUserId,
+        'conversation': conversationId,
+        'sender': currentUserId,
         'content': content,
-        'is_read': false,
+        'read': false,
       },
     );
   }
@@ -344,14 +344,14 @@ class PocketBaseService {
           perPage: perPage,
           filter: finalFilter.isNotEmpty ? finalFilter : null,
           sort: '-created',
-          expand: 'creator_id',
+          expand: 'creator',
         );
   }
 
   Future<RecordModel> getGroup(String groupId) async {
     return await pb.collection(PocketBaseService.groupsCollection).getOne(
           groupId,
-          expand: 'creator_id',
+          expand: 'creator',
         );
   }
 

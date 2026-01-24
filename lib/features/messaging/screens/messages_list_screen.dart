@@ -65,7 +65,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                     child: Text('${index + 1}'),
                   ),
                   title:
-                      Text('Conversation ${conversation.id.substring(0, 8)}'),
+                      Text('Conversation ${conversation.id.length > 8 ? conversation.id.substring(0, 8) : conversation.id}'),
                   subtitle: conversation.lastMessage != null
                       ? Text(
                           conversation.lastMessage!.content,

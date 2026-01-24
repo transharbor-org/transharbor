@@ -102,7 +102,7 @@ class _VotingScreenState extends State<VotingScreen> {
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              'Ends: ${proposal.votingEndsAt.toString().substring(0, 16)}',
+                              'Ends: ${proposal.votingEndsAt.toLocal().toString().split('.').first}',
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],

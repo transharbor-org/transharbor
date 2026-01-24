@@ -55,7 +55,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Conversation ${widget.conversationId.substring(0, 8)}'),
+        title: Text('Conversation ${widget.conversationId.length > 8 ? widget.conversationId.substring(0, 8) : widget.conversationId}'),
       ),
       body: Column(
         children: [

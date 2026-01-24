@@ -44,7 +44,7 @@ class PhoneAuthService {
           await pb.collection('phone_verification').getOne(verificationId);
 
       // Check if OTP matches and is not expired (10 min)
-      final createdAt = DateTime.parse(record.data['created']);
+      final createdAt = DateTime.parse(record.data['created'] as String);
       final isExpired = DateTime.now().difference(createdAt).inMinutes > 10;
 
       if (isExpired) {

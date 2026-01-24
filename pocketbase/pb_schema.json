@@ -90,8 +90,8 @@
         "unique": false
       },
       {
-        "id": "membership_type",
-        "name": "membership_type",
+        "id": "membershipType",
+        "name": "membershipType",
         "type": "select",
         "system": false,
         "required": false,
@@ -109,7 +109,7 @@
     "indexes": [
       "CREATE UNIQUE INDEX idx_username ON users (username)",
       "CREATE INDEX idx_role ON users (role)",
-      "CREATE INDEX idx_membership_type ON users (membership_type)"
+      "CREATE INDEX idx_membershipType ON users (membershipType)"
     ],
     "listRule": "@request.auth.id != ''",
     "viewRule": "@request.auth.id != ''",

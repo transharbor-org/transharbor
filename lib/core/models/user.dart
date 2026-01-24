@@ -49,15 +49,15 @@ class User {
       id: json['id'] as String,
       email: json['email'] as String,
       username: json['username'] as String?,
-      displayName: json['display_name'] as String?,
+      displayName: json['name'] as String?,
       bio: json['bio'] as String?,
       pronouns: json['pronouns'] as String?,
       avatar: json['avatar'] as String?,
       role: UserRole.fromString(json['role'] as String? ?? 'user'),
       membershipType: MembershipType.fromString(
-          json['membership_type'] as String? ?? 'non_voting'),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      isActive: json['is_active'] as bool? ?? true,
+          json['membershipType'] as String? ?? 'non_voting'),
+      createdAt: DateTime.parse(json['created'] as String),
+      isActive: json['isActive'] as bool? ?? true,
     );
   }
 
@@ -82,7 +82,7 @@ class User {
           : null,
       role: UserRole.fromString(record.getStringValue('role')),
       membershipType:
-          MembershipType.fromString(record.getStringValue('membership_type')),
+          MembershipType.fromString(record.getStringValue('membershipType')),
       createdAt: DateTime.parse(record.created),
       isActive: true,
     );
@@ -93,14 +93,14 @@ class User {
       'id': id,
       'email': email,
       'username': username,
-      'display_name': displayName,
+      'name': displayName,
       'bio': bio,
       'pronouns': pronouns,
       'avatar': avatar,
       'role': role.toApiString(),
-      'membership_type': membershipType.toApiString(),
-      'created_at': createdAt.toIso8601String(),
-      'is_active': isActive,
+      'membershipType': membershipType.toApiString(),
+      'created': createdAt.toIso8601String(),
+      'isActive': isActive,
     };
   }
 }

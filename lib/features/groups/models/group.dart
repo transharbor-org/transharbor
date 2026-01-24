@@ -28,12 +28,12 @@ class Group {
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
-      creatorId: json['creator_id'] as String,
+      creatorId: json['creator'] as String,
       category: json['category'] as String?,
-      isPrivate: json['is_private'] as bool? ?? false,
-      memberCount: json['member_count'] as int? ?? 0,
-      bannerUrl: json['banner_url'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      isPrivate: json['isPrivate'] as bool? ?? false,
+      memberCount: json['memberCount'] as int? ?? 0,
+      bannerUrl: json['bannerUrl'] as String?,
+      createdAt: DateTime.parse(json['created'] as String),
     );
   }
 
@@ -48,8 +48,8 @@ class Group {
           : null,
       isPrivate: record.getBoolValue('isPrivate'),
       memberCount: (record.data['members'] as List?)?.length ?? 0,
-      bannerUrl: record.getStringValue('banner_url').isNotEmpty
-          ? record.getStringValue('banner_url')
+      bannerUrl: record.getStringValue('bannerUrl').isNotEmpty
+          ? record.getStringValue('bannerUrl')
           : null,
       createdAt: DateTime.parse(record.created),
     );
@@ -60,12 +60,12 @@ class Group {
       'id': id,
       'name': name,
       'description': description,
-      'creator_id': creatorId,
+      'creator': creatorId,
       'category': category,
-      'is_private': isPrivate,
-      'member_count': memberCount,
-      'banner_url': bannerUrl,
-      'created_at': createdAt.toIso8601String(),
+      'isPrivate': isPrivate,
+      'memberCount': memberCount,
+      'bannerUrl': bannerUrl,
+      'created': createdAt.toIso8601String(),
     };
   }
 }
@@ -94,13 +94,13 @@ class GroupMember {
   factory GroupMember.fromJson(Map<String, dynamic> json) {
     return GroupMember(
       id: json['id'] as String,
-      groupId: json['group_id'] as String,
-      userId: json['user_id'] as String,
+      groupId: json['group'] as String,
+      userId: json['user'] as String,
       role: GroupRole.values.firstWhere(
         (e) => e.name == json['role'],
         orElse: () => GroupRole.member,
       ),
-      joinedAt: DateTime.parse(json['joined_at'] as String),
+      joinedAt: DateTime.parse(json['created'] as String),
     );
   }
 
@@ -120,10 +120,10 @@ class GroupMember {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'group_id': groupId,
-      'user_id': userId,
+      'group': groupId,
+      'user': userId,
       'role': role.name,
-      'joined_at': joinedAt.toIso8601String(),
+      'created': joinedAt.toIso8601String(),
     };
   }
 }
@@ -150,12 +150,12 @@ class GroupPost {
   factory GroupPost.fromJson(Map<String, dynamic> json) {
     return GroupPost(
       id: json['id'] as String,
-      groupId: json['group_id'] as String,
-      userId: json['user_id'] as String,
+      groupId: json['group'] as String,
+      userId: json['author'] as String,
       content: json['content'] as String,
-      likesCount: json['likes_count'] as int? ?? 0,
-      commentsCount: json['comments_count'] as int? ?? 0,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      likesCount: json['likes'] as int? ?? 0,
+      commentsCount: json['comments'] as int? ?? 0,
+      createdAt: DateTime.parse(json['created'] as String),
     );
   }
 
@@ -174,12 +174,12 @@ class GroupPost {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'group_id': groupId,
-      'user_id': userId,
+      'group': groupId,
+      'author': userId,
       'content': content,
-      'likes_count': likesCount,
-      'comments_count': commentsCount,
-      'created_at': createdAt.toIso8601String(),
+      'likes': likesCount,
+      'comments': commentsCount,
+      'created': createdAt.toIso8601String(),
     };
   }
 }

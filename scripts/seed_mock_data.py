@@ -22,7 +22,7 @@ MOCK_USERS = [
         "name": "Alex Rivera",
         "bio": "Trans activist and software developer. Building community through technology 🏳️‍⚧️",
         "role": "user",
-        "membership_type": "voting_member"
+        "membershipType": "voting_member"
     },
     {
         "username": "sam_chen",
@@ -31,7 +31,7 @@ MOCK_USERS = [
         "name": "Sam Chen",
         "bio": "Non-binary artist and community organizer. They/them pronouns.",
         "role": "user",
-        "membership_type": "voting_member"
+        "membershipType": "voting_member"
     },
     {
         "username": "jordan_blake",
@@ -40,7 +40,7 @@ MOCK_USERS = [
         "name": "Jordan Blake",
         "bio": "Trans educator advocating for inclusive spaces. She/her.",
         "role": "moderator",
-        "membership_type": "voting_member"
+        "membershipType": "voting_member"
     },
     {
         "username": "casey_moore",
@@ -49,7 +49,7 @@ MOCK_USERS = [
         "name": "Casey Moore",
         "bio": "Genderfluid writer and poet. Any pronouns welcome 💜",
         "role": "user",
-        "membership_type": "voting_member"
+        "membershipType": "voting_member"
     },
     {
         "username": "riley_nguyen",
@@ -58,7 +58,7 @@ MOCK_USERS = [
         "name": "Riley Nguyen",
         "bio": "Trans healthcare advocate working to improve access for all.",
         "role": "user",
-        "membership_type": "non_voting"
+        "membershipType": "non_voting"
     },
     {
         "username": "taylor_kim",
@@ -67,7 +67,7 @@ MOCK_USERS = [
         "name": "Taylor Kim",
         "bio": "Non-binary musician and sound engineer. Creating safe spaces through art.",
         "role": "user",
-        "membership_type": "voting_member"
+        "membershipType": "voting_member"
     }
 ]
 
@@ -138,7 +138,7 @@ def create_user(user_data, admin_token):
         "name": user_data["name"],
         "bio": user_data["bio"],
         "role": user_data["role"],
-        "membership_type": user_data["membership_type"]
+        "membershipType": user_data["membershipType"]
     }
     
     response = requests.post(

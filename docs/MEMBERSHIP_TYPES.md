@@ -156,11 +156,11 @@ await pb.collection('users').update(userId, body: {
 
 ## PocketBase Schema
 
-Users collection includes `membership_type` field:
+Users collection includes `membershipType` field:
 
 ```json
 {
-  "name": "membership_type",
+  "name": "membershipType",
   "type": "select",
   "required": true,
   "options": {
@@ -172,7 +172,7 @@ Users collection includes `membership_type` field:
 
 Index for efficient queries:
 ```sql
-CREATE INDEX idx_membership_type ON users (membership_type)
+CREATE INDEX idx_membershipType ON users (membershipType)
 ```
 
 ## Governance Integration
@@ -276,7 +276,7 @@ bool isEligible = await checkVotingEligibility(userId);
 if (isEligible) {
   // Upgrade to voting member
   await pb.collection('users').update(userId, body: {
-    'membership_type': 'voting_member',
+    'membershipType': 'voting_member',
   });
   
   // Notify user
@@ -298,7 +298,7 @@ PocketBase rules should respect membership types:
 
 // Example: Only voting members can vote
 @request.auth.id != "" && 
-@request.auth.membership_type = "voting_member" &&
+@request.auth.membershipType = "voting_member" &&
 @request.data.proposal_id != ""
 ```
 
@@ -374,7 +374,7 @@ testWidgets('NonVotingMemberBanner shows for non-voting', (tester) async {
 ## Support
 
 For membership-related issues:
-1. Verify `membership_type` field in users collection
-2. Check auth token includes membership_type
+1. Verify `membershipType` field in users collection
+2. Check auth token includes membershipType
 3. Review PocketBase access rules for governance collections
 4. Test with different membership types

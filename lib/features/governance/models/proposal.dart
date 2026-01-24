@@ -30,16 +30,16 @@ class Proposal {
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
-      authorId: json['author_id'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      votingEndsAt: DateTime.parse(json['voting_ends_at'] as String),
+      authorId: json['author'] as String,
+      createdAt: DateTime.parse(json['created'] as String),
+      votingEndsAt: DateTime.parse(json['endDate'] as String),
       status: ProposalStatus.values.firstWhere(
         (e) => e.name == json['status'],
         orElse: () => ProposalStatus.active,
       ),
-      votesFor: json['votes_for'] as int? ?? 0,
-      votesAgainst: json['votes_against'] as int? ?? 0,
-      votesAbstain: json['votes_abstain'] as int? ?? 0,
+      votesFor: json['votesFor'] as int? ?? 0,
+      votesAgainst: json['votesAgainst'] as int? ?? 0,
+      votesAbstain: json['votesAbstain'] as int? ?? 0,
     );
   }
 
@@ -66,13 +66,13 @@ class Proposal {
       'id': id,
       'title': title,
       'description': description,
-      'author_id': authorId,
-      'created_at': createdAt.toIso8601String(),
-      'voting_ends_at': votingEndsAt.toIso8601String(),
+      'author': authorId,
+      'created': createdAt.toIso8601String(),
+      'endDate': votingEndsAt.toIso8601String(),
       'status': status.name,
-      'votes_for': votesFor,
-      'votes_against': votesAgainst,
-      'votes_abstain': votesAbstain,
+      'votesFor': votesFor,
+      'votesAgainst': votesAgainst,
+      'votesAbstain': votesAbstain,
     };
   }
 

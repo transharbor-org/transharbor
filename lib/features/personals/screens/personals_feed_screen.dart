@@ -85,7 +85,7 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'User ${personal.userId.substring(0, 8)}',
+                                    'User ${personal.userId.length > 8 ? personal.userId.substring(0, 8) : personal.userId}',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),

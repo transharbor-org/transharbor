@@ -385,7 +385,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen>
           leading: const CircleAvatar(
             child: Icon(Icons.person),
           ),
-          title: Text('Member ${member.userId.substring(0, 8)}'),
+          title: Text('Member ${member.userId.length > 8 ? member.userId.substring(0, 8) : member.userId}'),
           subtitle: Text('Joined ${_formatDate(member.joinedAt)}'),
           trailing: Chip(
             label: Text(

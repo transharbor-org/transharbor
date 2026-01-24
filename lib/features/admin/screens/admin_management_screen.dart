@@ -57,7 +57,7 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
             'username': record.getStringValue('username'),
             'email': record.getStringValue('email'),
             'role': record.getStringValue('role'),
-            'membership_type': record.getStringValue('membership_type'),
+            'membershipType': record.getStringValue('membershipType'),
             'created': record.created,
           };
         }).toList();
@@ -104,7 +104,7 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
       String userId, String newMembershipType) async {
     try {
       await _pb.pb.collection('users').update(userId, body: {
-        'membership_type': newMembershipType,
+        'membershipType': newMembershipType,
       });
 
       if (mounted) {
@@ -163,7 +163,7 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
   }
 
   Future<void> _showMembershipDialog(Map<String, dynamic> user) async {
-    final currentMembership = user['membership_type'] as String;
+    final currentMembership = user['membershipType'] as String;
     final selectedMembership = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
@@ -301,7 +301,7 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
         itemBuilder: (context, index) {
           final user = _users[index];
           final role = user['role'] as String;
-          final membershipType = user['membership_type'] as String;
+          final membershipType = user['membershipType'] as String;
 
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
