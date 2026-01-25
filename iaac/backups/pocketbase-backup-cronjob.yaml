@@ -1,0 +1,114 @@
+---
+# PocketBase Backup CronJob for Hetzner Storage Box
+# Runs daily backups at 2 AM UTC
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pocketbase-backup
+  namespace: transharbor
+spec:
+  # Run daily at 2 AM UTC
+  schedule: "0 2 * * *"
+  
+  # Keep history of last 3 backup jobs
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pocketbase-backup
+        spec:
+          restartPolicy: OnFailure
+          
+          # Use same service account as PocketBase for volume access
+          serviceAccountName: default
+          
+          containers:
+          - name: backup
+            image: alpine:3.19
+            
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Install dependencies
+              apk add --no-cache sqlite bash tar gzip openssh-client lftp
+              
+              # Setup SSH for SFTP
+              mkdir -p ~/.ssh
+              echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+              chmod 600 ~/.ssh/id_ed25519
+              ssh-keyscan -H $STORAGE_BOX_HOST >> ~/.ssh/known_hosts 2>/dev/null
+              
+              # Run backup script
+              /scripts/backup-pocketbase.sh
+            
+            env:
+            - name: STORAGE_BOX_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-backup-credentials
+                  key: STORAGE_BOX_HOST
+            - name: STORAGE_BOX_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-backup-credentials
+                  key: STORAGE_BOX_USER
+            - name: STORAGE_BOX_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-backup-credentials
+                  key: STORAGE_BOX_PATH
+            - name: SSH_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pocketbase-backup-credentials
+                  key: SSH_PRIVATE_KEY
+            - name: KEEP_DAILY
+              valueFrom:
+                configMapKeyRef:
+                  name: pocketbase-backup-config
+                  key: KEEP_DAILY
+            - name: KEEP_WEEKLY
+              valueFrom:
+                configMapKeyRef:
+                  name: pocketbase-backup-config
+                  key: KEEP_WEEKLY
+            - name: KEEP_MONTHLY
+              valueFrom:
+                configMapKeyRef:
+                  name: pocketbase-backup-config
+                  key: KEEP_MONTHLY
+            - name: PB_DATA_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: pocketbase-backup-config
+                  key: PB_DATA_DIR
+            
+            volumeMounts:
+            - name: pb-data
+              mountPath: /pb_data
+              readOnly: true
+            - name: backup-script
+              mountPath: /scripts
+              readOnly: true
+            
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+          
+          volumes:
+          - name: pb-data
+            persistentVolumeClaim:
+              claimName: pocketbase-data
+          - name: backup-script
+            configMap:
+              name: pocketbase-backup-script
+              defaultMode: 0755
