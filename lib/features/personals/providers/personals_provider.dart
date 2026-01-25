@@ -21,7 +21,14 @@ class PersonalsProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final result = await _pb.getPersonals();
+      final currentUserId = _pb.currentUserId;
+      if (currentUserId == null) {
+        throw Exception('User not authenticated');
+      }
+
+      final result = await _pb.getPersonals(
+        filter: 'user = "$currentUserId"',
+      );
       _personals = result.items
           .map((record) => Personal.fromPocketBase(record))
           .toList();
