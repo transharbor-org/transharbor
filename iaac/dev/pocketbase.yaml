@@ -26,6 +26,9 @@ spec:
       labels:
         app: pocketbase
         env: dev
+      annotations:
+        # Update this to trigger rolling restart
+        deploy-version: "ddcdc1a"
     spec:
       priorityClassName: high-priority
       imagePullSecrets:
