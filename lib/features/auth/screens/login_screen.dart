@@ -27,9 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       final authProvider = context.read<AuthProvider>();
       
-      // Debug: Check if values are present
-      print('Login attempt - Email: ${_emailController.text.isNotEmpty}, Password: ${_passwordController.text.isNotEmpty}');
-      
       final success = await authProvider.login(
         _emailController.text,
         _passwordController.text,
