@@ -91,41 +91,11 @@ jobs:
           echo "CHROMEDRIVER_PID=$!" >> $GITHUB_ENV
           sleep 3
       
-      - name: Run E2E Tests - Login Flow
+      - name: Run E2E Tests - Auth Flow
         run: |
           flutter drive \
-            --driver=test_driver/integration_test.dart \
-            --target=integration_test/login_flow_test.dart \
-            -d web-server \
-            --web-port=8080 \
-            --release \
-            --web-browser-flag="--disable-gpu" \
-            --web-browser-flag="--disable-software-rasterizer" \
-            --web-browser-flag="--disable-dev-shm-usage" \
-            --web-browser-flag="--no-sandbox" \
-            --web-browser-flag="--headless=new"
-      
-      - name: Run E2E Tests - Register Flow
-        if: success() || failure()
-        run: |
-          flutter drive \
-            --driver=test_driver/integration_test.dart \
-            --target=integration_test/register_flow_test.dart \
-            -d web-server \
-            --web-port=8080 \
-            --release \
-            --web-browser-flag="--disable-gpu" \
-            --web-browser-flag="--disable-software-rasterizer" \
-            --web-browser-flag="--disable-dev-shm-usage" \
-            --web-browser-flag="--no-sandbox" \
-            --web-browser-flag="--headless=new"
-      
-      - name: Run E2E Tests - Navigation Flow
-        if: success() || failure()
-        run: |
-          flutter drive \
-            --driver=test_driver/integration_test.dart \
-            --target=integration_test/navigation_flow_test.dart \
+            --driver=integration_test_driver/integration_test.dart \
+            --target=integration_test/auth_flow_test.dart \
             -d web-server \
             --web-port=8080 \
             --release \
