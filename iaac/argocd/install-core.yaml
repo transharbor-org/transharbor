@@ -1,20 +1,27 @@
 # ArgoCD Core - Minimal Installation for Resource-Constrained Environments
 # Saves ~150MB RAM compared to full installation
 #
-# Install:
-# kubectl create namespace argocd
-# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/core-install.yaml
+# Complete Installation Steps:
+# 1. Install ArgoCD Core:
+#    kubectl create namespace argocd
+#    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/core-install.yaml
+#
+# 2. Setup configuration (creates default project, cluster secret, and configures sync):
+#    kubectl apply -f iaac/argocd/default-project.yaml
+#    kubectl apply -f iaac/argocd/cluster-secret.yaml
+#    kubectl apply -f iaac/argocd/application-dev.yaml
+#    bash iaac/argocd/setup-core.sh
 #
 # ArgoCD Core includes:
-# - application-controller: Monitors and syncs applications
+# - application-controller: Monitors and syncs applications (60s interval)
 # - repo-server: Git repository interface
 # - redis: Cache for repository data
+# - applicationset-controller: ApplicationSet CRD support
 #
 # NOT included (saves memory):
 # - argocd-server: Web UI and API server (~25MB)
 # - dex-server: SSO/OIDC authentication (~25MB)
 # - notifications-controller: Notifications (~19MB)
-# - applicationset-controller: ApplicationSet CRD support (~21MB)
 #
 # Manage via kubectl:
 # kubectl get applications -n argocd
