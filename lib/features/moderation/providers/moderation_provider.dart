@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../../../core/services/pocketbase_service.dart';
+import '../../../core/services/logging_service.dart';
 import '../models/report.dart';
 
 class ModerationProvider with ChangeNotifier {
@@ -102,9 +103,20 @@ class ModerationProvider with ChangeNotifier {
       _updatePendingReports();
       notifyListeners();
 
+      logger.info('Report created', metadata: {
+        'reportId': report.id,
+        'type': type.name,
+        'reason': reason,
+        'reportedItemId': reportedItemId,
+      });
+
       return report;
     } catch (e) {
       _error = e.toString();
+      logger.error('Failed to create report', error: e, metadata: {
+        'type': type.name,
+        'reportedItemId': reportedItemId,
+      });
       notifyListeners();
       return null;
     } finally {
@@ -145,6 +157,12 @@ class ModerationProvider with ChangeNotifier {
       }
       _updatePendingReports();
       notifyListeners();
+
+      logger.info('Report status updated', metadata: {
+        'reportId': reportId,
+        'status': status.name,
+        'hasNotes': moderatorNotes != null,
+      });
 
       return true;
     } catch (e) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/services/pocketbase_service.dart';
+import '../../../core/services/logging_service.dart';
 import '../models/proposal.dart';
 
 class GovernanceProvider extends ChangeNotifier {
@@ -43,11 +44,19 @@ class GovernanceProvider extends ChangeNotifier {
         choice: choice.value,
       );
 
+      logger.info('Vote submitted', metadata: {
+        'proposalId': proposalId,
+        'choice': choice.value,
+      });
+
       // Reload proposals to get updated vote counts
       await loadProposals();
       return true;
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Failed to submit vote', error: e, metadata: {
+        'proposalId': proposalId,
+      });
       return false;
     }
   }
@@ -63,9 +72,16 @@ class GovernanceProvider extends ChangeNotifier {
       final newProposal = Proposal.fromPocketBase(record);
       _proposals.insert(0, newProposal);
       notifyListeners();
+      
+      logger.info('Proposal created', metadata: {
+        'proposalId': newProposal.id,
+        'title': title,
+      });
+      
       return true;
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Failed to create proposal', error: e);
       return false;
     }
   }

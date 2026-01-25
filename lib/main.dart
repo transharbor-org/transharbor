@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -17,6 +18,34 @@ void main() async {
 
   // Initialize logging service
   logger.initialize();
+
+  // Global error handler for unhandled errors
+  FlutterError.onError = (FlutterErrorDetails details) {
+    logger.fatal(
+      'Unhandled Flutter error',
+      error: details.exception,
+      stackTrace: details.stack,
+      metadata: {
+        'library': details.library,
+        'context': details.context?.toString(),
+      },
+    );
+    
+    // Also log to console in debug mode
+    if (kDebugMode) {
+      FlutterError.dumpErrorToConsole(details);
+    }
+  };
+
+  // Catch errors in async operations
+  PlatformDispatcher.instance.onError = (error, stack) {
+    logger.fatal(
+      'Unhandled async error',
+      error: error,
+      stackTrace: stack,
+    );
+    return true;
+  };
 
   // Initialize services
   // await initializeServices();
