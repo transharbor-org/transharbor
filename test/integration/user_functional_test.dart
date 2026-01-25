@@ -267,9 +267,7 @@ void main() {
               'password123',
             );
 
-        final proposals = await pb.collection('proposals').getList(
-              sort: '-created',
-            );
+        final proposals = await pb.collection('proposals').getList();
 
         expect(proposals.items, isNotEmpty,
             reason: 'Should have proposals from seed data');
