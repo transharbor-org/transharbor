@@ -3,10 +3,10 @@ import 'package:pocketbase/pocketbase.dart';
 
 /// Live API integration tests for PocketBase
 /// These tests actually call the PocketBase API to validate behavior
-/// 
+///
 /// To run against live API:
 /// flutter test --dart-define=POCKETBASE_URL=https://dev.transharbor.org test/integration/pocketbase_live_api_test.dart
-/// 
+///
 /// Note: These tests require a live PocketBase instance with seeded data
 void main() {
   group('PocketBase Live API Tests', () {
@@ -34,7 +34,10 @@ void main() {
           // If health check not available, just verify PocketBase is initialized
           expect(pb.baseUrl, isNotEmpty);
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
     });
 
     group('Authentication Flow', () {
@@ -54,7 +57,10 @@ void main() {
         } catch (e) {
           fail('Authentication failed: $e');
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
     });
 
     group('Collections API', () {
@@ -70,14 +76,17 @@ void main() {
         expect(result.page, 1);
         expect(result.perPage, 5);
         expect(result.totalItems, greaterThan(0));
-        
+
         // Verify expand worked
         for (final item in result.items) {
           if (item.expand.isNotEmpty) {
             expect(item.expand['user'], isNotNull);
           }
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
 
       test('can filter personals by user', () async {
         if (userId == null) {
@@ -92,7 +101,10 @@ void main() {
         for (final item in result.items) {
           expect(item.getStringValue('user'), userId);
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
 
       test('conversations filter with relation array', () async {
         if (userId == null) {
@@ -133,7 +145,10 @@ void main() {
         }
 
         fail('None of the filter syntaxes worked for relation arrays');
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
 
       test('can get proposals with author expand', () async {
         final result = await pb.collection('proposals').getList(
@@ -144,13 +159,16 @@ void main() {
         for (final item in result.items) {
           expect(item.data['title'], isNotEmpty);
           expect(item.data['status'], isNotEmpty);
-          
+
           if (item.expand.isNotEmpty && item.expand['author'] != null) {
             final author = item.expand['author'];
             expect(author, isNotNull);
           }
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
     });
 
     group('Pagination Edge Cases', () {
@@ -172,7 +190,10 @@ void main() {
 
         expect(page1.items.first.id, isNot(equals(page2.items.first.id)),
             reason: 'Different pages should have different items');
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
 
       test('empty page returns empty items', () async {
         final result = await pb.collection('personals').getList(
@@ -182,7 +203,10 @@ void main() {
 
         expect(result.items, isEmpty);
         expect(result.page, 9999);
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
     });
 
     group('Sorting', () {
@@ -203,7 +227,10 @@ void main() {
           expect(date1.isBefore(date2) || date1.isAtSameMomentAs(date2), true,
               reason: 'Items should be in ascending order');
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
 
       test('descending sort order is correct', () async {
         final result = await pb.collection('personals').getList(
@@ -222,7 +249,10 @@ void main() {
           expect(date1.isAfter(date2) || date1.isAtSameMomentAs(date2), true,
               reason: 'Items should be in descending order');
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
     });
 
     group('Error Handling', () {
@@ -231,14 +261,20 @@ void main() {
           () => pb.collection('personals').getOne('nonexistent123'),
           throwsA(isA<ClientException>()),
         );
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
 
       test('400 on invalid filter syntax', () async {
         expect(
           () => pb.collection('personals').getList(filter: 'invalid syntax'),
           throwsA(isA<ClientException>()),
         );
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
     });
 
     group('Data Consistency', () {
@@ -251,7 +287,10 @@ void main() {
           expect(item.data['content'], isNotEmpty);
           expect(item.created, isNotEmpty);
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
 
       test('all proposals have votesFor and votesAgainst', () async {
         final result = await pb.collection('proposals').getList();
@@ -261,7 +300,10 @@ void main() {
           expect(item.data, containsPair('votesAgainst', isA<int>()));
           expect(item.data, containsPair('status', isA<String>()));
         }
-      }, skip: const bool.fromEnvironment('POCKETBASE_URL') ? false : 'Set POCKETBASE_URL to run live tests');
+      },
+          skip: const bool.fromEnvironment('POCKETBASE_URL')
+              ? false
+              : 'Set POCKETBASE_URL to run live tests');
     });
   });
 }

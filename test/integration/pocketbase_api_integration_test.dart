@@ -7,14 +7,14 @@ import 'package:transharbor/features/governance/models/proposal.dart';
 
 /// Integration tests for PocketBase API
 /// These tests validate that our service layer correctly interacts with PocketBase
-/// 
+///
 /// To run: flutter test test/integration/pocketbase_api_integration_test.dart
-/// 
+///
 /// Note: These are integration tests that can run against a real PocketBase instance
 /// Set POCKETBASE_URL environment variable to test against live API
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  
+
   group('PocketBase API Integration Tests', () {
     late PocketBase pb;
     late String testBaseUrl;
