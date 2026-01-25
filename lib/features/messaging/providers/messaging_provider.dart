@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/services/pocketbase_service.dart';
+import '../../../core/services/logging_service.dart';
 import '../models/message.dart';
 
 class MessagingProvider extends ChangeNotifier {
@@ -62,9 +63,19 @@ class MessagingProvider extends ChangeNotifier {
       }
       _messages[conversationId]!.add(newMessage);
       notifyListeners();
+      
+      logger.info('Message sent', metadata: {
+        'conversationId': conversationId,
+        'messageId': newMessage.id,
+        'contentLength': content.length,
+      });
+      
       return true;
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Failed to send message', error: e, metadata: {
+        'conversationId': conversationId,
+      });
       return false;
     }
   }

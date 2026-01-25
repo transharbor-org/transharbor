@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/services/pocketbase_service.dart';
+import '../../../core/services/logging_service.dart';
 import '../models/personal.dart';
 
 class PersonalsProvider extends ChangeNotifier {
@@ -46,9 +47,16 @@ class PersonalsProvider extends ChangeNotifier {
       final newPersonal = Personal.fromPocketBase(record);
       _personals.insert(0, newPersonal);
       notifyListeners();
+      
+      logger.info('Personal post created', metadata: {
+        'personalId': newPersonal.id,
+        'contentLength': content.length,
+      });
+      
       return true;
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Failed to create personal post', error: e);
       return false;
     }
   }
@@ -58,9 +66,17 @@ class PersonalsProvider extends ChangeNotifier {
       await _pb.deletePersonal(personalId);
       _personals.removeWhere((p) => p.id == personalId);
       notifyListeners();
+      
+      logger.info('Personal post deleted', metadata: {
+        'personalId': personalId,
+      });
+      
       return true;
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Failed to delete personal post', error: e, metadata: {
+        'personalId': personalId,
+      });
       return false;
     }
   }
