@@ -68,3 +68,25 @@ This will:
    ```bash
    flutter run
    ```
+
+### Testing
+
+**Unit & Widget Tests:**
+```bash
+flutter test
+```
+
+**E2E Tests (Browser):**
+```bash
+./scripts/run_integration_tests.sh
+```
+
+**Test Coverage:**
+- 104 unit tests ✅
+- 58 widget tests ✅
+- 19 E2E tests ✅
+
+📚 **Testing Documentation:**
+- [E2E Testing Guide](docs/E2E_TESTING.md)
+- [E2E Quick Start](docs/E2E_QUICKSTART.md)
+- [Implementation Details](docs/E2E_IMPLEMENTATION.md)
