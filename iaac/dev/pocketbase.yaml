@@ -28,7 +28,7 @@ spec:
         env: dev
       annotations:
         # Update this to trigger rolling restart
-        deploy-version: "ddcdc1a"
+        deploy-version: "27b1e15-1769301147"
     spec:
       priorityClassName: high-priority
       imagePullSecrets:
