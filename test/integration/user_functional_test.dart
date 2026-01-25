@@ -180,11 +180,11 @@ void main() {
         for (final convo in conversations.items) {
           final participants = convo.data['participants'] as List;
           expect(participants, contains(alexId),
-              reason:
-                  'Conversation should include Alex as participant');
+              reason: 'Conversation should include Alex as participant');
         }
 
-        print('✅ Alex participates in ${conversations.items.length} conversations');
+        print(
+            '✅ Alex participates in ${conversations.items.length} conversations');
       },
           skip: shouldRunLiveTests
               ? false
@@ -309,7 +309,8 @@ void main() {
         final proposals = await pb.collection('proposals').getList();
         expect(proposals, isNotNull);
 
-        print('✅ Non-voting member can view ${proposals.items.length} proposals');
+        print(
+            '✅ Non-voting member can view ${proposals.items.length} proposals');
       },
           skip: shouldRunLiveTests
               ? false
@@ -401,10 +402,8 @@ void main() {
           final created = DateTime.parse(personal.created);
           final updated = DateTime.parse(personal.updated);
 
-          expect(created.isBefore(DateTime.now().add(Duration(days: 1))),
-              true);
-          expect(updated.isAfter(created.subtract(Duration(seconds: 1))),
-              true);
+          expect(created.isBefore(DateTime.now().add(Duration(days: 1))), true);
+          expect(updated.isAfter(created.subtract(Duration(seconds: 1))), true);
         }
 
         print('✅ All timestamps are valid');
@@ -437,8 +436,7 @@ void main() {
 
           // Expanded participants should have user data
           if (convo.expand.containsKey('participants')) {
-            final expandedParticipants =
-                convo.expand['participants'] as List;
+            final expandedParticipants = convo.expand['participants'] as List;
             for (final participant in expandedParticipants) {
               final participantMap = participant as Map<String, dynamic>;
               expect(participantMap['email'], isNotEmpty);
@@ -475,7 +473,8 @@ void main() {
           pb.authStore.clear();
         }
 
-        print('✅ All ${seedUsers.length} seed users authenticated successfully');
+        print(
+            '✅ All ${seedUsers.length} seed users authenticated successfully');
       },
           skip: shouldRunLiveTests
               ? false
