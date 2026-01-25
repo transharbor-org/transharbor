@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/models/user.dart';
 import '../../../core/models/user_role.dart';
 import '../../../core/services/pocketbase_service.dart';
+import '../../../core/services/logging_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   final PocketBaseService _pb;
@@ -39,6 +40,10 @@ class AuthProvider extends ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
+      // Log auth check error
+      if (e.toString().contains('Failed') || e.toString().contains('Error')) {
+        logger.error('Auth check failed', error: e);
+      }
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -67,10 +72,13 @@ class AuthProvider extends ChangeNotifier {
       final authData = await _pb.login(email, password);
       if (authData.record != null) {
         _currentUser = User.fromPocketBase(authData.record!);
+        logger.setUser(_currentUser!.id);
+        logger.info('User logged in successfully', metadata: {'userId': _currentUser!.id});
       }
       return true;
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Login failed', error: e, metadata: {'email': email});
       return false;
     } finally {
       _isLoading = false;
@@ -92,10 +100,13 @@ class AuthProvider extends ChangeNotifier {
       );
       if (authData.record != null) {
         _currentUser = User.fromPocketBase(authData.record!);
+        logger.setUser(_currentUser!.id);
+        logger.info('User registered successfully', metadata: {'userId': _currentUser!.id, 'email': email});
       }
       return true;
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Registration failed', error: e, metadata: {'email': email});
       return false;
     } finally {
       _isLoading = false;

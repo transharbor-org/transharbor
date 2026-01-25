@@ -9,10 +9,14 @@ import 'features/governance/providers/governance_provider.dart';
 import 'features/groups/providers/groups_provider.dart';
 import 'features/moderation/providers/moderation_provider.dart';
 import 'core/services/pocketbase_service.dart';
+import 'core/services/logging_service.dart';
 
 // Testing end-to-end GitOps automation - 2026-01-24
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize logging service
+  logger.initialize();
 
   // Initialize services
   // await initializeServices();
