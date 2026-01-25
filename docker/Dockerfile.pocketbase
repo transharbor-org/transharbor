@@ -30,12 +30,15 @@ RUN apk add --no-cache curl python3
 # Copy PocketBase binary from builder
 COPY --from=builder /pocketbase /app/pocketbase
 
-# Copy schema, hooks, import script, and init script
+# Copy schema, import script, and init script
 COPY pocketbase/pb_schema.json /app/pb_schema.json
-COPY pocketbase/pb_hooks /app/pb_hooks
 COPY pocketbase/import_schema.py /app/import_schema.py
 COPY pocketbase/init_pocketbase.sh /app/init_pocketbase.sh
 RUN chmod +x /app/init_pocketbase.sh
+
+# Copy hooks to pb_data directory (PocketBase loads from here)
+RUN mkdir -p /pb_data/pb_hooks
+COPY pocketbase/pb_hooks/* /pb_data/pb_hooks/
 
 # Create non-root user
 RUN addgroup -g 1000 pocketbase && \
