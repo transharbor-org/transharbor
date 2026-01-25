@@ -5,8 +5,15 @@ set -e
 echo "🚀 TransHarbor PocketBase Initialization"
 echo "========================================"
 
-# Create data directory
-mkdir -p /pb_data
+# Create data directory and copy hooks
+mkdir -p /pb_data/pb_hooks
+
+# Copy hooks from app directory to pb_data (where PocketBase loads them)
+echo "📋 Copying hooks..."
+if [ -d "/app/pb_hooks" ]; then
+    cp -r /app/pb_hooks/* /pb_data/pb_hooks/ 2>/dev/null || true
+    echo "✅ Hooks copied to /pb_data/pb_hooks/"
+fi
 
 # Check if schema has changed by comparing checksums
 SCHEMA_CHECKSUM=$(md5sum /app/pb_schema.json | cut -d' ' -f1)
