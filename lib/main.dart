@@ -10,6 +10,7 @@ import 'features/groups/providers/groups_provider.dart';
 import 'features/moderation/providers/moderation_provider.dart';
 import 'core/services/pocketbase_service.dart';
 
+// Testing end-to-end GitOps automation - 2026-01-24
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
