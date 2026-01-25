@@ -55,7 +55,7 @@ void main() {
       test('can authenticate with test user', () async {
         try {
           final authData = await pb.collection('users').authWithPassword(
-                'alex_river@example.com',
+                'alex@example.com',
                 'password123',
               );
 
