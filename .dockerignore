@@ -39,10 +39,9 @@ coverage/
 # Infrastructure (not needed in image)
 iaac/
 
-# PocketBase data (but keep schema and init script)
+# PocketBase data (but keep schema, hooks, and init script)
 pocketbase/pb_data/
 pocketbase/pocketbase
-pocketbase/pb_hooks/
 pocketbase/schema/
 pocketbase/*.md
 pocketbase/create_pocketbase_schema.js
