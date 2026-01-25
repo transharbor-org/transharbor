@@ -31,11 +31,18 @@ jobs:
       - name: Analyze project source
         run: flutter analyze 2>&1 | tee analyze.log && ! grep -q "error •" analyze.log
       
+      - name: Run integration tests
+        run: |
+          echo "Running integration tests (API contracts, field validation, etc.)..."
+          flutter test test/integration/
+      
       - name: Run unit tests (excluding smoke tests)
         run: |
-          # Run specific test files, excluding smoke directory
-          find test -name '*_test.dart' -not -path 'test/smoke/*' -print0 | \
-            xargs -0 flutter test || echo "Some tests failed but continuing"
+          # Run specific test files, excluding smoke and integration directories
+          find test -name '*_test.dart' \
+            -not -path 'test/smoke/*' \
+            -not -path 'test/integration/*' \
+            -print0 | xargs -0 flutter test || echo "Some tests failed but continuing"
       
       - name: Check for outdated dependencies
         run: flutter pub outdated
