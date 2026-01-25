@@ -27,14 +27,18 @@ class PersonalsProvider extends ChangeNotifier {
         throw Exception('User not authenticated');
       }
 
+      // Load ALL personals from ALL users, sorted by newest first
       final result = await _pb.getPersonals(
-        filter: 'user = "$currentUserId"',
+        sort: '-created',
       );
       _personals = result.items
           .map((record) => Personal.fromPocketBase(record))
           .toList();
+      
+      logger.info('Loaded personals feed', metadata: {'count': _personals.length});
     } catch (e) {
       _errorMessage = e.toString();
+      logger.error('Failed to load personals', error: e);
     } finally {
       _isLoading = false;
       notifyListeners();
