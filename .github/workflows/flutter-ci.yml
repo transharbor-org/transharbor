@@ -168,7 +168,7 @@ jobs:
       
       - name: Update dev deployment images
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
           # Update image tags to trigger ArgoCD rolling deployment
           SHORT_SHA="${GITHUB_SHA:0:7}"
@@ -185,16 +185,16 @@ jobs:
           echo "📝 Updating deployment manifest via GitHub API..."
           
           # Get the current file SHA
-          FILE_SHA=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
+          FILE_SHA=$(curl -s -H "Authorization: token ${DEPLOY_TOKEN}" \
             "https://api.github.com/repos/${{ github.repository }}/contents/iaac/dev/web.yaml" \
             | jq -r '.sha')
           
           # Base64 encode the new content
           CONTENT=$(base64 -w 0 iaac/dev/web.yaml)
           
-          # Update file via GitHub API (bypasses branch protection for bots)
-          curl -X PUT \
-            -H "Authorization: token ${GITHUB_TOKEN}" \
+          # Update file via GitHub API using DEPLOY_TOKEN with admin permissions
+          RESPONSE=$(curl -s -X PUT \
+            -H "Authorization: token ${DEPLOY_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/contents/iaac/dev/web.yaml" \
             -d "{
@@ -202,9 +202,17 @@ jobs:
               \"content\": \"${CONTENT}\",
               \"sha\": \"${FILE_SHA}\",
               \"branch\": \"main\"
-            }"
+            }")
           
-          echo "✅ Deployment manifest updated"
+          # Check if update was successful
+          if echo "$RESPONSE" | jq -e '.commit' > /dev/null; then
+            echo "✅ Deployment manifest updated successfully"
+            echo "$RESPONSE" | jq -r '.commit.html_url'
+          else
+            echo "❌ Failed to update deployment manifest"
+            echo "$RESPONSE" | jq '.'
+            exit 1
+          fi
 
   live-api-tests:
     name: Live API Integration Tests
