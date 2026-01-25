@@ -84,6 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
+                    autofillHints: const [AutofillHints.email],
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.email),
@@ -102,6 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
+                    autofillHints: const [AutofillHints.newPassword],
                     decoration: InputDecoration(
                       labelText: 'Password',
                       prefixIcon: const Icon(Icons.lock),
@@ -132,6 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     controller: _confirmPasswordController,
                     obscureText: _obscureConfirmPassword,
+                    autofillHints: const [AutofillHints.newPassword],
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',
                       prefixIcon: const Icon(Icons.lock),
