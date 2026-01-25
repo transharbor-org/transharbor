@@ -22,13 +22,13 @@ spec:
         env: dev
       annotations:
         # Update this SHA to trigger rolling deployment via ArgoCD
-        image-version: "main-6acf9e0"
+        image-version: "main-70a0b70"
     spec:
       imagePullSecrets:
       - name: ghcr-secret
       containers:
       - name: web
-        image: ghcr.io/transharbor-org/transharbor/web:main
+        image: ghcr.io/transharbor-org/transharbor/web:main-70a0b70
         imagePullPolicy: Always
         ports:
         - containerPort: 80
