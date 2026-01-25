@@ -268,12 +268,22 @@ jobs:
             test/integration/pocketbase_live_api_test.dart \
             --reporter expanded
       
+      - name: Run functional user tests
+        env:
+          POCKETBASE_URL: https://dev.transharbor.org
+        run: |
+          echo "🧪 Running functional user tests against $POCKETBASE_URL"
+          flutter test \
+            --dart-define=POCKETBASE_URL=$POCKETBASE_URL \
+            test/integration/user_functional_test.dart \
+            --reporter expanded
+      
       - name: Report test results
         if: always()
         run: |
           if [ $? -eq 0 ]; then
-            echo "✅ All live API tests passed"
+            echo "✅ All live tests passed"
           else
-            echo "❌ Some live API tests failed"
+            echo "❌ Some live tests failed"
             echo "Check the test output above for details"
           fi
