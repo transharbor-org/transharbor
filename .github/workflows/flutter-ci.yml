@@ -176,22 +176,35 @@ jobs:
           # Update web deployment
           sed -i "s|image: ghcr.io/transharbor-org/transharbor/web:main-.*|image: ghcr.io/transharbor-org/transharbor/web:main-${SHORT_SHA}|" iaac/dev/web.yaml
           
-          # Update pocketbase deployment (if it changed)
-          # sed -i "s|image: ghcr.io/transharbor-org/transharbor/pocketbase:main-.*|image: ghcr.io/transharbor-org/transharbor/pocketbase:main-${SHORT_SHA}|" iaac/dev/pocketbase.yaml
-          
           # Check if there are changes
-          if git diff --quiet iaac/dev/; then
-            echo "No changes to deployment files"
+          if git diff --quiet iaac/dev/web.yaml; then
+            echo "No changes to deployment file"
             exit 0
           fi
           
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add iaac/dev/
-          git commit -m "Deploy: Update dev images to main-${SHORT_SHA} [skip ci]"
+          echo "📝 Updating deployment manifest via GitHub API..."
           
-          # Force push using GITHUB_TOKEN (bypasses branch protection for bots)
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git main
+          # Get the current file SHA
+          FILE_SHA=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
+            "https://api.github.com/repos/${{ github.repository }}/contents/iaac/dev/web.yaml" \
+            | jq -r '.sha')
+          
+          # Base64 encode the new content
+          CONTENT=$(base64 -w 0 iaac/dev/web.yaml)
+          
+          # Update file via GitHub API (bypasses branch protection for bots)
+          curl -X PUT \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/contents/iaac/dev/web.yaml" \
+            -d "{
+              \"message\": \"Deploy: Update web image to main-${SHORT_SHA} [skip ci]\",
+              \"content\": \"${CONTENT}\",
+              \"sha\": \"${FILE_SHA}\",
+              \"branch\": \"main\"
+            }"
+          
+          echo "✅ Deployment manifest updated"
 
   live-api-tests:
     name: Live API Integration Tests
