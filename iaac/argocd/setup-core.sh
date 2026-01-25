@@ -4,13 +4,16 @@ set -e
 
 echo "🔧 Setting up ArgoCD Core..."
 
+# Get the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Apply default project
 echo "📦 Creating default AppProject..."
-kubectl apply -f /home/aaron/transharbor/iaac/argocd/default-project.yaml
+kubectl apply -f "$SCRIPT_DIR/default-project.yaml"
 
 # Apply cluster secret
 echo "🔐 Creating in-cluster secret..."
-kubectl apply -f /home/aaron/transharbor/iaac/argocd/cluster-secret.yaml
+kubectl apply -f "$SCRIPT_DIR/cluster-secret.yaml"
 
 # Configure sync interval to 1 minute
 echo "⏱️  Setting sync interval to 60 seconds..."
