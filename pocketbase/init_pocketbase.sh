@@ -8,9 +8,21 @@ echo "========================================"
 # Create data directory
 mkdir -p /pb_data
 
-# Check if this is first run (no initialization marker)
+# Check if schema has changed by comparing checksums
+SCHEMA_CHECKSUM=$(md5sum /app/pb_schema.json | cut -d' ' -f1)
+NEED_IMPORT=false
+
 if [ ! -f "/pb_data/.initialized" ]; then
     echo "📦 First run detected - initializing database..."
+    NEED_IMPORT=true
+elif [ ! -f "/pb_data/.schema_checksum" ] || [ "$(cat /pb_data/.schema_checksum)" != "$SCHEMA_CHECKSUM" ]; then
+    echo "📦 Schema changed - reimporting collections..."
+    NEED_IMPORT=true
+    # Remove initialization marker to force reimport
+    rm -f /pb_data/.initialized
+fi
+
+if [ "$NEED_IMPORT" = "true" ]; then
     
     # Start PocketBase in background to initialize DB
     /app/pocketbase serve --http=0.0.0.0:8080 --dir=/pb_data &
@@ -149,6 +161,7 @@ PYTHON_SCRIPT
                 echo "✅ All collections imported successfully (rules will be applied on first access)"
                 rm -f /tmp/batch*.json /tmp/import_response.json /tmp/collections_with_rules.json
                 touch /pb_data/.initialized
+                echo "$SCHEMA_CHECKSUM" > /pb_data/.schema_checksum
             else
                 echo "⚠️  Import failed, copying schema to /pb_data for manual import"
                 cp /app/pb_schema.json /pb_data/pb_schema.json
@@ -159,6 +172,7 @@ PYTHON_SCRIPT
             echo "⚠️  Could not authenticate for schema import"
             cp /app/pb_schema.json /pb_data/pb_schema.json
             touch /pb_data/.initialized
+            echo "$SCHEMA_CHECKSUM" > /pb_data/.schema_checksum
         fi
     fi
     
