@@ -47,10 +47,104 @@ jobs:
       - name: Check for outdated dependencies
         run: flutter pub outdated
 
+  e2e-tests:
+    name: E2E Tests (Web)
+    runs-on: ubuntu-latest
+    needs: analyze
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.x'
+          channel: 'stable'
+          cache: true
+      
+      - name: Install Chrome and ChromeDriver
+        run: |
+          # Install Chrome
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          
+          # Install ChromeDriver
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f 1)
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
+          wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+          
+          # Verify installation
+          google-chrome --version
+          chromedriver --version
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Start ChromeDriver
+        run: |
+          chromedriver --port=4444 --url-base=/wd/hub &
+          echo "CHROMEDRIVER_PID=$!" >> $GITHUB_ENV
+          sleep 3
+      
+      - name: Run E2E Tests - Login Flow
+        run: |
+          flutter drive \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/login_flow_test.dart \
+            -d web-server \
+            --web-port=8080 \
+            --release \
+            --web-browser-flag="--disable-gpu" \
+            --web-browser-flag="--disable-software-rasterizer" \
+            --web-browser-flag="--disable-dev-shm-usage" \
+            --web-browser-flag="--no-sandbox" \
+            --web-browser-flag="--headless=new"
+      
+      - name: Run E2E Tests - Register Flow
+        if: success() || failure()
+        run: |
+          flutter drive \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/register_flow_test.dart \
+            -d web-server \
+            --web-port=8080 \
+            --release \
+            --web-browser-flag="--disable-gpu" \
+            --web-browser-flag="--disable-software-rasterizer" \
+            --web-browser-flag="--disable-dev-shm-usage" \
+            --web-browser-flag="--no-sandbox" \
+            --web-browser-flag="--headless=new"
+      
+      - name: Run E2E Tests - Navigation Flow
+        if: success() || failure()
+        run: |
+          flutter drive \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/navigation_flow_test.dart \
+            -d web-server \
+            --web-port=8080 \
+            --release \
+            --web-browser-flag="--disable-gpu" \
+            --web-browser-flag="--disable-software-rasterizer" \
+            --web-browser-flag="--disable-dev-shm-usage" \
+            --web-browser-flag="--no-sandbox" \
+            --web-browser-flag="--headless=new"
+      
+      - name: Stop ChromeDriver
+        if: always()
+        run: |
+          kill $CHROMEDRIVER_PID || true
+          pkill -f chromedriver || true
+
   build-web:
     name: Build Web
     runs-on: ubuntu-latest
-    needs: analyze
+    needs: [analyze, e2e-tests]
     
     steps:
       - uses: actions/checkout@v4
