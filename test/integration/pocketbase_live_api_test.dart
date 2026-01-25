@@ -15,12 +15,23 @@ void main() {
     String? authToken;
     String? userId;
 
+    // Determine if we should run live tests based on URL
+    final shouldRunLiveTests = const String.fromEnvironment(
+          'POCKETBASE_URL',
+          defaultValue: 'http://localhost:8080',
+        ) !=
+        'http://localhost:8080';
+
     setUpAll(() {
       baseUrl = const String.fromEnvironment(
         'POCKETBASE_URL',
         defaultValue: 'http://localhost:8080',
       );
       pb = PocketBase(baseUrl);
+
+      if (shouldRunLiveTests) {
+        print('🌐 Running live API tests against: $baseUrl');
+      }
     });
 
     group('Health Check', () {
@@ -35,7 +46,7 @@ void main() {
           expect(pb.baseUrl, isNotEmpty);
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
     });
@@ -58,7 +69,7 @@ void main() {
           fail('Authentication failed: $e');
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
     });
@@ -84,7 +95,7 @@ void main() {
           }
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
 
@@ -102,7 +113,7 @@ void main() {
           expect(item.getStringValue('user'), userId);
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
 
@@ -146,7 +157,7 @@ void main() {
 
         fail('None of the filter syntaxes worked for relation arrays');
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
 
@@ -166,7 +177,7 @@ void main() {
           }
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
     });
@@ -191,7 +202,7 @@ void main() {
         expect(page1.items.first.id, isNot(equals(page2.items.first.id)),
             reason: 'Different pages should have different items');
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
 
@@ -204,7 +215,7 @@ void main() {
         expect(result.items, isEmpty);
         expect(result.page, 9999);
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
     });
@@ -228,7 +239,7 @@ void main() {
               reason: 'Items should be in ascending order');
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
 
@@ -250,7 +261,7 @@ void main() {
               reason: 'Items should be in descending order');
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
     });
@@ -262,7 +273,7 @@ void main() {
           throwsA(isA<ClientException>()),
         );
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
 
@@ -272,7 +283,7 @@ void main() {
           throwsA(isA<ClientException>()),
         );
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
     });
@@ -288,7 +299,7 @@ void main() {
           expect(item.created, isNotEmpty);
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
 
@@ -301,7 +312,7 @@ void main() {
           expect(item.data, containsPair('status', isA<String>()));
         }
       },
-          skip: const bool.fromEnvironment('POCKETBASE_URL')
+          skip: shouldRunLiveTests
               ? false
               : 'Set POCKETBASE_URL to run live tests');
     });
