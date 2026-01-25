@@ -1,0 +1,653 @@
+00:00 +0: loading /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart                                                                                                             00:00 +0: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                          00:00 +0: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Authentication Workflows user can log in with valid credentials                                    
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~1: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Authentication Workflows user cannot log in with invalid credentials                            
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~2: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~2: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Authentication Workflows auth token persists across requests                                    
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~3: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~3: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Personals - User Privacy user sees only their own personals                                     
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~4: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~4: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Personals - User Privacy different users see different personals                                
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~5: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~5: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Conversations - User Privacy user sees only conversations they participate in                   
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~6: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~6: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Conversations - User Privacy user cannot see conversations they are not part of                 
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~7: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~7: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Messaging - Conversation Isolation messages are isolated to specific conversations              
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~8: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~8: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Proposals - Voting Member Access voting member can view proposals                               
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~9: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                       00:00 +0 ~9: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Proposals - Voting Member Access non-voting member can view but not create proposals            
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~10: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:00 +0 ~10: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests User Profile Data user can view their own profile from auth record                             
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~11: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:00 +0 ~11: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Moderator Capabilities moderator user has correct role                                         
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~12: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:00 +0 ~12: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Data Integrity personals have correct user associations                                        
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:00 +0 ~13: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Data Integrity conversations have valid participant relationships                              
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~14: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:00 +0 ~14: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Seed Data Verification all seed users exist and can authenticate                               
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~15: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:00 +0 ~15: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Seed Data Verification seed data contains personals for users                                  
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~16: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:00 +0 ~16: /home/aaron/transharbor/test/integration/user_functional_test.dart: User Functional Tests Seed Data Verification seed data contains proposals                                            
+  Skip: Set POCKETBASE_URL to run live tests
+00:00 +0 ~17: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +0 ~17: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +1 ~17: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +1 ~17: /home/aaron/transharbor/test/integration/pocketbase_api_integration_test.dart: PocketBase API Integration Tests Authentication PocketBase service is singleton                           
+  Skip: Requires platform plugins
+00:01 +1 ~18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +1 ~18: /home/aaron/transharbor/test/integration/pocketbase_api_integration_test.dart: PocketBase API Integration Tests Authentication isAuthenticated returns false when no auth                
+  Skip: Requires platform plugins
+00:01 +1 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +2 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +3 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +4 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +5 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +6 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +7 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +8 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +9 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                      00:01 +10 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +11 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +12 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +13 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +14 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +15 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +16 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +17 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +18 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +19 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +20 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +21 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +22 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +23 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +24 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +25 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +26 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +27 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +28 ~19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +28 ~19: /home/aaron/transharbor/test/integration/pocketbase_api_integration_test.dart: PocketBase API Integration Tests Collection Rules Compatibility groups create rule auto-joins creator    
+  Skip: Requires platform plugins
+00:01 +28 ~20: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +29 ~20: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +30 ~20: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +31 ~20: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~20: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~20: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Health Check API is accessible                                                        
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~21: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~21: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Authentication Flow can authenticate with test user                                   
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~22: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~22: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Collections API can list personals with pagination                                    
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~23: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Collections API can filter personals by user                                          
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~24: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~24: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Collections API conversations filter with relation array                              
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~25: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~25: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Collections API can get proposals with author expand                                  
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~26: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~26: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Pagination Edge Cases page 1 and page 2 have different items                          
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~27: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~27: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Pagination Edge Cases empty page returns empty items                                  
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~28: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~28: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Sorting ascending sort order is correct                                               
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~29: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Sorting descending sort order is correct                                              
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~30: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~30: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Error Handling 404 on non-existent record                                             
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~31: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~31: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Error Handling 400 on invalid filter syntax                                           
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~32: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~32: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Data Consistency all personals have required fields                                   
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~33: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +32 ~33: /home/aaron/transharbor/test/integration/pocketbase_live_api_test.dart: PocketBase Live API Tests Data Consistency all proposals have votesFor and votesAgainst                         
+  Skip: Set POCKETBASE_URL to run live tests
+00:01 +32 ~34: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +33 ~34: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +34 ~34: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +35 ~34: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +36 ~34: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +37 ~34: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     00:01 +37 ~34: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field                                     
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Phone Number": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:36:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 36
+The test description was:
+  displays phone number input field
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +38 ~34 -1: /home/aaron/transharbor/test/services/phone_auth_service_test.dart: PhoneAuthService - verifyOTP throws exception for expired OTP                                                    00:01 +38 ~34 -1: /home/aaron/transharbor/test/services/phone_auth_service_test.dart: PhoneAuthService - verifyOTP throws exception for incorrect OTP                                                  00:01 +38 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays phone number input field [E]                              
+  Test failed. See exception logs above.
+  The test description was: displays phone number input field
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Initial State displays phone number input field'
+00:01 +39 ~34 -1: /home/aaron/transharbor/test/services/phone_auth_service_test.dart: PhoneAuthService - verifyOTP throws exception for incorrect OTP                                                  00:01 +39 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +40 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +41 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +42 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +43 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +44 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +45 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +46 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +47 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +48 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +49 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +50 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +51 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +52 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +53 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State displays Send Verification Code button                             00:01 +53 ~34 -1: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State phone icon is visible                                              00:01 +54 ~34 -1: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests Web app is accessible                                                                        00:01 +54 ~34 -2: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests Web app is accessible [E]                                                                    
+  ClientException with SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = stage.transharbor.org, port = 43318, uri=https://stage.transharbor.org
+  package:http/src/io_client.dart 227:7  IOClient.send
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/smoke/stage_smoke_test.dart -p vm --plain-name 'Stage Environment Smoke Tests Web app is accessible'
+00:01 +54 ~34 -2: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State no error message shown initially                                   
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: at least one matching candidate
+  Actual: _TypeWidgetFinder:<Found 0 widgets with type "Container": []>
+   Which: means none were found but some were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:62:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 62
+The test description was:
+  no error message shown initially
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +54 ~34 -3: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Initial State no error message shown initially [E]                               
+  Test failed. See exception logs above.
+  The test description was: no error message shown initially
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Initial State no error message shown initially'
+00:01 +54 ~34 -3: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests PocketBase health check                                                                      00:01 +54 ~34 -4: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests PocketBase health check [E]                                                                  
+  ClientException with SocketException: Failed host lookup: 'pb-stage.transharbor.org' (OS Error: No address associated with hostname, errno = -5), uri=https://pb-stage.transharbor.org/api/health
+  package:http/src/io_client.dart 227:7  IOClient.send
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/smoke/stage_smoke_test.dart -p vm --plain-name 'Stage Environment Smoke Tests PocketBase health check'
+00:01 +54 ~34 -5: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests PocketBase collections exist [E]                                                             
+  ClientException with SocketException: Failed host lookup: 'pb-stage.transharbor.org' (OS Error: No address associated with hostname, errno = -5), uri=https://pb-stage.transharbor.org/api/collections
+  package:http/src/io_client.dart 227:7  IOClient.send
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/smoke/stage_smoke_test.dart -p vm --plain-name 'Stage Environment Smoke Tests PocketBase collections exist'
+00:01 +54 ~34 -6: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation shows error for empty phone number                       00:01 +54 ~34 -6: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests Phone verification collection accessible [E]                                                 
+  ClientException with SocketException: Failed host lookup: 'pb-stage.transharbor.org' (OS Error: No address associated with hostname, errno = -5), uri=https://pb-stage.transharbor.org/api/collections/phone_verification/records
+  package:http/src/io_client.dart 227:7  IOClient.send
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/smoke/stage_smoke_test.dart -p vm --plain-name 'Stage Environment Smoke Tests Phone verification collection accessible'
+00:01 +55 ~34 -6: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation shows error for empty phone number                       00:01 +56 ~34 -6: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation shows error for empty phone number                       00:01 +57 ~34 -6: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests Users collection accessible                                                                  00:01 +57 ~34 -7: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Smoke Tests Users collection accessible [E]                                                              
+  ClientException with SocketException: Failed host lookup: 'pb-stage.transharbor.org' (OS Error: No address associated with hostname, errno = -5), uri=https://pb-stage.transharbor.org/api/collections/users/records
+  package:http/src/io_client.dart 227:7  IOClient.send
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/smoke/stage_smoke_test.dart -p vm --plain-name 'Stage Environment Smoke Tests Users collection accessible'
+00:01 +57 ~34 -8: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Performance Web app loads within 3 seconds [E]                                                           
+  ClientException with SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = stage.transharbor.org, port = 43326, uri=https://stage.transharbor.org
+  package:http/src/io_client.dart 227:7  IOClient.send
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/smoke/stage_smoke_test.dart -p vm --plain-name 'Stage Environment Performance Web app loads within 3 seconds'
+00:01 +57 ~34 -8: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation shows error for invalid phone format                     00:01 +57 ~34 -9: /home/aaron/transharbor/test/smoke/stage_smoke_test.dart: Stage Environment Performance PocketBase API responds within 1 second [E]                                                  
+  ClientException with SocketException: Failed host lookup: 'pb-stage.transharbor.org' (OS Error: No address associated with hostname, errno = -5), uri=https://pb-stage.transharbor.org/api/health
+  package:http/src/io_client.dart 227:7  IOClient.send
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/smoke/stage_smoke_test.dart -p vm --plain-name 'Stage Environment Performance PocketBase API responds within 1 second'
+00:01 +57 ~34 -10: /home/aaron/transharbor/test/features/personals/models/personal_test.dart: Personal Model creates personal from JSON [E]                                                            
+  type 'Null' is not a subtype of type 'String' in type cast
+  package:transharbor/features/personals/models/personal.dart 25:28  new Personal.fromJson
+  test/features/personals/models/personal_test.dart 17:33            main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/personals/models/personal_test.dart -p vm --plain-name 'Personal Model creates personal from JSON'
+00:01 +57 ~34 -11: /home/aaron/transharbor/test/features/personals/models/personal_test.dart: Personal Model converts personal to JSON [E]                                                             
+  Expected: 'user123'
+    Actual: <null>
+     Which: not an <Instance of 'String'>
+  
+  package:matcher                                         expect
+  package:flutter_test/src/widget_tester.dart 473:18      expect
+  test/features/personals/models/personal_test.dart 40:7  main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/personals/models/personal_test.dart -p vm --plain-name 'Personal Model converts personal to JSON'
+00:01 +57 ~35 -11: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation shows error for invalid phone format                    00:01 +57 ~35 -12: /home/aaron/transharbor/test/features/personals/models/personal_test.dart: Personal Model handles nullable fields [E]                                                               
+  type 'Null' is not a subtype of type 'String' in type cast
+  package:transharbor/features/personals/models/personal.dart 25:28  new Personal.fromJson
+  test/features/personals/models/personal_test.dart 58:33            main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/personals/models/personal_test.dart -p vm --plain-name 'Personal Model handles nullable fields'
+00:01 +57 ~35 -12: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation shows error for invalid phone format                    
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Invalid phone number format (use
++country_code)": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:89:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 89
+The test description was:
+  shows error for invalid phone format
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +57 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation shows error for invalid phone format [E]                
+  Test failed. See exception logs above.
+  The test description was: shows error for invalid phone format
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Phone Number Validation shows error for invalid phone format'
+00:01 +57 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation accepts valid E.164 phone format                        00:01 +58 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation accepts valid E.164 phone format                        00:01 +59 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation accepts valid E.164 phone format                        00:01 +60 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation accepts valid E.164 phone format                        00:01 +61 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation accepts valid E.164 phone format                        00:01 +61 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation validates multiple international formats                00:01 +62 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation validates multiple international formats                00:01 +63 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation validates multiple international formats                00:01 +64 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation validates multiple international formats                00:01 +65 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation validates multiple international formats                00:01 +66 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Phone Number Validation validates multiple international formats                00:01 +67 ~35 -13: /home/aaron/transharbor/test/features/moderation/models/report_test.dart: Report Model copyWith creates new report with updated fields                                              00:01 +68 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +69 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +70 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +71 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +72 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +73 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +74 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +75 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +76 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          00:01 +76 ~35 -13: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP                          
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TypeWidgetFinder:<Found 0 widgets with type "CircularProgressIndicator": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:141:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 141
+The test description was:
+  shows loading indicator when sending OTP
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +76 ~35 -14: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP [E]                      
+  Test failed. See exception logs above.
+  The test description was: shows loading indicator when sending OTP
+  
+Warning: At least one test in this suite creates an HttpClient. When running a test suite that uses
+TestWidgetsFlutterBinding, all HTTP requests will return status code 400, and no network request
+will actually be made. Any test expecting a real network connection and status code will fail.
+To test code that needs an HttpClient, provide your own HttpClient implementation to the code under
+test, so that your test can consistently provide a testable response to the code under test.
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Send OTP Flow shows loading indicator when sending OTP'
+00:01 +76 ~35 -14: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow transitions to OTP entry screen after sending                     00:01 +76 ~35 -15: /home/aaron/transharbor/test/features/auth/models/user_test.dart: User Model creates user from JSON [E]                                                                             
+  type 'Null' is not a subtype of type 'String' in type cast
+  package:transharbor/core/models/user.dart 59:49  new User.fromJson
+  test/features/auth/models/user_test.dart 22:25   main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/auth/models/user_test.dart -p vm --plain-name 'User Model creates user from JSON'
+00:01 +76 ~35 -16: /home/aaron/transharbor/test/features/auth/models/user_test.dart: User Model converts user to JSON [E]                                                                              
+  Expected: 'Test User'
+    Actual: <null>
+     Which: not an <Instance of 'String'>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/features/auth/models/user_test.dart 52:7       main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/auth/models/user_test.dart -p vm --plain-name 'User Model converts user to JSON'
+00:01 +76 ~36 -16: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow transitions to OTP entry screen after sending                     00:01 +76 ~36 -17: /home/aaron/transharbor/test/features/auth/models/user_test.dart: User Model handles nullable fields [E]                                                                            
+  type 'Null' is not a subtype of type 'String' in type cast
+  package:transharbor/core/models/user.dart 59:49  new User.fromJson
+  test/features/auth/models/user_test.dart 71:25   main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/auth/models/user_test.dart -p vm --plain-name 'User Model handles nullable fields'
+00:01 +76 ~36 -17: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow transitions to OTP entry screen after sending                     
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Verification Code": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:157:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 157
+The test description was:
+  transitions to OTP entry screen after sending
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +76 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow transitions to OTP entry screen after sending [E]                 
+  Test failed. See exception logs above.
+  The test description was: transitions to OTP entry screen after sending
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Send OTP Flow transitions to OTP entry screen after sending'
+00:01 +76 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:01 +77 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:01 +78 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:01 +79 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:01 +80 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:01 +81 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:02 +81 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:02 +82 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow shows error message when send fails                               00:02 +82 ~36 -18: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow disables button while sending                                     00:02 +82 ~36 -19: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow disables button while sending                                     
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: <Closure: () => Future<void> from Function '_sendOTP@24340124':.>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:188:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 188
+The test description was:
+  disables button while sending
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +82 ~36 -20: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Send OTP Flow disables button while sending [E]                                 
+  Test failed. See exception logs above.
+  The test description was: disables button while sending
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Send OTP Flow disables button while sending'
+00:02 +82 ~36 -20: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification displays OTP input field with correct properties               00:02 +82 ~36 -20: /home/aaron/transharbor/test/features/messaging/models/message_test.dart: Message Model creates message from JSON [E]                                                               
+  type 'Null' is not a subtype of type 'String' in type cast
+  package:transharbor/features/messaging/models/message.dart 23:44  new Message.fromJson
+  test/features/messaging/models/message_test.dart 16:31            main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/messaging/models/message_test.dart -p vm --plain-name 'Message Model creates message from JSON'
+00:02 +82 ~36 -21: /home/aaron/transharbor/test/features/messaging/models/message_test.dart: Message Model converts message to JSON [E]                                                                
+  Expected: 'conv123'
+    Actual: <null>
+     Which: not an <Instance of 'String'>
+  
+  package:matcher                                        expect
+  package:flutter_test/src/widget_tester.dart 473:18     expect
+  test/features/messaging/models/message_test.dart 38:7  main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/messaging/models/message_test.dart -p vm --plain-name 'Message Model converts message to JSON'
+00:02 +82 ~37 -21: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification displays OTP input field with correct properties               00:02 +82 ~37 -22: /home/aaron/transharbor/test/features/messaging/models/message_test.dart: Conversation Model creates conversation from JSON [E]                                                     
+  type 'Null' is not a subtype of type 'List<dynamic>' in type cast
+  package:transharbor/features/messaging/models/message.dart 72:62  new Conversation.fromJson
+  test/features/messaging/models/message_test.dart 58:41            main.<fn>.<fn>
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/features/messaging/models/message_test.dart -p vm --plain-name 'Conversation Model creates conversation from JSON'
+00:02 +82 ~38 -22: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification displays OTP input field with correct properties               00:02 +82 ~38 -22: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification displays OTP input field with correct properties               
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _AncestorWidgetFinder:<Found 0 widgets with type "TextFormField" that are ancestors of
+widgets with text "Verification Code": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:207:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 207
+The test description was:
+  displays OTP input field with correct properties
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +82 ~38 -23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification displays OTP input field with correct properties [E]           
+  Test failed. See exception logs above.
+  The test description was: displays OTP input field with correct properties
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - OTP Verification displays OTP input field with correct properties'
+00:02 +82 ~38 -23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for empty OTP                                      00:02 +83 ~38 -23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for empty OTP                                      00:02 +84 ~38 -23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for empty OTP                                      00:02 +85 ~38 -23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for empty OTP                                      00:02 +86 ~38 -23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for empty OTP                                      00:02 +86 ~38 -23: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for empty OTP                                      
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+The finder "Found 0 widgets with text "Verify Code": []" (used in a call to "tap()") could not find
+any matching widgets.
+
+When the exception was thrown, this was the stack:
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2013:7)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1865:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1045:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:225:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  shows error for empty OTP
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +86 ~38 -24: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for empty OTP [E]                                  
+  Test failed. See exception logs above.
+  The test description was: shows error for empty OTP
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - OTP Verification shows error for empty OTP'
+00:02 +86 ~38 -24: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for OTP with wrong length                          00:02 +86 ~38 -24: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for OTP with wrong length                          
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.state (package:flutter_test/src/controller.dart:912:42)
+#2      WidgetTester.showKeyboard.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1125:42)
+#5      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#6      WidgetTester.showKeyboard (package:flutter_test/src/widget_tester.dart:1124:27)
+#7      WidgetTester.enterText.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1160:13)
+#10     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#11     WidgetTester.enterText (package:flutter_test/src/widget_tester.dart:1159:27)
+#12     main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:242:20)
+<asynchronous suspension>
+#13     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#14     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The test description was:
+  shows error for OTP with wrong length
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +86 ~38 -25: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows error for OTP with wrong length [E]                      
+  Test failed. See exception logs above.
+  The test description was: shows error for OTP with wrong length
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - OTP Verification shows error for OTP with wrong length'
+00:02 +86 ~38 -25: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows loading indicator when verifying                         00:02 +86 ~38 -25: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows loading indicator when verifying                         
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.state (package:flutter_test/src/controller.dart:912:42)
+#2      WidgetTester.showKeyboard.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1125:42)
+#5      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#6      WidgetTester.showKeyboard (package:flutter_test/src/widget_tester.dart:1124:27)
+#7      WidgetTester.enterText.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1160:13)
+#10     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#11     WidgetTester.enterText (package:flutter_test/src/widget_tester.dart:1159:27)
+#12     main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:263:20)
+<asynchronous suspension>
+#13     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#14     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The test description was:
+  shows loading indicator when verifying
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +86 ~38 -26: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification shows loading indicator when verifying [E]                     
+  Test failed. See exception logs above.
+  The test description was: shows loading indicator when verifying
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - OTP Verification shows loading indicator when verifying'
+00:02 +86 ~38 -26: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification calls onVerified callback on successful verification           00:02 +87 ~38 -26: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - OTP Verification calls onVerified callback on successful verification           00:02 +87 ~38 -26: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number shows Change Phone Number button on OTP screen              00:02 +87 ~38 -26: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number shows Change Phone Number button on OTP screen              
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Change Phone Number": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:307:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 307
+The test description was:
+  shows Change Phone Number button on OTP screen
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +87 ~38 -27: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number shows Change Phone Number button on OTP screen [E]          
+  Test failed. See exception logs above.
+  The test description was: shows Change Phone Number button on OTP screen
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Change Phone Number shows Change Phone Number button on OTP screen'
+00:02 +87 ~38 -27: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number returns to phone input when change phone tapped             00:02 +87 ~38 -27: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number returns to phone input when change phone tapped             
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+The finder "Found 0 widgets with text "Change Phone Number": []" (used in a call to "tap()") could
+not find any matching widgets.
+
+When the exception was thrown, this was the stack:
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2013:7)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1865:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1045:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:323:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  returns to phone input when change phone tapped
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +87 ~38 -28: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number returns to phone input when change phone tapped [E]         
+  Test failed. See exception logs above.
+  The test description was: returns to phone input when change phone tapped
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Change Phone Number returns to phone input when change phone tapped'
+00:02 +87 ~38 -28: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number clears OTP field when changing phone                        00:02 +87 ~38 -28: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number clears OTP field when changing phone                        
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.state (package:flutter_test/src/controller.dart:912:42)
+#2      WidgetTester.showKeyboard.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1125:42)
+#5      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#6      WidgetTester.showKeyboard (package:flutter_test/src/widget_tester.dart:1124:27)
+#7      WidgetTester.enterText.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1160:13)
+#10     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#11     WidgetTester.enterText (package:flutter_test/src/widget_tester.dart:1159:27)
+#12     main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:342:20)
+<asynchronous suspension>
+#13     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#14     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The test description was:
+  clears OTP field when changing phone
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +87 ~38 -29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Change Phone Number clears OTP field when changing phone [E]                    
+  Test failed. See exception logs above.
+  The test description was: clears OTP field when changing phone
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Change Phone Number clears OTP field when changing phone'
+00:02 +87 ~38 -29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Error Display shows error message in red container                              00:02 +88 ~38 -29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Error Display shows error message in red container                              00:02 +88 ~38 -29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Error Display clears error when user corrects input                             00:02 +89 ~38 -29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Error Display clears error when user corrects input                             00:02 +89 ~38 -29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility has semantic labels for screen readers                            00:02 +89 ~38 -29: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility has semantic labels for screen readers                            
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Phone Number": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:405:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 405
+The test description was:
+  has semantic labels for screen readers
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +89 ~38 -30: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility has semantic labels for screen readers [E]                        
+  Test failed. See exception logs above.
+  The test description was: has semantic labels for screen readers
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Accessibility has semantic labels for screen readers'
+00:02 +89 ~38 -30: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility maintains focus management between screens                        00:02 +89 ~38 -30: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility maintains focus management between screens                        
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _AncestorWidgetFinder:<Found 0 widgets with type "TextFormField" that are ancestors of
+widgets with text "Verification Code": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:421:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 421
+The test description was:
+  maintains focus management between screens
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +89 ~38 -31: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility maintains focus management between screens [E]                    
+  Test failed. See exception logs above.
+  The test description was: maintains focus management between screens
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Accessibility maintains focus management between screens'
+00:02 +89 ~38 -31: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility supports keyboard navigation                                      00:02 +90 ~38 -31: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Accessibility supports keyboard navigation                                      00:02 +90 ~38 -31: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Edge Cases handles rapid button taps gracefully                                 00:02 +90 ~38 -31: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Edge Cases handles rapid button taps gracefully                                 
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TypeWidgetFinder:<Found 0 widgets with type "CircularProgressIndicator": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart:451:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart line 451
+The test description was:
+  handles rapid button taps gracefully
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +90 ~38 -32: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Edge Cases handles rapid button taps gracefully [E]                             
+  Test failed. See exception logs above.
+  The test description was: handles rapid button taps gracefully
+  
+
+To run this test again: /home/aaron/flutter/bin/cache/dart-sdk/bin/dart test /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart -p vm --plain-name 'PhoneVerificationWidget - Edge Cases handles rapid button taps gracefully'
+00:02 +90 ~38 -32: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Edge Cases maintains state after error recovery                                 00:02 +91 ~38 -32: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Edge Cases maintains state after error recovery                                 00:02 +91 ~38 -32: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Edge Cases handles widget rebuild without losing state                          00:02 +92 ~38 -32: /home/aaron/transharbor/test/widgets/phone_verification_widget_test.dart: PhoneVerificationWidget - Edge Cases handles widget rebuild without losing state                          00:02 +92 ~38 -32: Some tests failed.                                                                                                                                                                  

@@ -1,0 +1,51 @@
+---
+# IngressRoute for Prometheus
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus
+  namespace: observability
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dev.transharbor.org`) && PathPrefix(`/prometheus`)
+      kind: Rule
+      services:
+        - name: prometheus
+          port: 9090
+      middlewares:
+        - name: prometheus-stripprefix
+  tls:
+    certResolver: default
+
+---
+# Middleware to strip /prometheus prefix
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: prometheus-stripprefix
+  namespace: observability
+spec:
+  stripPrefix:
+    prefixes:
+      - /prometheus
+
+---
+# IngressRoute for Grafana
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana
+  namespace: observability
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dev.transharbor.org`) && PathPrefix(`/grafana`)
+      kind: Rule
+      services:
+        - name: grafana
+          port: 3000
+  tls:
+    certResolver: default

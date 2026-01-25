@@ -10,13 +10,13 @@ void main() {
         'id': 'user123',
         'username': 'testuser',
         'email': 'test@example.com',
-        'display_name': 'Test User',
+        'name': 'Test User',
         'bio': 'Test bio',
         'avatar': 'avatar.jpg',
         'role': 'user',
         'membershipType': 'non_voting',
-        'created_at': '2024-01-01T00:00:00.000Z',
-        'is_active': true,
+        'created': '2024-01-01T00:00:00.000Z',
+        'isActive': true,
       };
 
       final user = User.fromJson(json);
@@ -49,7 +49,7 @@ void main() {
       expect(json['id'], 'user123');
       expect(json['username'], 'testuser');
       expect(json['email'], 'test@example.com');
-      expect(json['display_name'], 'Test User');
+      expect(json['name'], 'Test User');
       expect(json['bio'], 'Test bio');
       expect(json['avatar'], 'avatar.jpg');
       expect(json['role'], 'user');
@@ -65,7 +65,7 @@ void main() {
         'id': 'user123',
         'username': 'testuser',
         'email': 'test@example.com',
-        'created_at': '2024-01-01T00:00:00.000Z',
+        'created': '2024-01-01T00:00:00.000Z',
       };
 
       final user = User.fromJson(json);

@@ -6,12 +6,12 @@ void main() {
     test('creates personal from JSON', () {
       final json = {
         'id': 'personal123',
-        'user_id': 'user123',
+        'user': 'user123',
         'content': 'Test content',
-        'likes_count': 10,
-        'comments_count': 5,
-        'created_at': '2024-01-01T00:00:00.000Z',
-        'updated_at': '2024-01-02T00:00:00.000Z',
+        'likes': 10,
+        'comments': 5,
+        'created': '2024-01-01T00:00:00.000Z',
+        'updated': '2024-01-02T00:00:00.000Z',
       };
 
       final personal = Personal.fromJson(json);
@@ -37,10 +37,10 @@ void main() {
       final json = personal.toJson();
 
       expect(json['id'], 'personal123');
-      expect(json['user_id'], 'user123');
+      expect(json['user'], 'user123');
       expect(json['content'], 'Test content');
-      expect(json['likes_count'], 10);
-      expect(json['comments_count'], 5);
+      expect(json['likes'], 10);
+      expect(json['comments'], 5);
     });
 
     test('creates personal from PocketBase record', () {
@@ -50,9 +50,9 @@ void main() {
     test('handles nullable fields', () {
       final json = {
         'id': 'personal123',
-        'user_id': 'user123',
+        'user': 'user123',
         'content': 'Test content',
-        'created_at': '2024-01-01T00:00:00.000Z',
+        'created': '2024-01-01T00:00:00.000Z',
       };
 
       final personal = Personal.fromJson(json);

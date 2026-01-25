@@ -6,11 +6,11 @@ void main() {
     test('creates message from JSON', () {
       final json = {
         'id': 'msg123',
-        'conversation_id': 'conv123',
-        'sender_id': 'user123',
+        'conversation': 'conv123',
+        'sender': 'user123',
         'content': 'Hello world',
-        'is_read': false,
-        'created_at': '2024-01-01T00:00:00.000Z',
+        'read': false,
+        'created': '2024-01-01T00:00:00.000Z',
       };
 
       final message = Message.fromJson(json);
@@ -35,10 +35,10 @@ void main() {
       final json = message.toJson();
 
       expect(json['id'], 'msg123');
-      expect(json['conversation_id'], 'conv123');
-      expect(json['sender_id'], 'user123');
+      expect(json['conversation'], 'conv123');
+      expect(json['sender'], 'user123');
       expect(json['content'], 'Hello world');
-      expect(json['is_read'], false);
+      expect(json['read'], false);
     });
 
     test('creates message from PocketBase record', () {
@@ -50,9 +50,9 @@ void main() {
     test('creates conversation from JSON', () {
       final json = {
         'id': 'conv123',
-        'participant_ids': ['user1', 'user2'],
-        'unread_count': 3,
-        'created_at': '2024-01-01T00:00:00.000Z',
+        'participants': ['user1', 'user2'],
+        'unreadCount': 3,
+        'created': '2024-01-01T00:00:00.000Z',
       };
 
       final conversation = Conversation.fromJson(json);

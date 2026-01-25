@@ -26,6 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
       final authProvider = context.read<AuthProvider>();
+      
+      // Debug: Check if values are present
+      print('Login attempt - Email: ${_emailController.text.isNotEmpty}, Password: ${_passwordController.text.isNotEmpty}');
+      
       final success = await authProvider.login(
         _emailController.text,
         _passwordController.text,
@@ -36,7 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
           context.go('/home');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Login failed. Please try again.')),
+            SnackBar(
+              content: Text(
+                authProvider.errorMessage ?? 'Login failed. Please try again.',
+              ),
+            ),
           );
         }
       }
@@ -80,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
+                    autofillHints: const [AutofillHints.email],
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.email),
@@ -95,6 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
+                    autofillHints: const [AutofillHints.password],
                     decoration: InputDecoration(
                       labelText: 'Password',
                       prefixIcon: const Icon(Icons.lock),
