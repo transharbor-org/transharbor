@@ -278,6 +278,12 @@ jobs:
             echo "⚠️  Version check timed out, but API is healthy. Proceeding with tests..."
           fi
       
+      - name: Run API endpoint tests
+        run: |
+          echo "🧪 Running API endpoint tests..."
+          chmod +x scripts/test_api.sh
+          ./scripts/test_api.sh
+      
       - name: Run live API integration tests
         env:
           POCKETBASE_URL: https://dev.transharbor.org
