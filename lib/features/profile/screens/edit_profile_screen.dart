@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../../core/services/pocketbase_service.dart';
 
@@ -13,6 +15,7 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _pb = PocketBaseService();
+  final _imagePicker = ImagePicker();
 
   late TextEditingController _displayNameController;
   late TextEditingController _bioController;
@@ -20,6 +23,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   bool _isPrivate = false;
   bool _isSaving = false;
+  File? _selectedImage;
+  String? _currentAvatarUrl;
 
   @override
   void initState() {
@@ -30,6 +35,44 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _bioController = TextEditingController(text: user?.bio ?? '');
     _pronounsController = TextEditingController(text: user?.pronouns ?? '');
     _isPrivate = user?.isPrivate ?? false;
+
+    // Load current avatar URL if available
+    if (user?.avatar != null && user!.avatar!.isNotEmpty) {
+      _loadAvatarUrl(user.id, user.avatar!);
+    }
+  }
+
+  Future<void> _loadAvatarUrl(String userId, String avatarFilename) async {
+    try {
+      final url = await _pb.getAvatarUrl(userId, avatarFilename);
+      if (mounted) {
+        setState(() => _currentAvatarUrl = url);
+      }
+    } catch (e) {
+      // Ignore errors loading avatar
+    }
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 512,
+        maxHeight: 512,
+        imageQuality: 85,
+      );
+
+      if (image != null) {
+        setState(() {
+          _selectedImage = File(image.path);
+        });
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to pick image: $e')),
+      );
+    }
   }
 
   @override
@@ -50,7 +93,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     try {
       final authProvider = context.read<AuthProvider>();
 
-      // Use the PocketBaseService updateUserProfile method
+      // Upload avatar first if selected
+      if (_selectedImage != null) {
+        await _pb.uploadUserAvatar(_selectedImage!.path);
+      }
+
+      // Update other profile fields
       await _pb.updateUserProfile(
         displayName: _displayNameController.text.trim(),
         bio: _bioController.text.trim(),
@@ -107,6 +155,62 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            // Avatar section
+            Center(
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.grey[300],
+                          backgroundImage: _selectedImage != null
+                              ? FileImage(_selectedImage!)
+                              : (_currentAvatarUrl != null
+                                  ? NetworkImage(_currentAvatarUrl!)
+                                  : null) as ImageProvider?,
+                          child: (_selectedImage == null &&
+                                  _currentAvatarUrl == null)
+                              ? Icon(Icons.person,
+                                  size: 60, color: Colors.grey[600])
+                              : null,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton.icon(
+                    onPressed: _pickImage,
+                    icon: const Icon(Icons.upload),
+                    label: Text(
+                        _selectedImage != null || _currentAvatarUrl != null
+                            ? 'Change Photo'
+                            : 'Upload Photo'),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Divider(),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _displayNameController,
               decoration: const InputDecoration(
