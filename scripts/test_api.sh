@@ -45,20 +45,38 @@ echo ""
 
 # Test 1: Authentication
 echo "1️⃣  Authentication"
-AUTH_RESPONSE=$(curl -s -X POST ${API_URL}/collections/users/auth-with-password \
+AUTH_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST ${API_URL}/collections/users/auth-with-password \
   -H "Content-Type: application/json" \
   -d "{\"identity\": \"$TEST_EMAIL\", \"password\": \"$TEST_PASSWORD\"}")
 
-TOKEN=$(echo "$AUTH_RESPONSE" | jq -r '.token // empty')
-USER_ID=$(echo "$AUTH_RESPONSE" | jq -r '.record.id // empty')
+# Extract HTTP status code and response body
+HTTP_CODE=$(echo "$AUTH_RESPONSE" | tail -n1)
+RESPONSE_BODY=$(echo "$AUTH_RESPONSE" | sed '$d')
 
-if [ -z "$TOKEN" ]; then
-  echo "  ❌ Authentication failed"
-  echo "$AUTH_RESPONSE" | jq .
+# Check HTTP status
+if [ "$HTTP_CODE" != "200" ]; then
+  echo "  ❌ Authentication failed - HTTP $HTTP_CODE"
+  echo "  Response: $RESPONSE_BODY"
   exit 1
 fi
 
-echo "  ✅ Authenticated as: $(echo "$AUTH_RESPONSE" | jq -r '.record.email')"
+# Check if response is valid JSON
+if ! echo "$RESPONSE_BODY" | jq empty > /dev/null 2>&1; then
+  echo "  ❌ Authentication failed - Invalid JSON response"
+  echo "  Response: $RESPONSE_BODY"
+  exit 1
+fi
+
+TOKEN=$(echo "$RESPONSE_BODY" | jq -r '.token // empty')
+USER_ID=$(echo "$RESPONSE_BODY" | jq -r '.record.id // empty')
+
+if [ -z "$TOKEN" ]; then
+  echo "  ❌ Authentication failed - No token in response"
+  echo "$RESPONSE_BODY" | jq .
+  exit 1
+fi
+
+echo "  ✅ Authenticated as: $(echo "$RESPONSE_BODY" | jq -r '.record.email')"
 echo "  User ID: $USER_ID"
 PASSED=$((PASSED + 1))
 echo ""
@@ -66,9 +84,9 @@ echo ""
 # Test 2: User Profile
 echo "2️⃣  User Profile"
 echo -n "  Testing profile fields... "
-EMAIL=$(echo "$AUTH_RESPONSE" | jq -r '.record.email')
-NAME=$(echo "$AUTH_RESPONSE" | jq -r '.record.name')
-USERNAME=$(echo "$AUTH_RESPONSE" | jq -r '.record.username')
+EMAIL=$(echo "$RESPONSE_BODY" | jq -r '.record.email')
+NAME=$(echo "$RESPONSE_BODY" | jq -r '.record.name')
+USERNAME=$(echo "$RESPONSE_BODY" | jq -r '.record.username')
 
 if [ -n "$EMAIL" ] && [ -n "$NAME" ] && [ -n "$USERNAME" ]; then
   echo "✅"
