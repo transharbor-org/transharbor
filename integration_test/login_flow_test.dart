@@ -119,7 +119,7 @@ void main() {
       await tester.tap(visibilityToggle);
       await tester.pumpAndSettle();
 
-      // Password visibility check disabled - implementation detail  
+      // Password visibility check disabled - implementation detail
       // final updatedPasswordWidget = tester.widget<TextFormField>(passwordField);
       // expect(updatedPasswordWidget.obscureText, false);
     }, timeout: const Timeout(Duration(seconds: 30)));
