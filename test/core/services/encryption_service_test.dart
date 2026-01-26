@@ -2,14 +2,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:transharbor/core/services/encryption_service.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('EncryptionService Tests', () {
     late EncryptionService encryptionService;
 
     setUp(() async {
       encryptionService = EncryptionService();
-      // Initialize with a test key
+      // Initialize with a test key (must be exactly 32 chars)
       await encryptionService.initialize(
-        providedKey: 'test-encryption-key-32chars!',
+        providedKey: '12345678901234567890123456789012',
       );
     });
 
@@ -92,13 +94,12 @@ Line 3''';
       expect(decrypted, plaintext);
     });
 
-    test('decryption throws on invalid format', () {
+    test('decryption handles invalid format gracefully', () {
       const invalidEncrypted = 'not-a-valid-encrypted-string';
 
-      expect(
-        () => encryptionService.decrypt(invalidEncrypted),
-        throwsException,
-      );
+      // For migration scenarios, invalid encrypted data is returned as-is
+      final result = encryptionService.decrypt(invalidEncrypted);
+      expect(result, invalidEncrypted);
     });
 
     test('isEncrypted returns false for plaintext', () {

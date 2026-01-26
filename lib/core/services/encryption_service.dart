@@ -21,18 +21,19 @@ class EncryptionService {
   /// Key should be provided via environment variable in production
   Future<void> initialize({String? providedKey}) async {
     try {
+      // If a key is provided (e.g., for testing), use it directly
+      if (providedKey != null && providedKey.length == 32) {
+        final key = Key.fromUtf8(providedKey);
+        _encrypter = Encrypter(AES(key, mode: AESMode.gcm));
+        return;
+      }
+
       // Try to get existing key from secure storage
       String? keyBase64 = await _secureStorage.read(key: _keyStorageKey);
 
       if (keyBase64 == null) {
-        // Generate or use provided key
-        final Key key;
-        if (providedKey != null && providedKey.length == 32) {
-          key = Key.fromUtf8(providedKey);
-        } else {
-          // Generate random key (32 bytes for AES-256)
-          key = Key.fromSecureRandom(32);
-        }
+        // Generate random key (32 bytes for AES-256)
+        final key = Key.fromSecureRandom(32);
 
         // Store for future use
         keyBase64 = base64.encode(key.bytes);
