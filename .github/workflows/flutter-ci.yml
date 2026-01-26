@@ -381,34 +381,14 @@ jobs:
           chmod +x scripts/test_api.sh
           ./scripts/test_api.sh
       
-      - name: Run live API integration tests
+      - name: Run all integration tests
         env:
           POCKETBASE_URL: https://dev.transharbor.org
         run: |
-          echo "🧪 Running live API tests against $POCKETBASE_URL"
+          echo "🧪 Running all integration tests against $POCKETBASE_URL"
           flutter test \
             --dart-define=POCKETBASE_URL=$POCKETBASE_URL \
-            test/integration/pocketbase_live_api_test.dart \
-            --reporter expanded
-      
-      - name: Run functional user tests
-        env:
-          POCKETBASE_URL: https://dev.transharbor.org
-        run: |
-          echo "🧪 Running functional user tests against $POCKETBASE_URL"
-          flutter test \
-            --dart-define=POCKETBASE_URL=$POCKETBASE_URL \
-            test/integration/user_functional_test.dart \
-            --reporter expanded
-      
-      - name: Run edit profile integration tests
-        env:
-          POCKETBASE_URL: https://dev.transharbor.org
-        run: |
-          echo "🧪 Running edit profile integration tests against $POCKETBASE_URL"
-          flutter test \
-            --dart-define=POCKETBASE_URL=$POCKETBASE_URL \
-            test/integration/edit_profile_integration_test.dart \
+            test/integration/ \
             --reporter expanded
       
       - name: Report test results
