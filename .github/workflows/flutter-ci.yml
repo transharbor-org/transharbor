@@ -38,10 +38,12 @@ jobs:
           echo "Running integration tests against dev environment..."
           flutter test test/integration/ --dart-define=POCKETBASE_URL=$POCKETBASE_URL
       
-      - name: Run user journey integration tests
-        run: |
-          echo "Running user journey integration tests..."
-          flutter test integration_test/
+      # Note: User journey integration tests (integration_test/) require a web driver or emulator
+      # These are skipped in CI for now - they should run in a dedicated E2E job with proper setup
+      # - name: Run user journey integration tests
+      #   run: |
+      #     echo "Running user journey integration tests..."
+      #     flutter test integration_test/
       
       - name: Run unit tests (excluding smoke tests)
         run: |
