@@ -7,9 +7,9 @@ class GroupsProvider extends ChangeNotifier {
   final _pb = PocketBaseService();
   List<Group> _groups = [];
   List<Group> _myGroups = [];
-  Map<String, List<GroupPost>> _groupPosts = {};
-  Map<String, List<GroupMember>> _groupMembers = {};
-  Map<String, GroupMember?> _myMemberships = {};
+  final Map<String, List<GroupPost>> _groupPosts = {};
+  final Map<String, List<GroupMember>> _groupMembers = {};
+  final Map<String, GroupMember?> _myMemberships = {};
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -60,12 +60,10 @@ class GroupsProvider extends ChangeNotifier {
     try {
       final result = await _pb.getUserGroups();
       _myGroups = result.items
-          .where((record) => record.expand?['group'] != null)
+          .where((record) => record.expand['group'] != null)
           .map((record) {
-            final groupExpandData = record.expand?['group'];
-            if (groupExpandData != null &&
-                groupExpandData is List &&
-                groupExpandData.isNotEmpty) {
+            final groupExpandData = record.expand['group'];
+            if (groupExpandData != null && groupExpandData.isNotEmpty) {
               final groupData = groupExpandData.first;
               return Group.fromPocketBase(groupData);
             }

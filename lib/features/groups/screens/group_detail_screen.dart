@@ -329,9 +329,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Member',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(

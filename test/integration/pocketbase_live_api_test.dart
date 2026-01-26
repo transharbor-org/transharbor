@@ -16,7 +16,7 @@ void main() {
     String? userId;
 
     // Determine if we should run live tests based on URL
-    final shouldRunLiveTests = const String.fromEnvironment(
+    const shouldRunLiveTests = String.fromEnvironment(
           'POCKETBASE_URL',
           defaultValue: 'http://localhost:8080',
         ) !=
@@ -39,8 +39,8 @@ void main() {
                 'password123',
               );
           authToken = authData.token;
-          userId = authData.record?.id;
-          print('✅ Authenticated as: ${authData.record?.data['email']}');
+          userId = authData.record.id;
+          print('✅ Authenticated as: ${authData.record.data['email']}');
         } catch (e) {
           print('⚠️  Authentication failed: $e');
         }
@@ -74,10 +74,10 @@ void main() {
 
           expect(authData.token, isNotEmpty);
           expect(authData.record, isNotNull);
-          expect(authData.record?.id, isNotEmpty);
+          expect(authData.record.id, isNotEmpty);
 
           authToken = authData.token;
-          userId = authData.record?.id;
+          userId = authData.record.id;
         } catch (e) {
           fail('Authentication failed: $e');
         }

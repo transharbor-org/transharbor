@@ -1,16 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
 
 /// Smoke tests to verify staging environment is functional
 /// Run with: flutter test test/smoke/stage_smoke_test.dart --dart-define=STAGE_URL=https://stage.transharbor.org
 void main() {
-  final stageUrl = const String.fromEnvironment(
+  const stageUrl = String.fromEnvironment(
     'STAGE_URL',
     defaultValue: 'https://stage.transharbor.org',
   );
 
-  final pbUrl = const String.fromEnvironment(
+  const pbUrl = String.fromEnvironment(
     'STAGE_PB_URL',
     defaultValue: 'https://pb-stage.transharbor.org',
   );

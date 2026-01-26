@@ -164,9 +164,9 @@ class PhoneVerificationWidget extends StatefulWidget {
   final Function(String phoneNumber, String verificationId) onVerified;
 
   const PhoneVerificationWidget({
-    Key? key,
+    super.key,
     required this.onVerified,
-  }) : super(key: key);
+  });
 
   @override
   State<PhoneVerificationWidget> createState() =>

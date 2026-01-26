@@ -8,7 +8,7 @@ class MessagingProvider extends ChangeNotifier {
   final PocketBaseService _pb;
   final EncryptionService _encryption = EncryptionService();
   List<Conversation> _conversations = [];
-  Map<String, List<Message>> _messages = {};
+  final Map<String, List<Message>> _messages = {};
   bool _isLoading = false;
   String? _errorMessage;
 

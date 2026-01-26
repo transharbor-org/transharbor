@@ -271,10 +271,9 @@ class _VoteProgressBar extends StatelessWidget {
           flex: (forPercent * 100).round(),
           child: Container(
             height: 8,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.green,
-              borderRadius:
-                  const BorderRadius.horizontal(left: Radius.circular(4)),
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(4)),
             ),
           ),
         ),
@@ -289,10 +288,9 @@ class _VoteProgressBar extends StatelessWidget {
           flex: ((1 - forPercent - againstPercent) * 100).round(),
           child: Container(
             height: 8,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.grey,
-              borderRadius:
-                  const BorderRadius.horizontal(right: Radius.circular(4)),
+              borderRadius: BorderRadius.horizontal(right: Radius.circular(4)),
             ),
           ),
         ),

@@ -70,12 +70,10 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       final authData = await _pb.login(email, password);
-      if (authData.record != null) {
-        _currentUser = User.fromPocketBase(authData.record!);
-        logger.setUser(_currentUser!.id);
-        logger.info('User logged in successfully',
-            metadata: {'userId': _currentUser!.id});
-      }
+      _currentUser = User.fromPocketBase(authData.record);
+      logger.setUser(_currentUser!.id);
+      logger.info('User logged in successfully',
+          metadata: {'userId': _currentUser!.id});
       return true;
     } catch (e) {
       _errorMessage = e.toString();
@@ -99,12 +97,10 @@ class AuthProvider extends ChangeNotifier {
         password: password,
         passwordConfirm: password,
       );
-      if (authData.record != null) {
-        _currentUser = User.fromPocketBase(authData.record!);
-        logger.setUser(_currentUser!.id);
-        logger.info('User registered successfully',
-            metadata: {'userId': _currentUser!.id, 'email': email});
-      }
+      _currentUser = User.fromPocketBase(authData.record);
+      logger.setUser(_currentUser!.id);
+      logger.info('User registered successfully',
+          metadata: {'userId': _currentUser!.id, 'email': email});
       return true;
     } catch (e) {
       _errorMessage = e.toString();

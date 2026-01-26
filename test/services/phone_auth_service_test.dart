@@ -110,8 +110,9 @@ void main() {
       when(mockRecord.data).thenReturn({
         'otp': '123456',
         'phone': '+12125551234',
-        'created':
-            DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
+        'created': DateTime.now()
+            .subtract(const Duration(minutes: 5))
+            .toIso8601String(),
         'verified': false,
       });
 
@@ -139,8 +140,9 @@ void main() {
       when(mockRecord.data).thenReturn({
         'otp': '123456',
         'phone': '+12125551234',
-        'created':
-            DateTime.now().subtract(Duration(minutes: 15)).toIso8601String(),
+        'created': DateTime.now()
+            .subtract(const Duration(minutes: 15))
+            .toIso8601String(),
         'verified': false,
       });
 
@@ -162,8 +164,9 @@ void main() {
       when(mockRecord.data).thenReturn({
         'otp': '123456',
         'phone': '+12125551234',
-        'created':
-            DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
+        'created': DateTime.now()
+            .subtract(const Duration(minutes: 5))
+            .toIso8601String(),
         'verified': false,
       });
 

@@ -7,3 +7,11 @@ repos:
         language: system
         files: \.dart$
         pass_filenames: true
+      
+      - id: dart-analyze
+        name: Dart Analyze (Lint)
+        entry: bash -c 'dart analyze --fatal-warnings 2>&1 | grep -v "^info •" || true'
+        language: system
+        files: \.dart$
+        pass_filenames: false
+        always_run: true

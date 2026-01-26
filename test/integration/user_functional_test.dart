@@ -19,7 +19,7 @@ void main() {
     late PocketBase pb;
     late String baseUrl;
 
-    final shouldRunLiveTests = const String.fromEnvironment(
+    const shouldRunLiveTests = String.fromEnvironment(
           'POCKETBASE_URL',
           defaultValue: 'http://localhost:8080',
         ) !=
@@ -51,9 +51,9 @@ void main() {
 
         expect(authData.token, isNotEmpty);
         expect(authData.record, isNotNull);
-        expect(authData.record!.data['email'], 'alex@example.com');
+        expect(authData.record.data['email'], 'alex@example.com');
         expect(pb.authStore.isValid, true);
-        print('✅ User logged in: ${authData.record!.data['email']}');
+        print('✅ User logged in: ${authData.record.data['email']}');
       },
           skip: shouldRunLiveTests
               ? false
@@ -79,7 +79,7 @@ void main() {
               'password123',
             );
 
-        final userId = authData.record!.id;
+        final userId = authData.record.id;
 
         // Make authenticated request
         final result = await pb.collection('personals').getList(
@@ -101,7 +101,7 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = alexAuth.record!.id;
+        final alexId = alexAuth.record.id;
 
         // Fetch personals filtered by Alex's ID
         final alexPersonals = await pb.collection('personals').getList(
@@ -128,7 +128,7 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = authData.record!.id;
+        final alexId = authData.record.id;
         final alexPersonals = await pb.collection('personals').getList(
               filter: 'user = "$alexId"',
             );
@@ -140,7 +140,7 @@ void main() {
               'sam@example.com',
               'password123',
             );
-        final samId = authData.record!.id;
+        final samId = authData.record.id;
         final samPersonals = await pb.collection('personals').getList(
               filter: 'user = "$samId"',
             );
@@ -168,7 +168,7 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = authData.record!.id;
+        final alexId = authData.record.id;
 
         // Fetch conversations where Alex is a participant
         final conversations = await pb.collection('conversations').getList(
@@ -197,7 +197,7 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = authData.record!.id;
+        final alexId = authData.record.id;
         pb.authStore.clear();
 
         // Login as Sam
@@ -205,7 +205,7 @@ void main() {
               'sam@example.com',
               'password123',
             );
-        final samId = authData.record!.id;
+        final samId = authData.record.id;
 
         // Get Sam's conversations
         final samConvos = await pb.collection('conversations').getList(
@@ -234,7 +234,7 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = authData.record!.id;
+        final alexId = authData.record.id;
 
         // Get Alex's conversations
         final conversations = await pb.collection('conversations').getList(
@@ -314,7 +314,7 @@ void main() {
             );
 
         // Use auth record instead of querying users collection
-        final userRecord = authData.record!;
+        final userRecord = authData.record;
 
         expect(userRecord.data['email'], 'alex@example.com');
         expect(userRecord.data['name'], isNotEmpty);
@@ -337,10 +337,10 @@ void main() {
               'password123',
             );
 
-        expect(authData.record!.data['role'], 'moderator');
-        expect(authData.record!.data['name'], 'Jordan Blake');
+        expect(authData.record.data['role'], 'moderator');
+        expect(authData.record.data['name'], 'Jordan Blake');
 
-        print('✅ Jordan is a moderator: ${authData.record!.data['name']}');
+        print('✅ Jordan is a moderator: ${authData.record.data['name']}');
       },
           skip: shouldRunLiveTests
               ? false
@@ -353,7 +353,7 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = authData.record!.id;
+        final alexId = authData.record.id;
 
         final personals = await pb.collection('personals').getList(
               filter: 'user = "$alexId"',
@@ -377,7 +377,7 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = authData.record!.id;
+        final alexId = authData.record.id;
 
         final conversations = await pb.collection('conversations').getList(
               filter: 'participants ~ "$alexId"',
@@ -429,7 +429,7 @@ void main() {
               );
 
           expect(authData.token, isNotEmpty);
-          expect(authData.record!.data['name'], user['name']);
+          expect(authData.record.data['name'], user['name']);
           pb.authStore.clear();
         }
 

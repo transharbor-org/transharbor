@@ -12,7 +12,7 @@ void main() {
     late PhoneAuthService authService;
 
     // Allow environment override for testing against different environments
-    final pbUrl = const String.fromEnvironment(
+    const pbUrl = String.fromEnvironment(
       'STAGE_PB_URL',
       defaultValue: 'https://dev.transharbor.org',
     );
@@ -45,7 +45,7 @@ void main() {
       String? otp;
       try {
         final record =
-            await pb.collection('phone_verification').getOne(verificationId!);
+            await pb.collection('phone_verification').getOne(verificationId);
         otp = record.data['otp'] as String;
         expect(otp, hasLength(6));
         expect(int.tryParse(otp), isNotNull);
@@ -56,7 +56,7 @@ void main() {
       // 3. Verify OTP
       bool verified = false;
       try {
-        verified = await authService.verifyOTP(verificationId!, otp!);
+        verified = await authService.verifyOTP(verificationId, otp);
         expect(verified, true);
       } catch (e) {
         fail('Failed to verify OTP: $e');
@@ -67,7 +67,7 @@ void main() {
       try {
         user = await authService.registerWithPhone(
           phoneNumber: testPhone,
-          verificationId: verificationId!,
+          verificationId: verificationId,
           password: 'TestPassword123!',
           name: 'Test User',
         );
@@ -81,12 +81,12 @@ void main() {
       // 5. Verify user is authenticated
       expect(pb.authStore.isValid, true);
       expect(pb.authStore.token, isNotEmpty);
-      expect(pb.authStore.model?.id, user!.id);
+      expect(pb.authStore.model?.id, user.id);
 
       // Cleanup: Delete test user
       try {
         await pb.collection('users').delete(user.id);
-        await pb.collection('phone_verification').delete(verificationId!);
+        await pb.collection('phone_verification').delete(verificationId);
       } catch (e) {
         print('Cleanup failed: $e');
       }
@@ -121,8 +121,9 @@ void main() {
 
       // Manually set expiration to past (requires admin access)
       await pb.collection('phone_verification').update(verificationId, body: {
-        'expires_at':
-            DateTime.now().subtract(Duration(minutes: 15)).toIso8601String(),
+        'expires_at': DateTime.now()
+            .subtract(const Duration(minutes: 15))
+            .toIso8601String(),
       });
 
       // Attempt verification
@@ -225,8 +226,8 @@ void main() {
             password,
           );
 
-      expect(authData.record?.id, user.id);
-      expect(authData.record?.data['phone'], testPhone);
+      expect(authData.record.id, user.id);
+      expect(authData.record.data['phone'], testPhone);
       expect(pb.authStore.isValid, true);
 
       // Cleanup
@@ -260,7 +261,7 @@ void main() {
 
       // Tap send button
       await tester.tap(find.text('Send Verification Code'));
-      await tester.pumpAndSettle(Duration(seconds: 3));
+      await tester.pumpAndSettle(const Duration(seconds: 3));
 
       // Should show OTP screen
       expect(find.text('Verification Code'), findsOneWidget);
@@ -309,7 +310,7 @@ void main() {
       expect(verificationId1, isNotEmpty);
 
       // Wait a bit
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
 
       // Second attempt
       final verificationId2 = await authService.sendOTP(testPhone);

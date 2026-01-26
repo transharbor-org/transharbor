@@ -67,7 +67,7 @@ class EncryptionService {
     final encrypted = _encrypter!.encrypt(plaintext, iv: iv);
 
     // Prepend IV to encrypted data (needed for decryption)
-    final ivAndEncrypted = iv.base64 + ':' + encrypted.base64;
+    final ivAndEncrypted = '${iv.base64}:${encrypted.base64}';
 
     return ivAndEncrypted;
   }

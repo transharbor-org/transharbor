@@ -68,7 +68,7 @@ void main() {
       test('relation filter syntax for conversations', () {
         const userId = 'test123';
         // Correct filter syntax for relation arrays
-        final filter = 'participants ~ "$userId"';
+        const filter = 'participants ~ "$userId"';
         expect(filter, contains('~'),
             reason: 'Should use ~ operator for relation contains');
         expect(filter, contains('"'),
@@ -77,14 +77,14 @@ void main() {
 
       test('relation filter syntax for messages', () {
         const conversationId = 'conv123';
-        final filter = 'conversation = "$conversationId"';
+        const filter = 'conversation = "$conversationId"';
         expect(filter, contains('='),
             reason: 'Should use = operator for single relation');
       });
 
       test('relation filter syntax for user groups', () {
         const userId = 'user123';
-        final filter = 'user = "$userId"';
+        const filter = 'user = "$userId"';
         expect(filter, contains('='));
       });
 

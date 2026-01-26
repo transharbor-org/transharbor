@@ -94,7 +94,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         decoration: BoxDecoration(
                           color: isCurrentUser
                               ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.surfaceVariant,
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .surfaceContainerHighest,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
