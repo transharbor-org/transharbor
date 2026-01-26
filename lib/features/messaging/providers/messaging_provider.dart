@@ -63,13 +63,13 @@ class MessagingProvider extends ChangeNotifier {
       }
       _messages[conversationId]!.add(newMessage);
       notifyListeners();
-      
+
       logger.info('Message sent', metadata: {
         'conversationId': conversationId,
         'messageId': newMessage.id,
         'contentLength': content.length,
       });
-      
+
       return true;
     } catch (e) {
       _errorMessage = e.toString();

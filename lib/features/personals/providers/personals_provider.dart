@@ -32,8 +32,9 @@ class PersonalsProvider extends ChangeNotifier {
       _personals = result.items
           .map((record) => Personal.fromPocketBase(record))
           .toList();
-      
-      logger.info('Loaded personals feed', metadata: {'count': _personals.length});
+
+      logger.info('Loaded personals feed',
+          metadata: {'count': _personals.length});
     } catch (e) {
       _errorMessage = e.toString();
       logger.error('Failed to load personals', error: e);
@@ -49,12 +50,12 @@ class PersonalsProvider extends ChangeNotifier {
       final newPersonal = Personal.fromPocketBase(record);
       _personals.insert(0, newPersonal);
       notifyListeners();
-      
+
       logger.info('Personal post created', metadata: {
         'personalId': newPersonal.id,
         'contentLength': content.length,
       });
-      
+
       return true;
     } catch (e) {
       _errorMessage = e.toString();
@@ -68,11 +69,11 @@ class PersonalsProvider extends ChangeNotifier {
       await _pb.deletePersonal(personalId);
       _personals.removeWhere((p) => p.id == personalId);
       notifyListeners();
-      
+
       logger.info('Personal post deleted', metadata: {
         'personalId': personalId,
       });
-      
+
       return true;
     } catch (e) {
       _errorMessage = e.toString();

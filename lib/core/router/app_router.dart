@@ -38,10 +38,11 @@ class NavigationLogger extends NavigatorObserver {
     super.didPop(route, previousRoute);
     if (previousRoute?.settings.name != null) {
       logger.setScreen(previousRoute!.settings.name);
-      logger.info('Navigation: Popped to ${previousRoute.settings.name}', metadata: {
-        'from': route.settings.name,
-        'to': previousRoute.settings.name,
-      });
+      logger.info('Navigation: Popped to ${previousRoute.settings.name}',
+          metadata: {
+            'from': route.settings.name,
+            'to': previousRoute.settings.name,
+          });
     }
   }
 }

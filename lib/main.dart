@@ -30,7 +30,7 @@ void main() async {
         'context': details.context?.toString(),
       },
     );
-    
+
     // Also log to console in debug mode
     if (kDebugMode) {
       FlutterError.dumpErrorToConsole(details);

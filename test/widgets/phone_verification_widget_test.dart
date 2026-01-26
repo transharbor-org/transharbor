@@ -23,7 +23,8 @@ void main() {
 
       expect(find.byType(TextFormField), findsOneWidget);
       expect(find.text('Phone Number (International)'), findsOneWidget);
-      expect(find.text('+1234567890, +442071234567, +919876543210'), findsOneWidget); // Hint text
+      expect(find.text('+1234567890, +442071234567, +919876543210'),
+          findsOneWidget); // Hint text
     });
 
     testWidgets('displays Send Verification Code button', (tester) async {

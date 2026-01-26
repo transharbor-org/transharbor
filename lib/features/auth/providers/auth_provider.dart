@@ -73,7 +73,8 @@ class AuthProvider extends ChangeNotifier {
       if (authData.record != null) {
         _currentUser = User.fromPocketBase(authData.record!);
         logger.setUser(_currentUser!.id);
-        logger.info('User logged in successfully', metadata: {'userId': _currentUser!.id});
+        logger.info('User logged in successfully',
+            metadata: {'userId': _currentUser!.id});
       }
       return true;
     } catch (e) {
@@ -101,7 +102,8 @@ class AuthProvider extends ChangeNotifier {
       if (authData.record != null) {
         _currentUser = User.fromPocketBase(authData.record!);
         logger.setUser(_currentUser!.id);
-        logger.info('User registered successfully', metadata: {'userId': _currentUser!.id, 'email': email});
+        logger.info('User registered successfully',
+            metadata: {'userId': _currentUser!.id, 'email': email});
       }
       return true;
     } catch (e) {

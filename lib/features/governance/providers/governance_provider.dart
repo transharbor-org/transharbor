@@ -72,12 +72,12 @@ class GovernanceProvider extends ChangeNotifier {
       final newProposal = Proposal.fromPocketBase(record);
       _proposals.insert(0, newProposal);
       notifyListeners();
-      
+
       logger.info('Proposal created', metadata: {
         'proposalId': newProposal.id,
         'title': title,
       });
-      
+
       return true;
     } catch (e) {
       _errorMessage = e.toString();

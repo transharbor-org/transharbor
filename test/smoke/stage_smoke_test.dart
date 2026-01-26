@@ -18,9 +18,8 @@ void main() {
   // Check if staging environment is accessible before running tests
   Future<bool> isStageAccessible() async {
     try {
-      final response = await http
-          .get(Uri.parse(pbUrl))
-          .timeout(const Duration(seconds: 5));
+      final response =
+          await http.get(Uri.parse(pbUrl)).timeout(const Duration(seconds: 5));
       return response.statusCode < 500;
     } catch (e) {
       return false;

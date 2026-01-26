@@ -116,18 +116,19 @@ class GroupsProvider extends ChangeNotifier {
       _groups.insert(0, newGroup);
       _myGroups.insert(0, newGroup);
       notifyListeners();
-      
+
       logger.info('Group created', metadata: {
         'groupId': newGroup.id,
         'name': name,
         'category': category,
         'isPrivate': isPrivate,
       });
-      
+
       return true;
     } catch (e) {
       _errorMessage = e.toString();
-      logger.error('Failed to create group', error: e, metadata: {'name': name});
+      logger
+          .error('Failed to create group', error: e, metadata: {'name': name});
       return false;
     }
   }
@@ -156,13 +157,14 @@ class GroupsProvider extends ChangeNotifier {
 
       await loadMyGroups();
       notifyListeners();
-      
+
       logger.info('Joined group', metadata: {'groupId': groupId});
-      
+
       return true;
     } catch (e) {
       _errorMessage = e.toString();
-      logger.error('Failed to join group', error: e, metadata: {'groupId': groupId});
+      logger.error('Failed to join group',
+          error: e, metadata: {'groupId': groupId});
       return false;
     }
   }
@@ -225,17 +227,18 @@ class GroupsProvider extends ChangeNotifier {
       }
       _groupPosts[groupId]!.insert(0, newPost);
       notifyListeners();
-      
+
       logger.info('Group post created', metadata: {
         'groupId': groupId,
         'postId': newPost.id,
         'contentLength': content.length,
       });
-      
+
       return true;
     } catch (e) {
       _errorMessage = e.toString();
-      logger.error('Failed to create group post', error: e, metadata: {'groupId': groupId});
+      logger.error('Failed to create group post',
+          error: e, metadata: {'groupId': groupId});
       return false;
     }
   }
