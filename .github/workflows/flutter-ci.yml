@@ -36,6 +36,11 @@ jobs:
           echo "Running integration tests (API contracts, field validation, etc.)..."
           flutter test test/integration/
       
+      - name: Run user journey integration tests
+        run: |
+          echo "Running user journey integration tests..."
+          flutter test integration_test/
+      
       - name: Run unit tests (excluding smoke tests)
         run: |
           # Run specific test files, excluding smoke and integration directories
