@@ -104,6 +104,12 @@ class _HomeScreenState extends State<HomeScreen> {
               context.go('/messages');
               break;
             case 3:
+              context.go('/groups');
+              break;
+            case 4:
+              context.go('/governance');
+              break;
+            case 5:
               context.go('/profile');
               break;
           }
@@ -120,6 +126,14 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
             label: 'Messages',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.group),
+            label: 'Groups',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.how_to_vote),
+            label: 'Governance',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

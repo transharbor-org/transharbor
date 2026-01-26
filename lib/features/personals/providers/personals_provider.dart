@@ -91,6 +91,33 @@ class PersonalsProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> toggleLike(String personalId) async {
+    try {
+      // Optimistically update UI
+      final index = _personals.indexWhere((p) => p.id == personalId);
+      if (index != -1) {
+        final personal = _personals[index];
+        _personals[index] = Personal(
+          id: personal.id,
+          userId: personal.userId,
+          content: personal.content,
+          createdAt: personal.createdAt,
+          updatedAt: personal.updatedAt,
+          likesCount: personal.likesCount + 1,
+          commentsCount: personal.commentsCount,
+        );
+        notifyListeners();
+      }
+
+      // TODO: Implement actual like API call when PocketBase endpoint is ready
+      logger.info('Personal liked', metadata: {'personalId': personalId});
+    } catch (e) {
+      logger.error('Failed to like personal', error: e);
+      // Revert on error
+      loadPersonals();
+    }
+  }
+
   Future<bool> deletePersonal(String personalId) async {
     try {
       await _pb.deletePersonal(personalId);

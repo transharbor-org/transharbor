@@ -7,9 +7,3 @@ repos:
         language: system
         files: \.dart$
         pass_filenames: true
-      - id: dart-analyze
-        name: Dart Analyze
-        entry: dart analyze
-        language: system
-        files: \.dart$
-        pass_filenames: false

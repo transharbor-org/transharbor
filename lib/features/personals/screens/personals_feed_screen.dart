@@ -136,12 +136,22 @@ class _PersonalsFeedScreenState extends State<PersonalsFeedScreen> {
                         Row(
                           children: [
                             TextButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                provider.toggleLike(personal.id);
+                              },
                               icon: const Icon(Icons.favorite_border),
                               label: Text('${personal.likesCount}'),
                             ),
                             TextButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                // TODO: Navigate to comments screen
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Comments coming soon!'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              },
                               icon: const Icon(Icons.comment_outlined),
                               label: Text('${personal.commentsCount}'),
                             ),
