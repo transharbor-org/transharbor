@@ -165,7 +165,60 @@ PYTHON_SCRIPT
             done
             
             if [ "$SUCCESS" = "true" ]; then
-                echo "✅ All collections imported successfully (rules will be applied on first access)"
+                echo "✅ All collections imported successfully"
+                
+                # Now apply rules from original schema
+                echo "📝 Applying collection rules..."
+                python3 - "$TOKEN" <<'PYEOF'
+import sys
+import json
+import urllib.request
+
+token = sys.argv[1]
+
+# Read original schema to get rules
+with open('/app/pb_schema.json', 'r') as f:
+    schema = json.load(f)
+
+# Apply rules for each collection
+for collection in schema:
+    name = collection.get('name')
+    rules = {
+        'listRule': collection.get('listRule'),
+        'viewRule': collection.get('viewRule'),
+        'createRule': collection.get('createRule'),
+        'updateRule': collection.get('updateRule'),
+        'deleteRule': collection.get('deleteRule'),
+    }
+    
+    try:
+        # Get collection ID
+        req = urllib.request.Request(
+            f'http://localhost:8080/api/collections/{name}',
+            headers={'Authorization': token}
+        )
+        with urllib.request.urlopen(req) as response:
+            coll_data = json.loads(response.read())
+            coll_id = coll_data['id']
+        
+        # Update rules
+        data = json.dumps(rules).encode('utf-8')
+        req = urllib.request.Request(
+            f'http://localhost:8080/api/collections/{coll_id}',
+            data=data,
+            method='PATCH',
+            headers={
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            }
+        )
+        with urllib.request.urlopen(req) as response:
+            print(f'  ✅ Applied rules for {name}')
+    except Exception as e:
+        print(f'  ⚠️  Failed to apply rules for {name}: {e}')
+
+PYEOF
+                
                 rm -f /tmp/batch*.json /tmp/import_response.json /tmp/collections_with_rules.json
                 touch /pb_data/.initialized
                 echo "$SCHEMA_CHECKSUM" > /pb_data/.schema_checksum

@@ -21,6 +21,8 @@ MOCK_USERS = [
         "password": "password123",
         "name": "Alex Rivera",
         "bio": "Trans activist and software developer. Building community through technology 🏳️‍⚧️",
+        "pronouns": "she/her",
+        "isPrivate": False,
         "role": "user",
         "membershipType": "voting_member"
     },
@@ -30,6 +32,8 @@ MOCK_USERS = [
         "password": "password123",
         "name": "Sam Chen",
         "bio": "Non-binary artist and community organizer. They/them pronouns.",
+        "pronouns": "they/them",
+        "isPrivate": False,
         "role": "user",
         "membershipType": "voting_member"
     },
@@ -39,6 +43,8 @@ MOCK_USERS = [
         "password": "password123",
         "name": "Jordan Blake",
         "bio": "Trans educator advocating for inclusive spaces. She/her.",
+        "pronouns": "she/her",
+        "isPrivate": False,
         "role": "moderator",
         "membershipType": "voting_member"
     },
@@ -48,6 +54,8 @@ MOCK_USERS = [
         "password": "password123",
         "name": "Casey Moore",
         "bio": "Genderfluid writer and poet. Any pronouns welcome 💜",
+        "pronouns": "any",
+        "isPrivate": False,
         "role": "user",
         "membershipType": "voting_member"
     },
@@ -57,6 +65,8 @@ MOCK_USERS = [
         "password": "password123",
         "name": "Riley Nguyen",
         "bio": "Trans healthcare advocate working to improve access for all.",
+        "pronouns": "he/him",
+        "isPrivate": False,
         "role": "user",
         "membershipType": "non_voting"
     },
@@ -66,6 +76,8 @@ MOCK_USERS = [
         "password": "password123",
         "name": "Taylor Kim",
         "bio": "Non-binary musician and sound engineer. Creating safe spaces through art.",
+        "pronouns": "they/them",
+        "isPrivate": False,
         "role": "user",
         "membershipType": "voting_member"
     }
