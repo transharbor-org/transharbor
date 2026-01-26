@@ -90,26 +90,24 @@ void main() {
       final now = DateTime.now();
       final conversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2'],
-        lastMessage: 'Hey there!',
-        lastMessageTime: now,
+        participantIds: ['user1', 'user2'],
+        lastMessage: null,
+        createdAt: now,
         unreadCount: 3,
       );
 
       expect(conversation.id, 'conv-123');
-      expect(conversation.participants.length, 2);
-      expect(conversation.participants, contains('user1'));
-      expect(conversation.participants, contains('user2'));
-      expect(conversation.lastMessage, 'Hey there!');
-      expect(conversation.lastMessageTime, now);
+      expect(conversation.participantIds.length, 2);
+      expect(conversation.participantIds, contains('user1'));
+      expect(conversation.participantIds, contains('user2'));
       expect(conversation.unreadCount, 3);
     });
 
     test('creates Conversation with defaults', () {
       final conversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2'],
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1', 'user2'],
+        createdAt: DateTime.now(),
       );
 
       expect(conversation.lastMessage, isNull);
@@ -119,28 +117,28 @@ void main() {
     test('handles empty participants list', () {
       final conversation = Conversation(
         id: 'conv-123',
-        participants: [],
-        lastMessageTime: DateTime.now(),
+        participantIds: [],
+        createdAt: DateTime.now(),
       );
 
-      expect(conversation.participants.isEmpty, true);
+      expect(conversation.participantIds.isEmpty, true);
     });
 
     test('handles multiple participants', () {
       final conversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2', 'user3', 'user4'],
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1', 'user2', 'user3', 'user4'],
+        createdAt: DateTime.now(),
       );
 
-      expect(conversation.participants.length, 4);
+      expect(conversation.participantIds.length, 4);
     });
 
     test('unreadCount defaults to 0', () {
       final conversation = Conversation(
         id: 'conv-123',
-        participants: ['user1'],
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1'],
+        createdAt: DateTime.now(),
       );
 
       expect(conversation.unreadCount, 0);
@@ -149,8 +147,8 @@ void main() {
     test('handles large unread count', () {
       final conversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2'],
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1', 'user2'],
+        createdAt: DateTime.now(),
         unreadCount: 999,
       );
 

@@ -58,9 +58,9 @@ void main() {
         id: 'group-123',
         name: 'Test Group',
         description: 'A test group for testing',
-        createdBy: 'user-abc',
+        creatorId: 'user-abc',
         memberCount: 10,
-        isPublic: true,
+        isPrivate: false,
         createdAt: DateTime.now(),
       );
 
@@ -77,9 +77,9 @@ void main() {
         id: 'group-123',
         name: 'Test Group',
         description: 'Description',
-        createdBy: 'user-abc',
+        creatorId: 'user-abc',
         memberCount: 25,
-        isPublic: true,
+        isPrivate: false,
         createdAt: DateTime.now(),
       );
 
@@ -96,9 +96,9 @@ void main() {
         id: 'group-123',
         name: 'Public Group',
         description: 'Description',
-        createdBy: 'user-abc',
+        creatorId: 'user-abc',
         memberCount: 10,
-        isPublic: true,
+        isPrivate: false,
         createdAt: DateTime.now(),
       );
 
@@ -115,27 +115,27 @@ void main() {
           id: '1',
           name: 'First Group',
           description: 'First description',
-          createdBy: 'user1',
+          creatorId: 'user1',
           memberCount: 10,
-          isPublic: true,
+          isPrivate: false,
           createdAt: DateTime.now(),
         ),
         Group(
           id: '2',
           name: 'Second Group',
           description: 'Second description',
-          createdBy: 'user2',
+          creatorId: 'user2',
           memberCount: 20,
-          isPublic: false,
+          isPrivate: true,
           createdAt: DateTime.now(),
         ),
         Group(
           id: '3',
           name: 'Third Group',
           description: 'Third description',
-          createdBy: 'user3',
+          creatorId: 'user3',
           memberCount: 30,
-          isPublic: true,
+          isPrivate: false,
           createdAt: DateTime.now(),
         ),
       ]);
@@ -164,9 +164,9 @@ void main() {
         id: 'group-123',
         name: 'Clickable Group',
         description: 'Description',
-        createdBy: 'user-abc',
+        creatorId: 'user-abc',
         memberCount: 10,
-        isPublic: true,
+        isPrivate: false,
         createdAt: DateTime.now(),
       );
 
@@ -182,9 +182,9 @@ void main() {
         id: 'group-123',
         name: 'Icon Group',
         description: 'Description',
-        createdBy: 'user-abc',
+        creatorId: 'user-abc',
         memberCount: 10,
-        isPublic: true,
+        isPrivate: false,
         createdAt: DateTime.now(),
       );
 

@@ -66,12 +66,12 @@ void main() {
         id: 'prop-123',
         title: 'Test Proposal',
         description: 'This is a test proposal',
-        proposer: 'user-abc',
+        authorId: 'user-abc',
         status: ProposalStatus.active,
         votesFor: 10,
         votesAgainst: 5,
         createdAt: DateTime.now(),
-        endsAt: DateTime.now().add(const Duration(days: 7)),
+        votingEndsAt: DateTime.now().add(const Duration(days: 7)),
       );
 
       mockProvider.proposals.add(mockProposal);
@@ -87,12 +87,12 @@ void main() {
         id: 'prop-123',
         title: 'Test Proposal',
         description: 'Description',
-        proposer: 'user-abc',
+        authorId: 'user-abc',
         status: ProposalStatus.active,
         votesFor: 25,
         votesAgainst: 10,
         createdAt: DateTime.now(),
-        endsAt: DateTime.now().add(const Duration(days: 7)),
+        votingEndsAt: DateTime.now().add(const Duration(days: 7)),
       );
 
       mockProvider.proposals.add(mockProposal);
@@ -108,12 +108,12 @@ void main() {
         id: 'prop-123',
         title: 'Active Proposal',
         description: 'Description',
-        proposer: 'user-abc',
+        authorId: 'user-abc',
         status: ProposalStatus.active,
         votesFor: 10,
         votesAgainst: 5,
         createdAt: DateTime.now(),
-        endsAt: DateTime.now().add(const Duration(days: 7)),
+        votingEndsAt: DateTime.now().add(const Duration(days: 7)),
       );
 
       mockProvider.proposals.add(mockProposal);
@@ -129,23 +129,23 @@ void main() {
           id: '1',
           title: 'First Proposal',
           description: 'First description',
-          proposer: 'user1',
+          authorId: 'user1',
           status: ProposalStatus.active,
           votesFor: 10,
           votesAgainst: 2,
           createdAt: DateTime.now(),
-          endsAt: DateTime.now().add(const Duration(days: 7)),
+          votingEndsAt: DateTime.now().add(const Duration(days: 7)),
         ),
         Proposal(
           id: '2',
           title: 'Second Proposal',
           description: 'Second description',
-          proposer: 'user2',
+          authorId: 'user2',
           status: ProposalStatus.active,
           votesFor: 15,
           votesAgainst: 8,
           createdAt: DateTime.now(),
-          endsAt: DateTime.now().add(const Duration(days: 5)),
+          votingEndsAt: DateTime.now().add(const Duration(days: 5)),
         ),
       ]);
 
@@ -168,12 +168,12 @@ void main() {
         id: 'prop-123',
         title: 'Clickable Proposal',
         description: 'Description',
-        proposer: 'user-abc',
+        authorId: 'user-abc',
         status: ProposalStatus.active,
         votesFor: 10,
         votesAgainst: 5,
         createdAt: DateTime.now(),
-        endsAt: DateTime.now().add(const Duration(days: 7)),
+        votingEndsAt: DateTime.now().add(const Duration(days: 7)),
       );
 
       mockProvider.proposals.add(mockProposal);
@@ -188,12 +188,12 @@ void main() {
         id: 'prop-123',
         title: 'Test Proposal',
         description: 'Description',
-        proposer: 'user-abc',
+        authorId: 'user-abc',
         status: ProposalStatus.active,
         votesFor: 10,
         votesAgainst: 5,
         createdAt: DateTime.now(),
-        endsAt: DateTime.now().add(const Duration(days: 7)),
+        votingEndsAt: DateTime.now().add(const Duration(days: 7)),
       );
 
       mockProvider.proposals.add(mockProposal);

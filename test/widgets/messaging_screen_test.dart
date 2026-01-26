@@ -56,9 +56,9 @@ void main() {
     testWidgets('displays conversation list', (tester) async {
       final mockConversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2'],
-        lastMessage: 'Hello there!',
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1', 'user2'],
+        lastMessage: null,
+        createdAt: DateTime.now(),
         unreadCount: 2,
       );
 
@@ -72,9 +72,9 @@ void main() {
     testWidgets('displays unread count badge', (tester) async {
       final mockConversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2'],
-        lastMessage: 'Test message',
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1', 'user2'],
+        lastMessage: null,
+        createdAt: DateTime.now(),
         unreadCount: 5,
       );
 
@@ -99,23 +99,23 @@ void main() {
       mockProvider.conversations.addAll([
         Conversation(
           id: '1',
-          participants: ['user1', 'user2'],
-          lastMessage: 'First message',
-          lastMessageTime: DateTime.now(),
+          participantIds: ['user1', 'user2'],
+          lastMessage: null,
+          createdAt: DateTime.now(),
           unreadCount: 0,
         ),
         Conversation(
           id: '2',
-          participants: ['user1', 'user3'],
-          lastMessage: 'Second message',
-          lastMessageTime: DateTime.now(),
+          participantIds: ['user1', 'user3'],
+          lastMessage: null,
+          createdAt: DateTime.now(),
           unreadCount: 1,
         ),
         Conversation(
           id: '3',
-          participants: ['user1', 'user4'],
-          lastMessage: 'Third message',
-          lastMessageTime: DateTime.now(),
+          participantIds: ['user1', 'user4'],
+          lastMessage: null,
+          createdAt: DateTime.now(),
           unreadCount: 2,
         ),
       ]);
@@ -132,9 +132,9 @@ void main() {
     testWidgets('conversation tiles are tappable', (tester) async {
       final mockConversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2'],
-        lastMessage: 'Tap me!',
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1', 'user2'],
+        lastMessage: null,
+        createdAt: DateTime.now(),
         unreadCount: 0,
       );
 
@@ -148,9 +148,9 @@ void main() {
     testWidgets('displays avatar circles', (tester) async {
       final mockConversation = Conversation(
         id: 'conv-123',
-        participants: ['user1', 'user2'],
-        lastMessage: 'Test',
-        lastMessageTime: DateTime.now(),
+        participantIds: ['user1', 'user2'],
+        lastMessage: null,
+        createdAt: DateTime.now(),
         unreadCount: 0,
       );
 

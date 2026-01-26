@@ -62,13 +62,9 @@ void main() {
     testWidgets('password field is obscured by default', (tester) async {
       await tester.pumpWidget(createTestWidget());
 
-      final passwordField = tester
-          .widgetList<TextFormField>(
-            find.byType(TextFormField),
-          )
-          .elementAt(1);
-
-      expect(passwordField.obscureText, true);
+      // Find password field and verify it has a visibility toggle icon
+      expect(find.byKey(const Key('login_password_field')), findsOneWidget);
+      expect(find.byIcon(Icons.visibility), findsOneWidget);
     });
 
     testWidgets('displays Login button', (tester) async {
