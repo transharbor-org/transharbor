@@ -18,6 +18,7 @@ fi
 # Check if schema has changed by comparing checksums
 SCHEMA_CHECKSUM=$(md5sum /app/pb_schema.json | cut -d' ' -f1)
 NEED_IMPORT=false
+NEED_RULES_UPDATE=false
 
 if [ ! -f "/pb_data/.initialized" ]; then
     echo "📦 First run detected - initializing database..."
@@ -27,6 +28,13 @@ elif [ ! -f "/pb_data/.schema_checksum" ] || [ "$(cat /pb_data/.schema_checksum)
     NEED_IMPORT=true
     # Remove initialization marker to force reimport
     rm -f /pb_data/.initialized
+fi
+
+# Check if rules need to be applied/updated (even if DB already initialized)
+RULES_CHECKSUM=$(grep -E '"(list|view|create|update|delete)Rule"' /app/pb_schema.json | md5sum | cut -d' ' -f1)
+if [ ! -f "/pb_data/.rules_checksum" ] || [ "$(cat /pb_data/.rules_checksum 2>/dev/null)" != "$RULES_CHECKSUM" ]; then
+    echo "📝 Rules changed - will update collection rules"
+    NEED_RULES_UPDATE=true
 fi
 
 if [ "$NEED_IMPORT" = "true" ]; then
@@ -238,6 +246,101 @@ PYEOF
     
     # Stop temporary instance
     echo "🔄 Restarting PocketBase..."
+    kill $PB_PID 2>/dev/null || true
+    wait $PB_PID 2>/dev/null || true
+    sleep 2
+fi
+
+# Apply or update rules if needed (even when DB already initialized)
+if [ "$NEED_RULES_UPDATE" = "true" ] && [ "$NEED_IMPORT" = "false" ]; then
+    echo "📝 Applying collection rules to existing database..."
+    
+    # Start PocketBase temporarily
+    /app/pocketbase serve --http=0.0.0.0:8080 --dir=/pb_data &
+    PB_PID=$!
+    sleep 5
+    
+    # Wait for ready
+    max_attempts=30
+    attempt=0
+    while ! curl -s http://localhost:8080/api/health > /dev/null 2>&1; do
+        attempt=$((attempt + 1))
+        if [ $attempt -ge $max_attempts ]; then
+            echo "⚠️  PocketBase failed to start for rules update"
+            kill $PB_PID 2>/dev/null || true
+            break
+        fi
+        sleep 2
+    done
+    
+    if curl -s http://localhost:8080/api/health > /dev/null 2>&1; then
+        # Authenticate
+        AUTH_RESPONSE=$(curl -s -X POST http://localhost:8080/api/collections/_superusers/auth-with-password \
+            -H "Content-Type: application/json" \
+            -d "{\"identity\":\"$PB_ADMIN_EMAIL\",\"password\":\"$PB_ADMIN_PASSWORD\"}")
+        
+        TOKEN=$(echo "$AUTH_RESPONSE" | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
+        
+        if [ -n "$TOKEN" ]; then
+            # Apply rules using Python
+            python3 - "$TOKEN" <<'PYEOF'
+import sys
+import json
+import urllib.request
+
+token = sys.argv[1]
+
+# Read original schema to get rules
+with open('/app/pb_schema.json', 'r') as f:
+    schema = json.load(f)
+
+# Apply rules for each collection
+for collection in schema:
+    name = collection.get('name')
+    rules = {
+        'listRule': collection.get('listRule'),
+        'viewRule': collection.get('viewRule'),
+        'createRule': collection.get('createRule'),
+        'updateRule': collection.get('updateRule'),
+        'deleteRule': collection.get('deleteRule'),
+    }
+    
+    try:
+        # Get collection ID
+        req = urllib.request.Request(
+            f'http://localhost:8080/api/collections/{name}',
+            headers={'Authorization': token}
+        )
+        with urllib.request.urlopen(req) as response:
+            coll_data = json.loads(response.read())
+            coll_id = coll_data['id']
+        
+        # Update rules
+        data = json.dumps(rules).encode('utf-8')
+        req = urllib.request.Request(
+            f'http://localhost:8080/api/collections/{coll_id}',
+            data=data,
+            method='PATCH',
+            headers={
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            }
+        )
+        with urllib.request.urlopen(req) as response:
+            print(f'  ✅ Applied rules for {name}')
+    except Exception as e:
+        print(f'  ⚠️  Failed to apply rules for {name}: {e}')
+
+PYEOF
+            
+            echo "$RULES_CHECKSUM" > /pb_data/.rules_checksum
+            echo "✅ Collection rules updated"
+        else
+            echo "⚠️  Could not authenticate for rules update"
+        fi
+    fi
+    
+    # Stop temporary instance
     kill $PB_PID 2>/dev/null || true
     wait $PB_PID 2>/dev/null || true
     sleep 2
