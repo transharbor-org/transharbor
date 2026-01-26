@@ -104,6 +104,32 @@
         ],
         "default": "non_voting",
         "unique": false
+      },
+      {
+        "id": "pronouns",
+        "name": "pronouns",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "presentable": false,
+        "hidden": false,
+        "autogeneratePattern": "",
+        "max": 50,
+        "min": 0,
+        "pattern": "",
+        "primaryKey": false,
+        "unique": false
+      },
+      {
+        "id": "isPrivate",
+        "name": "isPrivate",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "presentable": false,
+        "hidden": false,
+        "default": false,
+        "unique": false
       }
     ],
     "indexes": [
