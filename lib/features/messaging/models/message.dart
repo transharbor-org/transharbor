@@ -36,7 +36,7 @@ class Message {
       conversationId: record.getStringValue('conversation'),
       senderId: record.getStringValue('sender'),
       content: record.getStringValue('content'),
-      createdAt: record.created.isNotEmpty
+      createdAt: record.created.isNotEmpty && record.created != 'null'
           ? DateTime.parse(record.created)
           : DateTime.now(),
       isRead: record.getBoolValue('read'),
@@ -96,7 +96,7 @@ class Conversation {
       participantIds: participantIds,
       lastMessage: null, // Can be populated separately
       unreadCount: record.getIntValue('unreadCount'),
-      createdAt: record.created.isNotEmpty
+      createdAt: record.created.isNotEmpty && record.created != 'null'
           ? DateTime.parse(record.created)
           : DateTime.now(),
     );

@@ -51,7 +51,7 @@ class Proposal {
       title: record.getStringValue('title'),
       description: record.getStringValue('description'),
       authorId: record.getStringValue('author'),
-      createdAt: record.created.isNotEmpty
+      createdAt: record.created.isNotEmpty && record.created != 'null'
           ? DateTime.parse(record.created)
           : DateTime.now(),
       votingEndsAt: DateTime.parse(record.getStringValue('endDate')),
