@@ -380,6 +380,14 @@ jobs:
           if [ $attempt -eq $max_attempts ]; then
             echo "⚠️  Version check timed out, but API is healthy. Proceeding with tests..."
           fi
+          
+          # Final health check before proceeding
+          echo "🏥 Final health check before tests..."
+          if ! curl -sf https://dev.transharbor.org/api/health > /dev/null 2>&1; then
+            echo "❌ API is not responding. Cannot proceed with tests."
+            exit 1
+          fi
+          echo "✅ API is responding, proceeding with tests"
       
       - name: Run API endpoint tests
         run: |
