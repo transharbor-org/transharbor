@@ -31,22 +31,7 @@ jobs:
       - name: Analyze project source
         run: flutter analyze 2>&1 | tee analyze.log && ! grep -q "error •" analyze.log
       
-      # Integration tests are temporarily disabled until backend schema is deployed
-      # - name: Run integration tests (live API)
-      #   env:
-      #     POCKETBASE_URL: https://dev.transharbor.org
-      #   run: |
-      #     echo "Running integration tests against dev environment..."
-      #     flutter test test/integration/ --dart-define=POCKETBASE_URL=$POCKETBASE_URL
-      
-      # Note: User journey integration tests (integration_test/) require a web driver or emulator
-      # These are skipped in CI for now - they should run in a dedicated E2E job with proper setup
-      # - name: Run user journey integration tests
-      #   run: |
-      #     echo "Running user journey integration tests..."
-      #     flutter test integration_test/
-      
-      - name: Run unit tests (excluding smoke tests)
+      - name: Run unit tests (excluding smoke and integration tests)
         run: |
           # Run specific test files, excluding smoke and integration directories
           find test -name '*_test.dart' \
@@ -414,6 +399,16 @@ jobs:
           flutter test \
             --dart-define=POCKETBASE_URL=$POCKETBASE_URL \
             test/integration/user_functional_test.dart \
+            --reporter expanded
+      
+      - name: Run edit profile integration tests
+        env:
+          POCKETBASE_URL: https://dev.transharbor.org
+        run: |
+          echo "🧪 Running edit profile integration tests against $POCKETBASE_URL"
+          flutter test \
+            --dart-define=POCKETBASE_URL=$POCKETBASE_URL \
+            test/integration/edit_profile_integration_test.dart \
             --reporter expanded
       
       - name: Report test results
