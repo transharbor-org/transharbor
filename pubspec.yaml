@@ -30,7 +30,7 @@ dependencies:
   # UI Components
   cupertino_icons: ^1.0.6
   encrypt: ^5.0.3
-  url_launcher: ^6.3.2
+  url_launcher: ^6.3.1
   
 dev_dependencies:
   flutter_test:
