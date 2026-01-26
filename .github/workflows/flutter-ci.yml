@@ -388,6 +388,7 @@ jobs:
           echo "🧪 Running all integration tests against $POCKETBASE_URL"
           flutter test \
             --dart-define=POCKETBASE_URL=$POCKETBASE_URL \
+            --concurrency=1 \
             test/integration/ \
             --reporter expanded
       
