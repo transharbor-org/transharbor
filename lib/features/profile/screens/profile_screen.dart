@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../../core/services/pocketbase_service.dart';
 
@@ -168,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: const Text('Edit Profile'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
-                    // Navigate to edit profile
+                    context.push('/settings');
                   },
                 ),
                 ListTile(
@@ -176,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: const Text('Privacy Settings'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
-                    // Navigate to privacy settings
+                    context.push('/settings');
                   },
                 ),
                 const Divider(),
@@ -185,23 +187,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: const Text('About TransHarbor'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
-                    // Show about dialog
+                    showAboutDialog(
+                      context: context,
+                      applicationName: 'TransHarbor',
+                      applicationVersion: '1.0.0-dev',
+                      applicationLegalese:
+                          '© 2026 TransHarbor\nUser-Owned • Trans-Centered • Privacy-First • Democratic • Nonprofit',
+                      children: [
+                        const SizedBox(height: 16),
+                        const Text(
+                          'TransHarbor is a community-owned platform built by and for the trans community. '
+                          'Our mission is to provide a safe, supportive space for connection, resources, and mutual aid.',
+                        ),
+                      ],
+                    );
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.article_outlined),
                   title: const Text('Community Guidelines'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: () {
-                    // Navigate to guidelines
+                  onTap: () async {
+                    final url = Uri.parse('https://transharbor.org/guidelines');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url,
+                          mode: LaunchMode.externalApplication);
+                    } else {
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Guidelines coming soon!'),
+                        ),
+                      );
+                    }
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.policy_outlined),
                   title: const Text('Privacy Policy'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: () {
-                    // Navigate to privacy policy
+                  onTap: () async {
+                    final url = Uri.parse('https://transharbor.org/privacy');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url,
+                          mode: LaunchMode.externalApplication);
+                    } else {
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Privacy policy coming soon!'),
+                        ),
+                      );
+                    }
                   },
                 ),
                 const Divider(),
