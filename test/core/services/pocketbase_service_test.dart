@@ -32,7 +32,7 @@ void main() {
   group('PocketBaseService - Method Signatures', () {
     test('getPersonals method exists with correct signature', () {
       final service = PocketBaseService();
-      
+
       // Verify the method exists and can be called
       // We don't execute it to avoid network calls in unit tests
       expect(service.getPersonals, isA<Function>());
@@ -75,11 +75,11 @@ void main() {
     test('CRITICAL: getPersonals should NOT use sort parameter', () {
       // This test documents the fix for the 400 Bad Request error
       // The sort parameter "-created" was causing API failures
-      
+
       // Verify the method exists and is callable
       final service = PocketBaseService();
       expect(service.getPersonals, isA<Function>());
-      
+
       // Integration tests will verify the actual API behavior
       // This unit test just ensures the method structure is correct
     });
@@ -87,10 +87,10 @@ void main() {
     test('CRITICAL: getConversations should NOT use sort parameter', () {
       // This test documents the fix for the 400 Bad Request error
       // The sort parameter "-updated" was causing API failures
-      
+
       final service = PocketBaseService();
       expect(service.getConversations, isA<Function>());
-      
+
       // Integration tests will verify the actual API behavior
     });
   });
