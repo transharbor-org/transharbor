@@ -24,7 +24,9 @@ class Personal {
       id: json['id'] as String,
       userId: json['user'] as String,
       content: json['content'] as String,
-      createdAt: DateTime.parse(json['created'] as String),
+      createdAt: json['created'] != null
+          ? DateTime.parse(json['created'] as String)
+          : DateTime.now(),
       updatedAt: json['updated'] != null
           ? DateTime.parse(json['updated'] as String)
           : null,
@@ -38,8 +40,10 @@ class Personal {
       id: record.id,
       userId: record.getStringValue('user'),
       content: record.getStringValue('content'),
-      createdAt: DateTime.parse(record.created),
-      updatedAt: DateTime.parse(record.updated),
+      createdAt:
+          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
+      updatedAt:
+          record.updated.isNotEmpty ? DateTime.parse(record.updated) : null,
       likesCount: record.getIntValue('likes'),
       commentsCount: record.getIntValue('comments'),
     );

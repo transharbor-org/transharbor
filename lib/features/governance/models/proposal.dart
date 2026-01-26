@@ -31,7 +31,9 @@ class Proposal {
       title: json['title'] as String,
       description: json['description'] as String,
       authorId: json['author'] as String,
-      createdAt: DateTime.parse(json['created'] as String),
+      createdAt: json['created'] != null
+          ? DateTime.parse(json['created'] as String)
+          : DateTime.now(),
       votingEndsAt: DateTime.parse(json['endDate'] as String),
       status: ProposalStatus.values.firstWhere(
         (e) => e.name == json['status'],
@@ -49,7 +51,8 @@ class Proposal {
       title: record.getStringValue('title'),
       description: record.getStringValue('description'),
       authorId: record.getStringValue('author'),
-      createdAt: DateTime.parse(record.created),
+      createdAt:
+          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
       votingEndsAt: DateTime.parse(record.getStringValue('endDate')),
       status: ProposalStatus.values.firstWhere(
         (e) => e.name == record.getStringValue('status'),

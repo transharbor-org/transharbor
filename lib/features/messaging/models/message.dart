@@ -23,7 +23,9 @@ class Message {
       conversationId: json['conversation'] as String,
       senderId: json['sender'] as String,
       content: json['content'] as String,
-      createdAt: DateTime.parse(json['created'] as String),
+      createdAt: json['created'] != null
+          ? DateTime.parse(json['created'] as String)
+          : DateTime.now(),
       isRead: json['read'] as bool? ?? false,
     );
   }
@@ -34,7 +36,8 @@ class Message {
       conversationId: record.getStringValue('conversation'),
       senderId: record.getStringValue('sender'),
       content: record.getStringValue('content'),
-      createdAt: DateTime.parse(record.created),
+      createdAt:
+          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
       isRead: record.getBoolValue('read'),
     );
   }
@@ -74,7 +77,9 @@ class Conversation {
           ? Message.fromJson(json['lastMessage'] as Map<String, dynamic>)
           : null,
       unreadCount: json['unreadCount'] as int? ?? 0,
-      createdAt: DateTime.parse(json['created'] as String),
+      createdAt: json['created'] != null
+          ? DateTime.parse(json['created'] as String)
+          : DateTime.now(),
     );
   }
 
@@ -90,7 +95,8 @@ class Conversation {
       participantIds: participantIds,
       lastMessage: null, // Can be populated separately
       unreadCount: record.getIntValue('unreadCount'),
-      createdAt: DateTime.parse(record.created),
+      createdAt:
+          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
     );
   }
 

@@ -33,7 +33,9 @@ class Group {
       isPrivate: json['isPrivate'] as bool? ?? false,
       memberCount: json['memberCount'] as int? ?? 0,
       bannerUrl: json['bannerUrl'] as String?,
-      createdAt: DateTime.parse(json['created'] as String),
+      createdAt: json['created'] != null
+          ? DateTime.parse(json['created'] as String)
+          : DateTime.now(),
     );
   }
 
@@ -51,7 +53,8 @@ class Group {
       bannerUrl: record.getStringValue('bannerUrl').isNotEmpty
           ? record.getStringValue('bannerUrl')
           : null,
-      createdAt: DateTime.parse(record.created),
+      createdAt:
+          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
     );
   }
 
@@ -100,7 +103,9 @@ class GroupMember {
         (e) => e.name == json['role'],
         orElse: () => GroupRole.member,
       ),
-      joinedAt: DateTime.parse(json['created'] as String),
+      joinedAt: json['created'] != null
+          ? DateTime.parse(json['created'] as String)
+          : DateTime.now(),
     );
   }
 
@@ -113,7 +118,8 @@ class GroupMember {
         (e) => e.name == record.getStringValue('role'),
         orElse: () => GroupRole.member,
       ),
-      joinedAt: DateTime.parse(record.created),
+      joinedAt:
+          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
     );
   }
 
@@ -155,7 +161,9 @@ class GroupPost {
       content: json['content'] as String,
       likesCount: json['likes'] as int? ?? 0,
       commentsCount: json['comments'] as int? ?? 0,
-      createdAt: DateTime.parse(json['created'] as String),
+      createdAt: json['created'] != null
+          ? DateTime.parse(json['created'] as String)
+          : DateTime.now(),
     );
   }
 
@@ -167,7 +175,8 @@ class GroupPost {
       content: record.getStringValue('content'),
       likesCount: record.getIntValue('likes'),
       commentsCount: 0,
-      createdAt: DateTime.parse(record.created),
+      createdAt:
+          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
     );
   }
 
