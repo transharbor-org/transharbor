@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pocketbase/pocketbase.dart';
 import 'package:transharbor/core/services/pocketbase_service.dart';
 import 'package:transharbor/features/messaging/models/message.dart';
 import 'package:transharbor/features/personals/models/personal.dart';
@@ -16,7 +15,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('PocketBase API Integration Tests', () {
-    late PocketBase pb;
+    // ignore: unused_local_variable
     late String testBaseUrl;
 
     setUpAll(() {
@@ -25,7 +24,6 @@ void main() {
         'POCKETBASE_URL',
         defaultValue: 'http://localhost:8080',
       );
-      pb = PocketBase(testBaseUrl);
     });
 
     group('Authentication', () {

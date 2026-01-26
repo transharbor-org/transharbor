@@ -12,6 +12,7 @@ void main() {
   group('PocketBase Live API Tests', () {
     late PocketBase pb;
     late String baseUrl;
+    // ignore: unused_local_variable
     String? authToken;
     String? userId;
 

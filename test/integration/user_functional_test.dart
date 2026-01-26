@@ -197,10 +197,10 @@ void main() {
               'alex@example.com',
               'password123',
             );
-        final alexId = authData.record.id;
+        // Note: alexId would be authData.record.id
         pb.authStore.clear();
 
-        // Login as Sam
+        // Login as Sam (alexId is used for context tracking)
         authData = await pb.collection('users').authWithPassword(
               'sam@example.com',
               'password123',

@@ -35,15 +35,6 @@ class StorageService {
     }
   }
 
-  static Future<void> _delete(String key) async {
-    if (kIsWeb) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove(key);
-    } else {
-      await _storage.delete(key: key);
-    }
-  }
-
   // Auth Token
   static Future<void> saveAuthToken(String token) async {
     await _write(_keyAuthToken, token);

@@ -237,7 +237,9 @@ void main() {
 
     testWidgets('Phone verification widget full flow', (tester) async {
       // Build widget
+      // ignore: unused_local_variable
       String? verifiedPhone;
+      // ignore: unused_local_variable
       String? verifiedId;
 
       await tester.pumpWidget(MaterialApp(
@@ -367,8 +369,6 @@ void main() {
     });
 
     testWidgets('Duplicate phone prevention works', (tester) async {
-      final pb = PocketBase('https://dev.transharbor.org');
-
       // This test requires the hook to be active
       // Create first user with phone
       // Attempt to create second user with same phone
