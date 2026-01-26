@@ -11,6 +11,7 @@ import 'features/groups/providers/groups_provider.dart';
 import 'features/moderation/providers/moderation_provider.dart';
 import 'core/services/pocketbase_service.dart';
 import 'core/services/logging_service.dart';
+import 'core/services/encryption_service.dart';
 
 // Testing end-to-end GitOps automation - 2026-01-24
 void main() async {
@@ -18,6 +19,14 @@ void main() async {
 
   // Initialize logging service
   logger.initialize();
+
+  // Initialize encryption service
+  try {
+    await EncryptionService().initialize();
+    logger.info('Encryption service initialized');
+  } catch (e) {
+    logger.error('Failed to initialize encryption', error: e);
+  }
 
   // Global error handler for unhandled errors
   FlutterError.onError = (FlutterErrorDetails details) {
