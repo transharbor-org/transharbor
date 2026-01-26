@@ -51,8 +51,9 @@ class Proposal {
       title: record.getStringValue('title'),
       description: record.getStringValue('description'),
       authorId: record.getStringValue('author'),
-      createdAt:
-          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
+      createdAt: record.created.isNotEmpty
+          ? DateTime.parse(record.created)
+          : DateTime.now(),
       votingEndsAt: DateTime.parse(record.getStringValue('endDate')),
       status: ProposalStatus.values.firstWhere(
         (e) => e.name == record.getStringValue('status'),

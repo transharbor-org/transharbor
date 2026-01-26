@@ -53,8 +53,9 @@ class Group {
       bannerUrl: record.getStringValue('bannerUrl').isNotEmpty
           ? record.getStringValue('bannerUrl')
           : null,
-      createdAt:
-          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
+      createdAt: record.created.isNotEmpty
+          ? DateTime.parse(record.created)
+          : DateTime.now(),
     );
   }
 
@@ -118,8 +119,9 @@ class GroupMember {
         (e) => e.name == record.getStringValue('role'),
         orElse: () => GroupRole.member,
       ),
-      joinedAt:
-          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
+      joinedAt: record.created.isNotEmpty
+          ? DateTime.parse(record.created)
+          : DateTime.now(),
     );
   }
 
@@ -175,8 +177,9 @@ class GroupPost {
       content: record.getStringValue('content'),
       likesCount: record.getIntValue('likes'),
       commentsCount: 0,
-      createdAt:
-          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
+      createdAt: record.created.isNotEmpty
+          ? DateTime.parse(record.created)
+          : DateTime.now(),
     );
   }
 

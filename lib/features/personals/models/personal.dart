@@ -40,8 +40,9 @@ class Personal {
       id: record.id,
       userId: record.getStringValue('user'),
       content: record.getStringValue('content'),
-      createdAt:
-          record.created.isNotEmpty ? DateTime.parse(record.created) : DateTime.now(),
+      createdAt: record.created.isNotEmpty
+          ? DateTime.parse(record.created)
+          : DateTime.now(),
       updatedAt:
           record.updated.isNotEmpty ? DateTime.parse(record.updated) : null,
       likesCount: record.getIntValue('likes'),
