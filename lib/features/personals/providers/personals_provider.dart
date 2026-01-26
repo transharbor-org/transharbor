@@ -28,9 +28,7 @@ class PersonalsProvider extends ChangeNotifier {
       }
 
       // Load ALL personals from ALL users, sorted by newest first
-      final result = await _pb.getPersonals(
-        sort: '-created',
-      );
+      final result = await _pb.getPersonals();
       _personals = result.items
           .map((record) => Personal.fromPocketBase(record))
           .toList();
