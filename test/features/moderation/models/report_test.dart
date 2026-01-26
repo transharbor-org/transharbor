@@ -272,4 +272,148 @@ void main() {
       expect(ReportStatus.dismissed.name, 'dismissed');
     });
   });
+
+  group('Report copyWith', () {
+    final now = DateTime.now();
+    final testReport = Report(
+      id: 'report123',
+      reporterId: 'user123',
+      reportedItemId: 'post456',
+      type: ReportType.post,
+      reason: 'Spam',
+      description: 'Test spam',
+      status: ReportStatus.pending,
+      created: now,
+      updated: now,
+    );
+
+    test('copyWith changes only specified fields', () {
+      final updated = testReport.copyWith(
+        status: ReportStatus.resolved,
+        moderatorId: 'mod789',
+        moderatorNotes: 'Resolved successfully',
+      );
+
+      expect(updated.status, equals(ReportStatus.resolved));
+      expect(updated.moderatorId, equals('mod789'));
+      expect(updated.moderatorNotes, equals('Resolved successfully'));
+      expect(updated.id, equals(testReport.id));
+      expect(updated.reporterId, equals(testReport.reporterId));
+      expect(updated.type, equals(testReport.type));
+    });
+
+    test('copyWith with no params returns equivalent report', () {
+      final copied = testReport.copyWith();
+
+      expect(copied.id, equals(testReport.id));
+      expect(copied.reporterId, equals(testReport.reporterId));
+      expect(copied.status, equals(testReport.status));
+      expect(copied.type, equals(testReport.type));
+    });
+
+    test('copyWith can update all fields', () {
+      final newTime = DateTime.now().add(const Duration(days: 1));
+      final updated = testReport.copyWith(
+        id: 'newId',
+        reporterId: 'newReporter',
+        reportedItemId: 'newItem',
+        type: ReportType.user,
+        reason: 'Harassment',
+        description: 'New description',
+        status: ReportStatus.dismissed,
+        moderatorId: 'newMod',
+        moderatorNotes: 'New notes',
+        created: newTime,
+        updated: newTime,
+      );
+
+      expect(updated.id, equals('newId'));
+      expect(updated.reporterId, equals('newReporter'));
+      expect(updated.reportedItemId, equals('newItem'));
+      expect(updated.type, equals(ReportType.user));
+      expect(updated.reason, equals('Harassment'));
+      expect(updated.description, equals('New description'));
+      expect(updated.status, equals(ReportStatus.dismissed));
+    });
+  });
+
+  group('Report status getters', () {
+    final now = DateTime.now();
+
+    test('isPending returns true only for pending status', () {
+      final report = Report(
+        id: 'r1',
+        reporterId: 'u1',
+        reportedItemId: 'p1',
+        type: ReportType.post,
+        reason: 'Test',
+        description: 'Test',
+        status: ReportStatus.pending,
+        created: now,
+        updated: now,
+      );
+
+      expect(report.isPending, isTrue);
+      expect(report.isUnderReview, isFalse);
+      expect(report.isResolved, isFalse);
+      expect(report.isDismissed, isFalse);
+    });
+
+    test('isUnderReview returns true only for underReview status', () {
+      final report = Report(
+        id: 'r1',
+        reporterId: 'u1',
+        reportedItemId: 'p1',
+        type: ReportType.post,
+        reason: 'Test',
+        description: 'Test',
+        status: ReportStatus.underReview,
+        created: now,
+        updated: now,
+      );
+
+      expect(report.isUnderReview, isTrue);
+      expect(report.isPending, isFalse);
+      expect(report.isResolved, isFalse);
+      expect(report.isDismissed, isFalse);
+    });
+
+    test('isResolved returns true only for resolved status', () {
+      final report = Report(
+        id: 'r1',
+        reporterId: 'u1',
+        reportedItemId: 'p1',
+        type: ReportType.post,
+        reason: 'Test',
+        description: 'Test',
+        status: ReportStatus.resolved,
+        created: now,
+        updated: now,
+      );
+
+      expect(report.isResolved, isTrue);
+      expect(report.isPending, isFalse);
+      expect(report.isUnderReview, isFalse);
+      expect(report.isDismissed, isFalse);
+    });
+
+    test('isDismissed returns true only for dismissed status', () {
+      final report = Report(
+        id: 'r1',
+        reporterId: 'u1',
+        reportedItemId: 'p1',
+        type: ReportType.post,
+        reason: 'Test',
+        description: 'Test',
+        status: ReportStatus.dismissed,
+        created: now,
+        updated: now,
+      );
+
+      expect(report.isDismissed, isTrue);
+      expect(report.isPending, isFalse);
+      expect(report.isUnderReview, isFalse);
+      expect(report.isResolved, isFalse);
+    });
+  });
 }
