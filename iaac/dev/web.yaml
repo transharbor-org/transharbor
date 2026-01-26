@@ -28,7 +28,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: web
-        image: ghcr.io/transharbor-org/transharbor/web:main-2842aec
+        image: ghcr.io/transharbor-org/transharbor/web:main-e9bdb55
         imagePullPolicy: Always
         ports:
         - containerPort: 80
