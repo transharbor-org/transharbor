@@ -117,4 +117,10 @@ class AuthProvider extends ChangeNotifier {
     _currentUser = null;
     notifyListeners();
   }
+
+  /// For testing only - set user directly
+  void setUserForTesting(User? user) {
+    _currentUser = user;
+    notifyListeners();
+  }
 }
