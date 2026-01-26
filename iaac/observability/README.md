@@ -4,30 +4,25 @@ Minimal observability infrastructure for monitoring and logging TransHarbor appl
 
 ## Components
 
-### 1. **Metrics Server** ✅ Already Running
-- Built-in Kubernetes metrics
-- Provides `kubectl top` functionality
-- CPU and memory metrics for nodes and pods
-
-### 2. **Prometheus** (Metrics Collection)
+### 1. **Prometheus** (Metrics Collection)
 - Scrapes metrics from Kubernetes API, nodes, and pods
 - 7-day retention
 - Minimal resource usage (256Mi RAM)
 - Auto-discovers pods with `prometheus.io/scrape: "true"` annotation
 
-### 3. **Grafana** (Visualization)
+### 2. **Grafana** (Visualization)
 - Web UI for metrics and logs
 - Pre-configured Prometheus and Loki datasources
 - Access: https://dev.transharbor.org/grafana
 - Default credentials: `admin` / `changeme-dev-password`
 
-### 4. **Loki** (Log Aggregation)
+### 3. **Loki** (Log Aggregation)
 - Lightweight log aggregation system
 - 7-day log retention
 - Indexes logs from all pods
 - Query logs via Grafana
 
-### 5. **Promtail** (Log Collector)
+### 4. **Promtail** (Log Collector)
 - DaemonSet running on each node
 - Collects logs from all containers
 - Ships logs to Loki
@@ -47,6 +42,17 @@ open https://dev.transharbor.org/grafana
 # Access Prometheus
 open https://dev.transharbor.org/prometheus
 ```
+
+## Removing metrics-server
+
+Since Prometheus provides comprehensive metrics, you can remove the built-in metrics-server to save ~28MB RAM:
+
+```bash
+# Run the removal script
+bash iaac/observability/remove-metrics-server.sh
+```
+
+**Note:** After removal, `kubectl top` will no longer work. Use Grafana dashboards instead.
 
 ## Resource Usage
 
