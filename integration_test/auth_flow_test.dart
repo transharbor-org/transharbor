@@ -6,7 +6,8 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Authentication Flow E2E Tests', () {
-    testWidgets('Complete login flow with valid credentials', (WidgetTester tester) async {
+    testWidgets('Complete login flow with valid credentials',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -16,7 +17,7 @@ void main() {
       // Find and verify login screen elements
       expect(find.text('Email'), findsOneWidget);
       expect(find.text('Password'), findsOneWidget);
-      
+
       final emailField = find.byKey(const Key('login_email_field'));
       final passwordField = find.byKey(const Key('login_password_field'));
       final loginButton = find.byKey(const Key('login_button'));
@@ -24,7 +25,7 @@ void main() {
       // Enter valid credentials
       await tester.enterText(emailField, 'alex@example.com');
       await tester.pumpAndSettle();
-      
+
       await tester.enterText(passwordField, 'password123');
       await tester.pumpAndSettle();
 
@@ -36,7 +37,8 @@ void main() {
       expect(find.text('Personals'), findsWidgets);
     });
 
-    testWidgets('Login with empty credentials shows validation errors', (WidgetTester tester) async {
+    testWidgets('Login with empty credentials shows validation errors',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -53,7 +55,8 @@ void main() {
       expect(find.text('Please enter your password'), findsOneWidget);
     });
 
-    testWidgets('Login with invalid credentials shows error message', (WidgetTester tester) async {
+    testWidgets('Login with invalid credentials shows error message',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -66,7 +69,7 @@ void main() {
       // Enter invalid credentials
       await tester.enterText(emailField, 'invalid@example.com');
       await tester.pumpAndSettle();
-      
+
       await tester.enterText(passwordField, 'wrongpassword');
       await tester.pumpAndSettle();
 
@@ -78,7 +81,8 @@ void main() {
       expect(find.textContaining('Failed to authenticate'), findsOneWidget);
     });
 
-    testWidgets('Navigate to register screen and back', (WidgetTester tester) async {
+    testWidgets('Navigate to register screen and back',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -87,7 +91,7 @@ void main() {
       // Find and tap register link
       final registerLink = find.text('Create Account');
       expect(registerLink, findsOneWidget);
-      
+
       await tester.tap(registerLink);
       await tester.pumpAndSettle();
 

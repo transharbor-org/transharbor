@@ -5,7 +5,7 @@ import 'package:transharbor/main.dart' as app;
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  
+
   // Enable longer timeouts for E2E tests
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
 
@@ -32,7 +32,7 @@ void main() {
       // Enter credentials
       await tester.enterText(emailField, 'alex@example.com');
       await tester.pumpAndSettle();
-      
+
       await tester.enterText(passwordField, 'password123');
       await tester.pumpAndSettle();
 
@@ -46,7 +46,7 @@ void main() {
       // Verify navigation to home screen
       // This should work if login succeeds
       expect(find.text('Welcome to TransHarbor'), findsNothing);
-      
+
       // Should see navigation elements or home content
       expect(find.byType(BottomNavigationBar), findsOneWidget);
     }, timeout: const Timeout(Duration(seconds: 30)));
@@ -63,7 +63,7 @@ void main() {
       // Enter invalid credentials
       await tester.enterText(emailField, 'invalid@example.com');
       await tester.pumpAndSettle();
-      
+
       await tester.enterText(passwordField, 'wrongpassword');
       await tester.pumpAndSettle();
 
@@ -100,14 +100,14 @@ void main() {
       await tester.pumpAndSettle();
 
       final passwordField = find.widgetWithText(TextFormField, 'Password');
-      
+
       // Enter password
       await tester.enterText(passwordField, 'password123');
       await tester.pumpAndSettle();
 
       // Find the password field widget
       final passwordWidget = tester.widget<TextFormField>(passwordField);
-      
+
       // Verify password is obscured by default
       expect(passwordWidget.obscureText, true);
 
@@ -116,7 +116,7 @@ void main() {
         of: passwordField,
         matching: find.byType(IconButton),
       );
-      
+
       await tester.tap(visibilityToggle);
       await tester.pumpAndSettle();
 
@@ -125,8 +125,7 @@ void main() {
       expect(updatedPasswordWidget.obscureText, false);
     }, timeout: const Timeout(Duration(seconds: 30)));
 
-    testWidgets('Navigate to register screen',
-        (WidgetTester tester) async {
+    testWidgets('Navigate to register screen', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 

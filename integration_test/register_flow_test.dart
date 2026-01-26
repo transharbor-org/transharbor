@@ -23,7 +23,8 @@ void main() {
       expect(find.text('Register'), findsOneWidget);
       expect(find.widgetWithText(TextFormField, 'Email'), findsOneWidget);
       expect(find.widgetWithText(TextFormField, 'Password'), findsOneWidget);
-      expect(find.widgetWithText(TextFormField, 'Confirm Password'), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, 'Confirm Password'),
+          findsOneWidget);
     }, timeout: const Timeout(Duration(seconds: 30)));
 
     testWidgets('Register validation prevents empty submission',
@@ -45,8 +46,7 @@ void main() {
       expect(find.text('Please enter a password'), findsOneWidget);
     }, timeout: const Timeout(Duration(seconds: 30)));
 
-    testWidgets('Register validates email format',
-        (WidgetTester tester) async {
+    testWidgets('Register validates email format', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -79,16 +79,17 @@ void main() {
 
       final emailField = find.widgetWithText(TextFormField, 'Email');
       final passwordField = find.widgetWithText(TextFormField, 'Password');
-      final confirmPasswordField = find.widgetWithText(TextFormField, 'Confirm Password');
+      final confirmPasswordField =
+          find.widgetWithText(TextFormField, 'Confirm Password');
       final registerButton = find.widgetWithText(ElevatedButton, 'Register');
 
       // Fill form with mismatched passwords
       await tester.enterText(emailField, 'newuser@example.com');
       await tester.pumpAndSettle();
-      
+
       await tester.enterText(passwordField, 'password123');
       await tester.pumpAndSettle();
-      
+
       await tester.enterText(confirmPasswordField, 'differentpassword');
       await tester.pumpAndSettle();
 
@@ -134,7 +135,7 @@ void main() {
       // Find and tap login link
       final loginLink = find.text('Already have an account? Login');
       expect(loginLink, findsOneWidget);
-      
+
       await tester.tap(loginLink);
       await tester.pumpAndSettle();
 
@@ -153,7 +154,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final passwordField = find.widgetWithText(TextFormField, 'Password');
-      
+
       // Enter password
       await tester.enterText(passwordField, 'password123');
       await tester.pumpAndSettle();
@@ -167,7 +168,7 @@ void main() {
         of: passwordField,
         matching: find.byType(IconButton),
       );
-      
+
       await tester.tap(visibilityToggle.first);
       await tester.pumpAndSettle();
 

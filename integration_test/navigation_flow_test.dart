@@ -11,14 +11,14 @@ void main() {
     // Helper function to login
     Future<void> loginAsTestUser(WidgetTester tester) async {
       await tester.pumpAndSettle();
-      
+
       final emailField = find.widgetWithText(TextFormField, 'Email');
       final passwordField = find.widgetWithText(TextFormField, 'Password');
       final loginButton = find.widgetWithText(ElevatedButton, 'Login');
 
       await tester.enterText(emailField, 'alex@example.com');
       await tester.pumpAndSettle();
-      
+
       await tester.enterText(passwordField, 'password123');
       await tester.pumpAndSettle();
 
@@ -40,8 +40,7 @@ void main() {
       expect(bottomNavWidget.items.length, greaterThanOrEqualTo(3));
     }, timeout: const Timeout(Duration(seconds: 30)));
 
-    testWidgets('Navigate to Personals tab',
-        (WidgetTester tester) async {
+    testWidgets('Navigate to Personals tab', (WidgetTester tester) async {
       app.main();
       await loginAsTestUser(tester);
 
@@ -63,8 +62,7 @@ void main() {
       }
     }, timeout: const Timeout(Duration(seconds: 30)));
 
-    testWidgets('Navigate to Messages tab',
-        (WidgetTester tester) async {
+    testWidgets('Navigate to Messages tab', (WidgetTester tester) async {
       app.main();
       await loginAsTestUser(tester);
 
@@ -86,8 +84,7 @@ void main() {
       }
     }, timeout: const Timeout(Duration(seconds: 30)));
 
-    testWidgets('Navigate to Profile tab',
-        (WidgetTester tester) async {
+    testWidgets('Navigate to Profile tab', (WidgetTester tester) async {
       app.main();
       await loginAsTestUser(tester);
 
@@ -118,15 +115,14 @@ void main() {
       expect(find.byType(AppBar), findsOneWidget);
     }, timeout: const Timeout(Duration(seconds: 30)));
 
-    testWidgets('Back button navigation works',
-        (WidgetTester tester) async {
+    testWidgets('Back button navigation works', (WidgetTester tester) async {
       app.main();
       await loginAsTestUser(tester);
 
       // Try to find a detail screen by tapping an item
       // This is a basic test - adapt based on actual app structure
       final bottomNav = find.byType(BottomNavigationBar);
-      
+
       if (bottomNav.evaluate().isNotEmpty) {
         // Navigate to different tabs
         final personalsTab = find.descendant(
@@ -155,7 +151,7 @@ void main() {
 
       // Find logout button - it might be in a drawer or menu
       final logoutButton = find.text('Logout');
-      
+
       if (logoutButton.evaluate().isNotEmpty) {
         await tester.tap(logoutButton);
         await tester.pumpAndSettle(const Duration(seconds: 2));
