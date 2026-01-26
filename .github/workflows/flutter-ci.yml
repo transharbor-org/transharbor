@@ -31,10 +31,12 @@ jobs:
       - name: Analyze project source
         run: flutter analyze 2>&1 | tee analyze.log && ! grep -q "error •" analyze.log
       
-      - name: Run integration tests
+      - name: Run integration tests (live API)
+        env:
+          POCKETBASE_URL: https://dev.transharbor.org
         run: |
-          echo "Running integration tests (API contracts, field validation, etc.)..."
-          flutter test test/integration/
+          echo "Running integration tests against dev environment..."
+          flutter test test/integration/ --dart-define=POCKETBASE_URL=$POCKETBASE_URL
       
       - name: Run user journey integration tests
         run: |
