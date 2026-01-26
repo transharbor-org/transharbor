@@ -165,7 +165,6 @@ class PocketBaseService {
           page: page,
           perPage: perPage,
           filter: filter,
-          sort: '-created',
           expand: 'user',
         );
   }
@@ -196,7 +195,6 @@ class PocketBaseService {
           page: page,
           perPage: perPage,
           filter: 'participants ~ "$currentUserId"',
-          sort: '-updated',
         );
   }
 
