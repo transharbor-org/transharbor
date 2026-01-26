@@ -60,10 +60,10 @@ class PersonalsProvider extends ChangeNotifier {
     try {
       // Encrypt content before sending
       final encryptedContent = _encryption.encrypt(content);
-      
+
       final record = await _pb.createPersonal(encryptedContent);
       final newPersonal = Personal.fromPocketBase(record);
-      
+
       // Decrypt for local display
       final decryptedPersonal = Personal(
         id: newPersonal.id,
@@ -74,7 +74,7 @@ class PersonalsProvider extends ChangeNotifier {
         likesCount: newPersonal.likesCount,
         commentsCount: newPersonal.commentsCount,
       );
-      
+
       _personals.insert(0, decryptedPersonal);
       notifyListeners();
 

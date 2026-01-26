@@ -66,13 +66,13 @@ class MessagingProvider extends ChangeNotifier {
     try {
       // Encrypt message content before sending
       final encryptedContent = _encryption.encrypt(content);
-      
+
       final record = await _pb.sendMessage(
         conversationId: conversationId,
         content: encryptedContent,
       );
       final newMessage = Message.fromPocketBase(record);
-      
+
       // Decrypt for local display
       final decryptedMessage = Message(
         id: newMessage.id,
