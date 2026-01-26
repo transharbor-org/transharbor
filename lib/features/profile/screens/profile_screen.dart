@@ -170,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: const Text('Edit Profile'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
-                    context.push('/settings');
+                    context.push('/profile/edit');
                   },
                 ),
                 ListTile(

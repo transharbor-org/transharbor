@@ -10,6 +10,7 @@ class User {
   final String? bio;
   final String? pronouns;
   final String? avatar;
+  final bool isPrivate;
   final UserRole role;
   final MembershipType membershipType;
   final DateTime createdAt;
@@ -23,6 +24,7 @@ class User {
     this.bio,
     this.pronouns,
     this.avatar,
+    this.isPrivate = false,
     this.role = UserRole.user,
     this.membershipType = MembershipType.nonVoting,
     required this.createdAt,
@@ -53,6 +55,7 @@ class User {
       bio: json['bio'] as String?,
       pronouns: json['pronouns'] as String?,
       avatar: json['avatar'] as String?,
+      isPrivate: json['isPrivate'] as bool? ?? false,
       role: UserRole.fromString(json['role'] as String? ?? 'user'),
       membershipType: MembershipType.fromString(
           json['membershipType'] as String? ?? 'non_voting'),
@@ -80,6 +83,7 @@ class User {
       avatar: record.getStringValue('avatar').isNotEmpty
           ? record.getStringValue('avatar')
           : null,
+      isPrivate: record.getBoolValue('isPrivate'),
       role: UserRole.fromString(record.getStringValue('role')),
       membershipType:
           MembershipType.fromString(record.getStringValue('membershipType')),
@@ -97,6 +101,7 @@ class User {
       'bio': bio,
       'pronouns': pronouns,
       'avatar': avatar,
+      'isPrivate': isPrivate,
       'role': role.toApiString(),
       'membershipType': membershipType.toApiString(),
       'created': createdAt.toIso8601String(),

@@ -16,6 +16,7 @@ import '../../features/groups/screens/create_group_screen.dart';
 import '../../features/moderation/screens/moderation_screen.dart';
 import '../../features/admin/screens/admin_management_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
+import '../../features/profile/screens/edit_profile_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../services/logging_service.dart';
 
@@ -124,6 +125,10 @@ class AppRouter {
       GoRoute(
         path: '/profile',
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: '/profile/edit',
+        builder: (context, state) => const EditProfileScreen(),
       ),
       GoRoute(
         path: '/settings',

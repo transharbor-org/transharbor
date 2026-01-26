@@ -122,11 +122,13 @@ class PocketBaseService {
     String? displayName,
     String? bio,
     String? pronouns,
+    bool? isPrivate,
   }) async {
     final body = <String, dynamic>{};
     if (displayName != null) body['displayName'] = displayName;
     if (bio != null) body['bio'] = bio;
     if (pronouns != null) body['pronouns'] = pronouns;
+    if (isPrivate != null) body['isPrivate'] = isPrivate;
 
     return await pb.collection(PocketBaseService.usersCollection).update(
           currentUserId!,
