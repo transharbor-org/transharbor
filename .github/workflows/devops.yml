@@ -1,0 +1,77 @@
+name: devops
+# Runs on the devops VPS (self-hosted runner, label devops): scan, build the PocketBase image, scan it, push it to the devops registry.
+# Everything it prints is in the job log; the run summary says what was pushed.
+# Never on pull_request: this repository is public and a self-hosted runner must not run code from forks.
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devops-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    name: Secrets, code, dependencies, SBOM
+    runs-on: [self-hosted, devops]
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: ci-scan
+        shell: bash
+        run: ci-scan .
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: sbom, path: .scan/sbom.spdx.json, if-no-files-found: ignore }
+
+  pocketbase-image:
+    name: PocketBase image
+    needs: scan
+    runs-on: [self-hosted, devops]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME//\//-}-${GITHUB_SHA::7}"
+          echo "TAG=$tag" >> "$GITHUB_ENV"
+          docker build -f docker/Dockerfile.pocketbase -t "pocketbase:$tag" \
+            --build-arg APP_VERSION="$tag" --build-arg GIT_SHA="$GITHUB_SHA" --build-arg BUILD_TIME="$(date -u +%FT%TZ)" .
+      - name: Scan the image
+        shell: bash
+        run: ci-scan-image "pocketbase:$TAG"
+      - name: Starts, imports the schema, serves
+        id: start
+        shell: bash
+        run: |
+          pw=$(head -c 24 /dev/urandom | base64 | tr -d '/+=')
+          docker run -d --name "pb-ci-$GITHUB_RUN_ID" -e PB_ADMIN_EMAIL=ci@example.test -e PB_ADMIN_PASSWORD="$pw" \
+            -p 127.0.0.1:18080:8080 "pocketbase:$TAG" >/dev/null
+          for _ in $(seq 1 60); do curl -fsS http://127.0.0.1:18080/api/health >/dev/null 2>&1 && break; sleep 2; done
+          curl -fsS http://127.0.0.1:18080/api/health
+          docker logs "pb-ci-$GITHUB_RUN_ID" 2>&1 | tail -40
+      - name: Hooks load (warning only)
+        if: always() && steps.start.outcome == 'success'
+        shell: bash
+        run: |
+          if docker logs "pb-ci-$GITHUB_RUN_ID" 2>&1 | grep -q "failed to execute"; then
+            docker logs "pb-ci-$GITHUB_RUN_ID" 2>&1 | grep -A2 "failed to execute" | head -20
+            echo "::warning title=PocketBase hooks::one or more pb_hooks failed to load on this PocketBase version (see the log above); they are not active"
+          else
+            echo "all hooks loaded"
+          fi
+      - name: Stop the test container
+        if: always()
+        shell: bash
+        run: docker rm -f "pb-ci-$GITHUB_RUN_ID" >/dev/null 2>&1 || true
+      - name: Push to the devops registry
+        shell: bash
+        run: |
+          ref=$(ci-push "pocketbase:$TAG" pocketbase)
+          echo "pushed $ref"
+          { echo "## PocketBase image"; echo; echo "Pushed \`$ref\` (scanned clean)."; } >> "$GITHUB_STEP_SUMMARY"
