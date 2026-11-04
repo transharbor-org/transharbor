@@ -11,7 +11,9 @@ on:
 permissions:
   contents: read
 
-concurrency: { group: devops-${{ github.ref }}, cancel-in-progress: true }
+concurrency:
+  group: devops-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   scan:
@@ -50,7 +52,7 @@ jobs:
           pw=$(head -c 24 /dev/urandom | base64 | tr -d '/+=')
           docker run -d --name "pb-ci-$GITHUB_RUN_ID" -e PB_ADMIN_EMAIL=ci@example.test -e PB_ADMIN_PASSWORD="$pw" \
             -p 127.0.0.1:18080:8080 "pocketbase:$TAG" >/dev/null
-          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:18080/api/health >/dev/null 2>&1 && break; sleep 2; done
+          for _ in $(seq 1 60); do curl -fsS http://127.0.0.1:18080/api/health >/dev/null 2>&1 && break; sleep 2; done
           curl -fsS http://127.0.0.1:18080/api/health
           docker logs "pb-ci-$GITHUB_RUN_ID" 2>&1 | tail -40
       - name: Hooks load (warning only)
